@@ -1,0 +1,8 @@
+data/declarations.json
+data/resultats_moodle.json
+data/plaquettes/
+*.xlsx
+moodle_session.json
+__pycache__/
+*.tmp
+.DS_Store

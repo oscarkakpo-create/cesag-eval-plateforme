@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CESAG ONLINE — Portail Évaluations des Enseignements 2026-2027</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Header Institutionnel CESAG -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-crest" aria-hidden="true">C</div>
+        <div class="brand-text">
+          <div class="brand-kicker">CESAG · PLANIFICATION &amp; SUIVI-ÉVALUATION</div>
+          <h1 class="brand-title">Évaluations des Enseignements 2026-2027</h1>
+        </div>
+      </div>
+
+      <div class="topbar-meta">
+        <a class="moodle-pill" href="https://formations.cesagonline.com/course/index.php?categoryid=372" target="_blank" rel="noopener">
+          <span class="dot-live"></span>
+          Moodle Cat. 372
+        </a>
+        <div id="storageBadge" class="storage-badge mode-local" title="Mode de stockage actif">
+          <span class="storage-dot"></span>
+          <span id="storageBadgeText">Connexion…</span>
+        </div>
+      </div>
+    </div>
+
+    <nav class="nav-tabs" aria-label="Navigation principale">
+      <div class="nav-tabs-inner">
+        <button class="nav-tab active" data-tab="declare" type="button">
+          <span class="tab-icon">＋</span>
+          <span>Déclarer des modules terminés</span>
+        </button>
+        <button class="nav-tab" data-tab="dashboard" type="button">
+          <span class="tab-icon">☰</span>
+          <span>Tableau de bord &amp; Suivi</span>
+          <span id="badgeTotalCount" class="tab-badge">0</span>
+        </button>
+        <button class="nav-tab" data-tab="automation" type="button">
+          <span class="tab-icon">⚡</span>
+          <span>Automatisation Moodle &amp; Cloud</span>
+          <span id="badgePendingCount" class="tab-badge badge-amber">0</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="main-container">
+    <!-- Toast & Notification Banner -->
+    <div id="toastArea" class="toast-area" aria-live="polite"></div>
+
+    <!-- ============================================================ -->
+    <!-- TAB 1 : DECLARER DES MODULES TERMINES (RESPONSABLES PROG)    -->
+    <!-- ============================================================ -->
+    <section id="tab-declare" class="tab-panel active">
+      <div class="section-intro">
+        <div>
+          <h2>Déclaration de fin de module (Espace Responsables de Programme)</h2>
+          <p>Sélectionnez votre programme issu des plaquettes officielles, cochez les ECUEs achevés et renseignez les intervenants. Chaque soumission notifie instantanément la coordination pour la programmation sur Moodle.</p>
+        </div>
+        <button id="btnOpenQuickImportFromDeclare" class="btn btn-outline" type="button">
+          Importer un fichier Excel/CSV collègue
+        </button>
+      </div>
+
+      <div class="declare-grid">
+        <!-- Colonne Gauche : Etape 1 Sélection catalogue -->
+        <div class="card">
+          <div class="card-header">
+            <span class="step-pill">Étape 1</span>
+            <h3>Programme, classe et modules (ECUEs)</h3>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Niveau de formation</label>
+            <div id="niveauPills" class="niveau-pills" role="group" aria-label="Niveau"></div>
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label" for="programmeSearch">Filtrer les programmes</label>
+              <input id="programmeSearch" class="input" type="search" placeholder="Ex : MACG, MBA GP, LG 1, MCCA…">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="programmeSelect">Programme officiel (<span id="programmeCountLabel">0</span>)</label>
+              <select id="programmeSelect" class="select"></select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="classeInput">Classe / Cohorte concernée *</label>
+            <input id="classeInput" class="input" type="text" list="classesDatalist" placeholder="Ex : MACG1 Jour A, LG 1, MBA MSCH…">
+            <datalist id="classesDatalist"></datalist>
+            <div id="classeSuggestions" class="chips-row" aria-label="Classes suggérées"></div>
+          </div>
+
+          <div class="form-group">
+            <div class="label-between">
+              <label class="form-label">Année / Semestre</label>
+              <span id="ecueStatsLabel" class="muted-small"></span>
+            </div>
+            <div id="semestrePills" class="semestre-pills"></div>
+          </div>
+
+          <div class="form-group">
+            <div class="label-between">
+              <label class="form-label" for="moduleSearchInput">Cocher les modules terminés (ECUEs)</label>
+              <div class="inline-actions">
+                <button id="btnSelectVisibleEcues" class="link-btn" type="button">Tout cocher</button>
+                <span class="sep">·</span>
+                <button id="btnClearSelectedEcues" class="link-btn" type="button">Tout décocher</button>
+              </div>
+            </div>
+            <input id="moduleSearchInput" class="input input-sm" type="search" placeholder="Rechercher un ECUE par code ou intitulé…">
+            <div id="ecueChecklist" class="ecue-checklist"></div>
+          </div>
+        </div>
+
+        <!-- Colonne Droite : Etape 2 Intervenants & Soumission -->
+        <div class="card card-sticky">
+          <div class="card-header">
+            <span class="step-pill step-gold">Étape 2</span>
+            <h3>Intervenants &amp; validation du lot (<span id="selectedCountBadge">0</span>)</h3>
+          </div>
+
+          <div class="declarant-box">
+            <div class="form-row-2">
+              <div class="form-group">
+                <label class="form-label" for="declarantNom">Votre nom (Responsable)</label>
+                <input id="declarantNom" class="input" type="text" placeholder="Ex : A. Diallo">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="declarantEmail">Votre email CESAG</label>
+                <input id="declarantEmail" class="input" type="email" placeholder="prenom.nom@cesag.edu.sn">
+              </div>
+            </div>
+            <div class="form-row-2">
+              <div class="form-group">
+                <label class="form-label" for="defaultDateFin">Date de fin par défaut</label>
+                <input id="defaultDateFin" class="input" type="date">
+              </div>
+              <div class="form-group align-bottom">
+                <button id="btnApplyDefaultDate" class="btn btn-soft btn-full" type="button">
+                  Appliquer la date à tous
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div id="duplicateWarningBanner" class="alert-warning hidden"></div>
+
+          <div id="selectedModulesContainer" class="selected-modules-list">
+            <div class="empty-selection">
+              <div class="empty-icon">☑</div>
+              <p><strong>Aucun module sélectionné</strong></p>
+              <p class="muted-small">Cochez un ou plusieurs ECUEs à gauche pour renseigner les intervenants et les envoyer à la programmation.</p>
+            </div>
+          </div>
+
+          <datalist id="intervenantsDatalist"></datalist>
+
+          <div class="submit-footer">
+            <label class="checkbox-inline">
+              <input id="forceDuplicateCheck" type="checkbox">
+              <span>Autoriser si déjà présent pour cette classe</span>
+            </label>
+            <button id="btnSubmitDeclarations" class="btn btn-primary btn-lg btn-full" type="button" disabled>
+              Soumettre la déclaration (0 module)
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- TAB 2 : TABLEAU DE BORD & SUIVI-EVALUATION                   -->
+    <!-- ============================================================ -->
+    <section id="tab-dashboard" class="tab-panel">
+      <div class="section-intro">
+        <div>
+          <h2>Tableau de bord de suivi-évaluation</h2>
+          <p>Suivi en temps réel des évaluations déclarées, programmées sur Moodle et réalisées, avec remontée des liens directs et du nombre de répondants.</p>
+        </div>
+        <div class="toolbar-buttons">
+          <button id="btnOpenImportModal" class="btn btn-outline" type="button">Importer fichier collègue</button>
+          <button id="btnExportExcel" class="btn btn-outline" type="button">Exporter Excel (.xlsx)</button>
+          <button id="btnExportPendingJson" class="btn btn-primary" type="button">Exporter Lot IA (.json)</button>
+        </div>
+      </div>
+
+      <!-- KPI Cards -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label">Total déclarées</div>
+          <div id="kpiTotal" class="kpi-value">0</div>
+          <div id="kpiTotalSub" class="kpi-sub">Toutes cohortes 26-27</div>
+        </div>
+        <div class="kpi-card kpi-amber">
+          <div class="kpi-label">À programmer</div>
+          <div id="kpiPending" class="kpi-value">0</div>
+          <div class="kpi-sub">En attente de passage Moodle</div>
+        </div>
+        <div class="kpi-card kpi-emerald">
+          <div class="kpi-label">Programmées / Ouvertes</div>
+          <div id="kpiProgrammed" class="kpi-value">0</div>
+          <div class="kpi-sub">Visibles aux étudiants</div>
+        </div>
+        <div class="kpi-card kpi-deep">
+          <div class="kpi-label">Réalisées / Clôturées</div>
+          <div id="kpiDone" class="kpi-value">0</div>
+          <div id="kpiDoneSub" class="kpi-sub">0 répondants enregistrés</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Taux de programmation</div>
+          <div id="kpiRate" class="kpi-value">0%</div>
+          <div class="progress-track">
+            <div id="kpiRateBar" class="progress-fill" style="width: 0%;"></div>
+          </div>
+          <div id="kpiRealRateSub" class="kpi-sub">Réalisation : 0%</div>
+        </div>
+      </div>
+
+      <!-- Synthèse par Niveau -->
+      <div id="niveauSummaryGrid" class="niveau-summary-grid"></div>
+
+      <!-- Filtres & Tableau -->
+      <div class="card">
+        <div class="filters-bar">
+          <select id="filterStatut" class="select select-sm">
+            <option value="">Tous les statuts</option>
+            <option value="A_programmer">À programmer</option>
+            <option value="Programmee">Programmée / Ouverte</option>
+            <option value="Realisee">Réalisée / Clôturée</option>
+            <option value="Annulee">Annulée</option>
+          </select>
+          <select id="filterNiveau" class="select select-sm">
+            <option value="">Tous les niveaux</option>
+            <option value="Licence">Licence</option>
+            <option value="Master">Master</option>
+            <option value="MBA">MBA</option>
+          </select>
+          <select id="filterProgramme" class="select select-sm">
+            <option value="">Tous les programmes</option>
+          </select>
+          <input id="filterSearch" class="input input-sm" type="search" placeholder="Rechercher classe, module, intervenant, CMID…">
+          <button id="btnResetFilters" class="btn btn-soft btn-sm" type="button">Réinitialiser</button>
+        </div>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Statut</th>
+                <th>Classe / Programme</th>
+                <th>Module (ECUE)</th>
+                <th>Intervenant</th>
+                <th>Fin module</th>
+                <th>Moodle (CMID / Lien)</th>
+                <th>Répondants</th>
+                <th class="col-actions">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="declarationsTableBody"></tbody>
+          </table>
+        </div>
+        <div id="tableEmptyState" class="empty-table hidden">
+          Aucune évaluation ne correspond aux filtres sélectionnés.
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- TAB 3 : AUTOMATISATION MOODLE & CLOUD                        -->
+    <!-- ============================================================ -->
+    <section id="tab-automation" class="tab-panel">
+      <div class="section-intro">
+        <div>
+          <h2>Automatisation Moodle &amp; Partage Cloud</h2>
+          <p>Générez le lot prêt pour l’IA sur Moodle (Catégorie 372), réinjectez les CMID/liens générés et connectez un Google Sheet pour partager ce portail avec vos collègues.</p>
+        </div>
+      </div>
+
+      <div class="automation-grid">
+        <!-- File d'attente IA -->
+        <div class="card">
+          <div class="card-header">
+            <span class="step-pill">Moodle Cat. 372</span>
+            <h3>File d’attente IA (<span id="queueCountLabel">0</span> à programmer)</h3>
+          </div>
+
+          <p class="muted-small">
+            Chaque module déclaré « À programmer » est enrichi avec son code ECUE, l’identifiant de cours Moodle connu et le carton vert HTML conforme à la charte CESAG.
+          </p>
+
+          <div class="action-stack">
+            <button id="btnCopyAiPrompt" class="btn btn-primary" type="button">
+              Copier le prompt prêt pour l’IA (Antigravity)
+            </button>
+            <button id="btnDownloadPendingBatch" class="btn btn-outline" type="button">
+              Télécharger <code>lot_a_programmer.json</code>
+            </button>
+            <label class="btn btn-soft file-btn">
+              Importer <code>resultats_moodle.json</code>
+              <input id="inputMoodleResultsFile" type="file" accept=".json" hidden>
+            </label>
+          </div>
+
+          <div id="pendingQueueList" class="pending-queue-list"></div>
+        </div>
+
+        <!-- Apercu Carton Vert & Connexion Cloud -->
+        <div class="automation-side">
+          <div class="card">
+            <div class="card-header">
+              <span class="step-pill step-gold">Gabarit Moodle</span>
+              <h3>Aperçu du Carton vert officiel CESAG</h3>
+            </div>
+            <div id="cartonVertPreview" class="carton-preview-box"></div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <span class="step-pill">Partage Collègues</span>
+              <h3>Connexion Cloud (Google Sheets + Apps Script)</h3>
+            </div>
+            <p class="muted-small">
+              1. Ouvrez votre Google Sheet maître et collez <code>cloud/Code.gs</code> dans <strong>Extensions &rarr; Apps Script</strong>.<br>
+              2. Déployez en <strong>Application Web</strong> (Accès : Tout le monde) et collez l’URL <code>/exec</code> ci-dessous (les soumissions enregistrent les lignes et envoient automatiquement une notification e-mail à la coordination).
+            </p>
+            <div id="masterSheetBox" class="form-group">
+              <a id="masterSheetLink" class="btn btn-soft btn-sm" href="#" target="_blank" rel="noopener">
+                Ouvrir le Google Sheet Maître ↗
+              </a>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="gasUrlInput">URL Web App Google Apps Script</label>
+              <input id="gasUrlInput" class="input" type="url" placeholder="https://script.google.com/macros/s/…/exec">
+            </div>
+            <div class="inline-btn-row">
+              <button id="btnSaveGasUrl" class="btn btn-primary" type="button">Tester &amp; Activer</button>
+              <button id="btnSyncNow" class="btn btn-outline" type="button">Synchroniser</button>
+              <button id="btnClearGasUrl" class="btn btn-soft" type="button">Mode local</button>
+            </div>
+            <div id="gasStatusText" class="muted-small mt-8"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================================================ -->
+  <!-- MODAL : IMPORT EXCEL / CSV COLLEGUE                          -->
+  <!-- ============================================================ -->
+  <div id="importModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="importModalTitle">
+    <div class="modal-card modal-lg">
+      <div class="modal-header">
+        <h3 id="importModalTitle">Importer un tableau collègue (4 colonnes)</h3>
+        <button class="modal-close" data-close-modal="importModal" type="button" aria-label="Fermer">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="muted-small">
+          Importez un fichier <strong>.csv / .tsv</strong> ou collez directement les lignes copiées depuis Excel avec les colonnes :
+          <code>Modules | Intervenants | Classe | Adresse email</code>.
+        </p>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label" for="importFileInput">Choisir un fichier CSV / TSV</label>
+            <input id="importFileInput" class="input" type="file" accept=".csv,.tsv,.txt">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="importDeclarantNom">Nom du déclarant / collègue</label>
+            <input id="importDeclarantNom" class="input" type="text" placeholder="Ex : Coordination Master">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="importPasteTextarea">Ou coller les lignes depuis Excel (Ctrl+V)</label>
+          <textarea id="importPasteTextarea" class="textarea" rows="5" placeholder="Modules	Intervenants	Classe	Adresse email&#10;Droit de la concurrence	M. Jean Baptiste DIOUF	MACG1 Jour A	jeanbaptiste.diouf@cesag.edu.sn"></textarea>
+        </div>
+        <div id="importPreviewArea" class="import-preview hidden"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-soft" data-close-modal="importModal" type="button">Annuler</button>
+        <button id="btnConfirmImport" class="btn btn-primary" type="button" disabled>Importer dans « À programmer »</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- MODAL : EDITION DECLARATION                                  -->
+  <!-- ============================================================ -->
+  <div id="editModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="editModalTitle">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="editModalTitle">Modifier l’évaluation</h3>
+        <button class="modal-close" data-close-modal="editModal" type="button" aria-label="Fermer">&times;</button>
+      </div>
+      <form id="editForm" class="modal-body">
+        <input id="editId" type="hidden">
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label" for="editStatut">Statut</label>
+            <select id="editStatut" class="select">
+              <option value="A_programmer">À programmer</option>
+              <option value="Programmee">Programmée / Ouverte</option>
+              <option value="Realisee">Réalisée / Clôturée</option>
+              <option value="Annulee">Annulée</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="editClasse">Classe</label>
+            <input id="editClasse" class="input" type="text" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="editModule">Module (ECUE)</label>
+          <input id="editModule" class="input" type="text" required>
+        </div>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label" for="editIntervenant">Intervenant</label>
+            <input id="editIntervenant" class="input" type="text" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="editEmail">Email intervenant</label>
+            <input id="editEmail" class="input" type="email">
+          </div>
+        </div>
+        <div class="form-row-3">
+          <div class="form-group">
+            <label class="form-label" for="editCmid">CMID Moodle</label>
+            <input id="editCmid" class="input" type="text" placeholder="Ex : 31273">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="editDateOuverture">Date ouverture</label>
+            <input id="editDateOuverture" class="input" type="date">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="editDateCloture">Date clôture</label>
+            <input id="editDateCloture" class="input" type="date">
+          </div>
+        </div>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label" for="editLienMoodle">Lien direct Moodle</label>
+            <input id="editLienMoodle" class="input" type="url" placeholder="Généré automatiquement via CMID">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="editNbRepondants">Nb répondants</label>
+            <input id="editNbRepondants" class="input" type="number" min="0" placeholder="0">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="editObservations">Observations</label>
+          <textarea id="editObservations" class="textarea" rows="2"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-soft" data-close-modal="editModal" type="button">Annuler</button>
+          <button class="btn btn-primary" type="submit">Enregistrer les modifications</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="data/catalog.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
