@@ -525,3 +525,47 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--cesag-green); 
   .evboard-viewport { height: 230px; }
 }
 @media (prefers-reduced-motion: reduce) { .evboard-rows.is-scrolling { animation: none; } .evboard-viewport { overflow-y: auto; } }
+
+/* =====================================================================
+   Déclaration rapide : nom du prof sous le module coché, options repliées
+   ===================================================================== */
+.ecue-prof {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  padding: 8px 14px 12px 44px;
+  background: var(--cesag-green-soft);
+  border-bottom: 1px solid var(--cesag-border);
+  box-shadow: inset 3px 0 0 var(--cesag-green);
+}
+.ecue-prof-tag { font-size: 11.5px; font-weight: 700; color: var(--cesag-green); text-transform: uppercase; letter-spacing: .05em; white-space: nowrap; }
+.ecue-prof .input { flex: 1 1 220px; min-width: 0; background: #fff; }
+
+#selectedModulesContainer { display: none !important; }
+
+.declare-options { border: 1px solid var(--cesag-border); border-radius: 10px; margin: 4px 0 14px; background: var(--bg-page); }
+.declare-options > summary {
+  cursor: pointer; list-style: none; padding: 11px 14px;
+  font-size: 13.5px; font-weight: 600; color: var(--text-muted);
+  display: flex; align-items: center; gap: 8px;
+}
+.declare-options > summary::-webkit-details-marker { display: none; }
+.declare-options > summary::before { content: "+"; display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: #fff; border: 1px solid var(--cesag-border-strong); color: var(--cesag-green); font-weight: 700; }
+.declare-options[open] > summary::before { content: "–"; }
+.declare-options[open] > summary { border-bottom: 1px solid var(--cesag-border); color: var(--text-main); }
+.declare-options .declarant-box { padding: 12px 14px; background: transparent; border: 0; margin: 0; }
+.submit-hint { margin: 0 0 10px; font-size: 13px; color: var(--text-muted); }
+
+@media (max-width: 860px) {
+  /* Le bouton d'envoi reste visible en bas de l'écran pendant qu'on coche */
+  .card-sticky {
+    position: sticky !important; bottom: 0; z-index: 30;
+    border-radius: 14px 14px 0 0 !important;
+    box-shadow: 0 -10px 30px -12px rgba(16, 40, 28, .35) !important;
+    padding: 12px 14px !important;
+  }
+  .card-sticky .card-header { display: none; }
+  .card-sticky .submit-hint { display: none; }
+  .declare-options { margin-bottom: 10px; }
+  .ecue-prof { padding-left: 14px; }
+}
+/* La case « Autoriser si déjà présent » n'apparaît qu'en cas de doublon */
+.card-sticky:not(:has(#duplicateWarningBanner:not(.hidden))) .checkbox-inline { display: none !important; }

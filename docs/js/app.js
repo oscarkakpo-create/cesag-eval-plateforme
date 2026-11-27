@@ -626,6 +626,11 @@
               </div>
             </div>
           </label>
+          ${isSelected ? `
+          <div class="ecue-prof">
+            <span class="ecue-prof-tag">Cours terminé · à évaluer</span>
+            <input class="input input-sm" type="text" list="intervenantsDatalist" data-prof-key="${escapeHtml(key)}" value="${escapeHtml(state.selectedEcues.get(key)?.intervenant || "")}" placeholder="Nom du prof (ex : M. Diouf)" aria-label="Nom du prof pour ${escapeHtml(e.titre)}">
+          </div>` : ""}
         `;
       });
     });
@@ -643,6 +648,20 @@
         }
         renderEcueChecklist();
         renderSelectedModules();
+        if (cb.checked) {
+          const profInput = container.querySelector(`input[data-prof-key="${CSS.escape(key)}"]`);
+          if (profInput) profInput.focus();
+        }
+      });
+    });
+    const lecturerEmails = new Map(getKnownLecturers().map((l) => [normalizeText(l.nom), l.email]));
+    container.querySelectorAll("input[data-prof-key]").forEach((inp) => {
+      inp.addEventListener("input", () => {
+        const entry = state.selectedEcues.get(inp.dataset.profKey);
+        if (!entry) return;
+        entry.intervenant = inp.value;
+        const autoEmail = lecturerEmails.get(normalizeText(inp.value));
+        entry.email_intervenant = autoEmail || "";
       });
     });
   }

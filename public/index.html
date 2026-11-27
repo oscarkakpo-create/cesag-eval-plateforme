@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CESAG ONLINE — PROGRAMMATION DES ÉVALUATIONS DES ENSEIGNEMENTS 26-27</title>
-  <link rel="stylesheet" href="css/style.css?v=20261127h">
-  <link rel="stylesheet" href="css/premium.css?v=20261127h">
+  <link rel="stylesheet" href="css/style.css?v=20261127i">
+  <link rel="stylesheet" href="css/premium.css?v=20261127i">
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
 <body>
@@ -317,9 +317,11 @@
         <div class="card card-sticky">
           <div class="card-header">
             <span class="step-pill step-gold">Étape 2</span>
-            <h3>Intervenants &amp; validation du lot (<span id="selectedCountBadge">0</span>)</h3>
+            <h3>Envoyer · <span id="selectedCountBadge">0</span> module(s) coché(s)</h3>
           </div>
 
+          <details class="declare-options">
+          <summary>Options (facultatif) : recevoir une copie, dates souhaitées</summary>
           <div class="declarant-box">
             <div class="form-row-2">
               <div class="form-group">
@@ -354,6 +356,8 @@
             </div>
           </div>
 
+          </details>
+
           <div id="duplicateWarningBanner" class="alert-warning hidden"></div>
 
           <div id="selectedModulesContainer" class="selected-modules-list">
@@ -367,9 +371,7 @@
           <datalist id="intervenantsDatalist"></datalist>
 
           <div class="submit-footer">
-            <div class="muted-small" style="background:#EAF3ED;border:1px solid #BDD6C4;border-radius:8px;padding:10px 14px;margin-bottom:12px;color:#0B4D2E;line-height:1.45;">
-              🔔 <strong>Signal instantané :</strong> Dès que vous validez, l'équipe reçoit immédiatement votre demande avec les dates souhaitées et programme l'évaluation sur Moodle.
-            </div>
+            <p class="submit-hint">Cochez les cours terminés, indiquez le nom du prof, puis envoyez.</p>
             <label class="checkbox-inline">
               <input id="forceDuplicateCheck" type="checkbox">
               <span>Autoriser si déjà présent pour cette cohorte</span>
@@ -787,10 +789,10 @@
   <!-- Animation Décollage Avion (Passion Aviation) -->
   <div id="flightTakeoffAnim" class="flight-takeoff-anim">✈️💨</div>
 
-  <script src="js/config.js?v=20261127h"></script>
-  <script src="data/catalog.js?v=20261127h"></script>
-  <script src="js/app.js?v=20261127h"></script>
-  <script src="js/board.js?v=20261127h"></script>
-  <script src="js/icons.js?v=20261127h"></script>
+  <script src="js/config.js?v=20261127i"></script>
+  <script src="data/catalog.js?v=20261127i"></script>
+  <script src="js/app.js?v=20261127i"></script>
+  <script src="js/board.js?v=20261127i"></script>
+  <script src="js/icons.js?v=20261127i"></script>
 </body>
 </html>
