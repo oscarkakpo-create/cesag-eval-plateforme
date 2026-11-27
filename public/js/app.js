@@ -350,10 +350,25 @@
   /* ------------------------------------------------------------------ */
   /* Tab 1: Catalog & Multi-Select Declaration Builder                  */
   /* ------------------------------------------------------------------ */
+  // Rattachement des filières aux directions :
+  // DPECN = MBA + toute la filière comptable DECOGEF / DESCOGEF ; DPGELM = le reste.
+  function programDirection(p) {
+    const key = `${p.id || ""} ${p.code || ""}`.toUpperCase();
+    if (p.niveau === "MBA" || key.includes("COGEF")) return "DPECN";
+    return "DPGELM";
+  }
+
+  function getActiveDirection() {
+    const dirSel = $("directionFilterSelect");
+    return (dirSel && dirSel.value) || state.activeDirection || "ALL";
+  }
+
   function getProgramsByNiveau(niveau) {
     const query = normalizeText($("programmeSearch").value);
+    const dir = getActiveDirection();
     return (state.catalog.programs || []).filter((p) => {
       if (niveau && p.niveau !== niveau) return false;
+      if (dir !== "ALL" && programDirection(p) !== dir) return false;
       if (!query) return true;
       return (
         normalizeText(p.code).includes(query) ||
@@ -375,7 +390,7 @@
     if (activeDir === "DPGELM") {
       levels = ["Licence", "Master"];
     } else if (activeDir === "DPECN") {
-      levels = ["MBA"];
+      levels = ["MBA", "Licence", "Master"]; // MBA + DECOGEF (Licence) + DESCOGEF (Master)
     }
 
     if (!levels.includes(state.activeNiveau)) {
@@ -385,14 +400,19 @@
     container.innerHTML = levels
       .map((niv) => {
         const info = state.catalog.summary?.by_niveau?.[niv] || {};
-        const countProg = info.programmes || (state.catalog.programs || []).filter((p) => p.niveau === niv).length;
-        const countEcue = info.ecues || 0;
+        let countProg = info.programmes || (state.catalog.programs || []).filter((p) => p.niveau === niv).length;
+        let countEcue = info.ecues || 0;
+        if (activeDir === "DPGELM" || activeDir === "DPECN") {
+          const scoped = (state.catalog.programs || []).filter((p) => p.niveau === niv && programDirection(p) === activeDir);
+          countProg = scoped.length;
+          countEcue = scoped.reduce((acc, p) => acc + (Number(p.ecue_count) || 0), 0);
+        }
         const active = state.activeNiveau === niv ? "active" : "";
         const icon = niv === "Licence" ? "📘" : (niv === "Master" ? "🎓" : "💼");
         return `
           <button class="pill-btn ${active}" type="button" data-niveau="${niv}">
             <span>${icon} ${niv}</span>
-            <span class="pill-sub">${countProg} filières · ${countEcue} ECUEs</span>
+            <span class="pill-sub">${countProg} filière${countProg > 1 ? "s" : ""} · ${countEcue} ECUEs</span>
           </button>
         `;
       })
