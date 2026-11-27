@@ -5,9 +5,7 @@
  * 1. Ouvrir votre Google Sheet maître ("CESAG — Suivi Évaluations des Enseignements 26-27").
  * 2. Extensions > Apps Script, coller ce code dans Code.gs.
  * 3. (Optionnel) Paramètres du projet > Propriétés du script : ajouter ACCESS_CODE si vous souhaitez protéger les écritures.
- * 4. (OBLIGATOIRE) Propriétés du script : ajouter ADMIN_PASSWORD = mot de passe de la coordination.
- *    Il protège le tableau de bord, les e-mails et les actions modifier / supprimer / importer.
- * 5. Déployer > Nouveau déploiement > Application Web :
+ * 4. Déployer > Nouveau déploiement > Application Web :
  *    - Exécuter en tant que : Moi
  *    - Qui a accès : Tout le monde
  * 5. Copier l'URL /exec dans public/js/config.js (ou dans l'onglet "Automatisation Moodle & Cloud").
@@ -288,28 +286,6 @@ function checkAccessCode(body) {
   return String(body.access_code || "").trim() === String(requiredCode).trim();
 }
 
-/* ---------------------------------------------------------------------------
-   Sécurité des données
-   - La lecture publique (doGet) ne renvoie AUCUNE adresse e-mail.
-   - Les données complètes et les actions de coordination exigent le mot de
-     passe ADMIN_PASSWORD (Propriétés du script), vérifié ici côté serveur.
---------------------------------------------------------------------------- */
-const PRIVATE_FIELDS = ["email_intervenant", "declarant_email"];
-
-function publicView(rows) {
-  return rows.map(function (r) {
-    const o = Object.assign({}, r);
-    PRIVATE_FIELDS.forEach(function (k) { delete o[k]; });
-    return o;
-  });
-}
-
-function checkAdminPassword(body) {
-  const pwd = PropertiesService.getScriptProperties().getProperty("ADMIN_PASSWORD");
-  if (!pwd) return false; // non configuré : accès coordination fermé par sécurité
-  return String((body && body.admin_password) || "").trim() === String(pwd).trim();
-}
-
 function doGet(e) {
   const action = (e && e.parameter && e.parameter.action) || "list";
   const ss = SpreadsheetApp.getActiveSpreadsheet();
@@ -322,7 +298,12 @@ function doGet(e) {
       count: Math.max(0, sh.getLastRow() - 1)
     });
   }
-  const declarations = publicView(readAllRows(sh));
+  // L'e-mail de l'enseignant n'est jamais renvoyé par la lecture publique.
+  const declarations = readAllRows(sh).map(function (r) {
+    const o = Object.assign({}, r);
+    delete o.email_intervenant;
+    return o;
+  });
   return jsonResponse({
     declarations,
     spreadsheet_id: ss.getId()
@@ -342,15 +323,6 @@ function doPost(e) {
     const sh = getOrInitSheet();
     const existing = readAllRows(sh);
     const ts = new Date().toISOString();
-
-    // Actions réservées à la coordination : mot de passe vérifié côté serveur
-    const ADMIN_ACTIONS = ["auth", "list_full", "update", "delete", "importRows", "importResults"];
-    if (ADMIN_ACTIONS.indexOf(action) !== -1 && !checkAdminPassword(body)) {
-      return jsonResponse({ error: "Mot de passe coordination invalide.", status: 401 });
-    }
-    if (action === "auth" || action === "list_full") {
-      return jsonResponse({ ok: true, declarations: existing });
-    }
 
     if (action === "submit") {
       const items = Array.isArray(body.items) ? body.items : [body];
@@ -403,7 +375,7 @@ function doPost(e) {
       });
 
       if (duplicates.length && !force) {
-        return jsonResponse({ error: "duplicate", status: 409, duplicates: publicView(duplicates) });
+        return jsonResponse({ error: "duplicate", status: 409, duplicates });
       }
 
       toAppend.forEach((rec) => {

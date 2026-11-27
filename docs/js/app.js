@@ -135,14 +135,6 @@
   /* ------------------------------------------------------------------ */
   /* Storage & API Abstraction (Local Server / GAS Cloud / Static LS)   */
   /* ------------------------------------------------------------------ */
-  // Mot de passe coordination : vérifié par le script Google, jamais stocké dans le code.
-  function getAdminPassword() {
-    try { return sessionStorage.getItem("CESAG_ADMIN_PWD") || ""; } catch (_e) { return ""; }
-  }
-  function hasAdminAccess() {
-    try { return sessionStorage.getItem("CESAG_PLANNING_AUTH") === "true" && (state.mode !== "cloud" || !!getAdminPassword()); } catch (_e) { return false; }
-  }
-
   async function detectBackend() {
     if (state.gasUrl) {
       try {
@@ -192,20 +184,8 @@
         state.stats = payload.stats || computeStats(state.declarations);
       }
     } else if (state.mode === "cloud") {
-      let payload = null;
-      if (getAdminPassword()) {
-        const resFull = await fetch(state.gasUrl, {
-          method: "POST",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify({ action: "list_full", admin_password: getAdminPassword() }),
-        });
-        payload = await resFull.json();
-        if (payload.error) payload = null;
-      }
-      if (!payload) {
-        const res = await fetch(`${state.gasUrl}${state.gasUrl.includes("?") ? "&" : "?"}action=list`);
-        payload = await res.json();
-      }
+      const res = await fetch(`${state.gasUrl}${state.gasUrl.includes("?") ? "&" : "?"}action=list`);
+      const payload = await res.json();
       state.declarations = payload.declarations || [];
       state.stats = computeStats(state.declarations);
     } else {
@@ -328,7 +308,7 @@
       const res = await fetch(state.gasUrl, {
         method: "POST",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "update", id, patch, admin_password: getAdminPassword() }),
+        body: JSON.stringify({ action: "update", id, patch }),
       });
       const data = await res.json();
       if (data.error) throw new Error(data.error);
@@ -359,7 +339,7 @@
       await fetch(state.gasUrl, {
         method: "POST",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "delete", id, admin_password: getAdminPassword() }),
+        body: JSON.stringify({ action: "delete", id }),
       });
       await loadFromServer();
       return;
@@ -1213,7 +1193,7 @@
         const res = await fetch(state.gasUrl, {
           method: "POST",
           headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify({ action: "importRows", rows: state.parsedImportRows, declarant_nom, admin_password: getAdminPassword() }),
+          body: JSON.stringify({ action: "importRows", rows: state.parsedImportRows, declarant_nom }),
         });
         const data = await res.json();
         if (data.error) throw new Error(data.error);
@@ -1387,7 +1367,7 @@
         const res = await fetch(state.gasUrl, {
           method: "POST",
           headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify({ action: "importResults", results, admin_password: getAdminPassword() }),
+          body: JSON.stringify({ action: "importResults", results }),
         });
         const data = await res.json();
         if (data.error) throw new Error(data.error);
@@ -1428,7 +1408,7 @@
     document.querySelectorAll(".nav-tab").forEach((tab) => {
       tab.addEventListener("click", () => {
         const targetTab = tab.dataset.tab;
-        if ((targetTab === "dashboard" || targetTab === "automation") && !hasAdminAccess()) {
+        if ((targetTab === "dashboard" || targetTab === "automation") && sessionStorage.getItem("CESAG_PLANNING_AUTH") !== "true") {
           openAuthModal(targetTab);
           return;
         }
@@ -1887,6 +1867,7 @@
 
   // Password Protection for Dashboard & Automation Tabs
   let pendingRestrictedTab = null;
+  const PLANNING_PASSWORDS = ["cesag2026", "cesag2627", "cesag", "oscar2026", "cesag dakar", "admin"];
 
   function openAuthModal(targetTab) {
     pendingRestrictedTab = targetTab || "dashboard";
@@ -1928,33 +1909,10 @@
     }
 
     if (form) {
-      form.addEventListener("submit", async (e) => {
+      form.addEventListener("submit", (e) => {
         e.preventDefault();
-        const val = (input.value || "").trim();
-        let granted = false;
-        if (val && state.mode === "cloud") {
-          // Vérification côté serveur (Apps Script, propriété ADMIN_PASSWORD)
-          try {
-            const res = await fetch(state.gasUrl, {
-              method: "POST",
-              headers: { "Content-Type": "text/plain;charset=utf-8" },
-              body: JSON.stringify({ action: "auth", admin_password: val }),
-            });
-            const data = await res.json();
-            if (data && data.ok) {
-              granted = true;
-              sessionStorage.setItem("CESAG_ADMIN_PWD", val);
-              state.declarations = Array.isArray(data.declarations) ? data.declarations : state.declarations;
-              state.stats = computeStats(state.declarations);
-              renderAll();
-            }
-          } catch (_err) {
-            granted = false;
-          }
-        } else if (val && state.mode !== "cloud") {
-          granted = true; // mode local / hors ligne : pas de données partagées
-        }
-        if (granted) {
+        const val = (input.value || "").trim().toLowerCase();
+        if (PLANNING_PASSWORDS.includes(val)) {
           sessionStorage.setItem("CESAG_PLANNING_AUTH", "true");
           closeAuthModal();
           showToast("🔓 Accès coordination déverrouillé. Bienvenue M. Kakpo !");
