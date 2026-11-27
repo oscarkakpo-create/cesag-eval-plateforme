@@ -624,7 +624,9 @@
                 ${e.td_tp ? `<span>TD ${e.td_tp}h</span>` : ""}
               </div>
             </div>
-            <span class="ecue-quick-cta">Terminé ?</span>
+            ${existing
+              ? `<span class="ecue-quick-cta is-done">${SYM.checkFill}<span>Signalé</span></span>`
+              : `<span class="ecue-quick-cta">${SYM.check}<span>Terminé</span></span>`}
           </button>
         `;
       });
@@ -643,6 +645,20 @@
   /* Déclaration rapide par boîtes de dialogue :                          */
   /* Terminé ? Oui/Non → Nom du prof → Êtes-vous sûr ? → Envoyé           */
   /* ------------------------------------------------------------------ */
+  // Symboles façon Apple (traits arrondis, cercle + glyphe)
+  const SVG_OPEN = '<svg class="sym" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">';
+  const SYM = {
+    check: `${SVG_OPEN}<circle cx="12" cy="12" r="9"/><path d="m8.2 12.4 2.6 2.6 5-5.3"/></svg>`,
+    checkFill: `${SVG_OPEN}<circle cx="12" cy="12" r="9.5" fill="currentColor" stroke="none"/><path d="m8.2 12.4 2.6 2.6 5-5.3" stroke="#fff" stroke-width="2.2"/></svg>`,
+    question: `${SVG_OPEN}<circle cx="12" cy="12" r="9"/><path d="M9.6 9.4a2.5 2.5 0 1 1 3.4 2.4c-.6.3-1 .8-1 1.5v.5"/><circle cx="12" cy="16.9" r="1" fill="currentColor" stroke="none"/></svg>`,
+    person: `${SVG_OPEN}<circle cx="12" cy="12" r="9"/><circle cx="12" cy="10" r="2.8"/><path d="M7 17.6a5.8 5.8 0 0 1 10 0"/></svg>`,
+    alert: `${SVG_OPEN}<circle cx="12" cy="12" r="9"/><path d="M12 7.6v5.4"/><circle cx="12" cy="16.4" r="1" fill="currentColor" stroke="none"/></svg>`,
+    xmark: `${SVG_OPEN}<circle cx="12" cy="12" r="9"/><path d="m9.2 9.2 5.6 5.6M14.8 9.2l-5.6 5.6"/></svg>`,
+    yes: `${SVG_OPEN}<path d="m5.5 12.5 4.2 4.2 8.8-9.4" stroke-width="2.2"/></svg>`,
+    no: `${SVG_OPEN}<path d="m7 7 10 10M17 7 7 17" stroke-width="2.2"/></svg>`,
+    send: `${SVG_OPEN}<path d="M21 3 10.5 13.5"/><path d="m21 3-6.5 18-4-7.5L3 9.5z"/></svg>`,
+  };
+
   function ensureQuickModal() {
     let modal = $("quickDeclareModal");
     if (modal) return modal;
@@ -652,7 +668,7 @@
     modal.setAttribute("role", "dialog");
     modal.setAttribute("aria-modal", "true");
     modal.setAttribute("aria-labelledby", "qdTitle");
-    modal.innerHTML = `<div class="qd-card"><p class="qd-kicker" id="qdKicker"></p><h3 id="qdTitle"></h3><div id="qdBody"></div><div class="qd-actions" id="qdActions"></div></div>`;
+    modal.innerHTML = `<div class="qd-card"><div class="qd-icon" id="qdIcon"></div><p class="qd-kicker" id="qdKicker"></p><h3 id="qdTitle"></h3><div id="qdBody"></div><div class="qd-actions" id="qdActions"></div></div>`;
     modal.addEventListener("click", (ev) => {
       if (ev.target === modal && !modal.dataset.busy) closeQuickModal();
     });
@@ -671,8 +687,12 @@
     }
   }
 
-  function showQuickStep({ kicker, title, body, actions }) {
+  function showQuickStep({ icon, tone, kicker, title, body, actions }) {
     const modal = ensureQuickModal();
+    const iconBox = $("qdIcon");
+    iconBox.className = `qd-icon qd-${tone || "green"}`;
+    iconBox.innerHTML = icon || "";
+    iconBox.hidden = !icon;
     $("qdKicker").textContent = kicker || "";
     $("qdTitle").textContent = title || "";
     $("qdBody").innerHTML = body || "";
@@ -682,7 +702,7 @@
       const b = document.createElement("button");
       b.type = "button";
       b.className = `btn ${a.primary ? "btn-primary" : "btn-outline"}`;
-      b.textContent = a.label;
+      b.innerHTML = `${a.sym ? SYM[a.sym] : ""}<span>${escapeHtml(a.label)}</span>`;
       b.addEventListener("click", a.onClick);
       box.appendChild(b);
     });
@@ -695,6 +715,7 @@
     const classe = $("classeInput").value.trim();
     if (!classe) {
       showQuickStep({
+        icon: SYM.alert, tone: "amber",
         kicker: ecue.titre,
         title: "Choisissez d'abord votre cohorte",
         body: `<p class="qd-text">Sélectionnez la cohorte (classe) au-dessus de la liste des modules, puis recliquez sur le module.</p>`,
@@ -704,20 +725,22 @@
     }
     const existing = findExistingDeclarationForClass(classe, ecue.titre);
     showQuickStep({
+      icon: SYM.question, tone: "blue",
       kicker: classe,
       title: `${ecue.titre} : ce cours est-il terminé ?`,
       body: existing
         ? `<p class="qd-warn">Déjà déclaré pour cette cohorte (${escapeHtml(STATUT_LABELS[existing.statut] || existing.statut)}).</p>`
         : "",
       actions: [
-        { label: "Non", onClick: closeQuickModal },
-        { label: "Oui", primary: true, onClick: () => askProf(prog, ecue, classe, "") },
+        { label: "Non", sym: "no", onClick: closeQuickModal },
+        { label: "Oui", sym: "yes", primary: true, onClick: () => askProf(prog, ecue, classe, "") },
       ],
     });
   }
 
   function askProf(prog, ecue, classe, current) {
     showQuickStep({
+      icon: SYM.person, tone: "green",
       kicker: ecue.titre,
       title: "Nom du prof",
       body: `<input id="qdProf" class="input" type="text" list="intervenantsDatalist" placeholder="Ex : M. Diouf" value="${escapeHtml(current)}" autocomplete="off" aria-label="Nom du prof">`,
@@ -725,6 +748,7 @@
         { label: "Annuler", onClick: closeQuickModal },
         {
           label: "Valider",
+          sym: "yes",
           primary: true,
           onClick: () => {
             const inp = $("qdProf");
@@ -749,12 +773,13 @@
 
   function confirmQuick(prog, ecue, classe, prof, force = false) {
     showQuickStep({
+      icon: SYM.alert, tone: "amber",
       kicker: "Confirmation",
       title: "Êtes-vous sûr ?",
       body: `<p class="qd-text"><strong>${escapeHtml(ecue.titre)}</strong><br>${escapeHtml(classe)} · Prof : ${escapeHtml(prof)}</p>`,
       actions: [
-        { label: "Non", onClick: () => askProf(prog, ecue, classe, prof) },
-        { label: "Oui, envoyer", primary: true, onClick: () => sendQuick(prog, ecue, classe, prof, force) },
+        { label: "Non", sym: "no", onClick: () => askProf(prog, ecue, classe, prof) },
+        { label: "Oui, envoyer", sym: "send", primary: true, onClick: () => sendQuick(prog, ecue, classe, prof, force) },
       ],
     });
   }
@@ -796,8 +821,9 @@
       triggerFlightTakeoff();
       renderAll();
       showQuickStep({
+        icon: SYM.checkFill, tone: "green qd-pop",
         kicker: "C'est parti",
-        title: "C'est envoyé ✓",
+        title: "C'est envoyé",
         body: `<p class="qd-text">L'évaluation de <strong>${escapeHtml(ecue.titre)}</strong> va être programmée sur Moodle.</p>`,
         actions: [{ label: "OK", primary: true, onClick: closeQuickModal }],
       });
@@ -805,16 +831,18 @@
       delete modal.dataset.busy;
       if (err.status === 409) {
         showQuickStep({
+          icon: SYM.alert, tone: "amber",
           kicker: ecue.titre,
           title: "Déjà déclaré pour cette cohorte",
           body: `<p class="qd-text">Voulez-vous l'envoyer quand même ?</p>`,
           actions: [
-            { label: "Non", onClick: closeQuickModal },
-            { label: "Oui", primary: true, onClick: () => sendQuick(prog, ecue, classe, prof, true) },
+            { label: "Non", sym: "no", onClick: closeQuickModal },
+            { label: "Oui", sym: "yes", primary: true, onClick: () => sendQuick(prog, ecue, classe, prof, true) },
           ],
         });
       } else {
         showQuickStep({
+          icon: SYM.xmark, tone: "red",
           kicker: ecue.titre,
           title: "L'envoi n'a pas abouti",
           body: `<p class="qd-text">${escapeHtml(err.message || "Erreur réseau")}. Réessayez dans un instant.</p>`,
