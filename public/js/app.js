@@ -1673,11 +1673,17 @@
     function openQr(url) {
       if (url && input) input.value = url;
       updateQr();
-      if (modal) modal.hidden = false;
+      if (modal) {
+        modal.hidden = false;
+        modal.classList.remove("hidden");
+      }
     }
 
     function closeQr() {
-      if (modal) modal.hidden = true;
+      if (modal) {
+        modal.hidden = true;
+        modal.classList.add("hidden");
+      }
     }
 
     function updateQr() {
