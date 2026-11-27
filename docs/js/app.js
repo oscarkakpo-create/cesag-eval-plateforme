@@ -1475,6 +1475,23 @@
     };
     if ($("btnLandingGoDeclare")) $("btnLandingGoDeclare").addEventListener("click", goDeclareTab);
     if ($("btnLandingBrowseCatalog")) $("btnLandingBrowseCatalog").addEventListener("click", goDeclareTab);
+
+    document.querySelectorAll(".btn-quick-niveau").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const niv = btn.dataset.quickNiveau;
+        goDeclareTab();
+        if (niv) {
+          state.activeNiveau = niv;
+          state.activeProgrammeId = "";
+          renderNiveauPills();
+          renderProgramSelect(true);
+          renderClasseSuggestions(true);
+          renderSemestrePills();
+          renderEcueChecklist();
+          renderSelectedModules();
+        }
+      });
+    });
     if ($("btnLandingDownloadCsv")) $("btnLandingDownloadCsv").addEventListener("click", downloadOfficialTemplateCsv);
     if ($("btnModalDownloadCsv")) $("btnModalDownloadCsv").addEventListener("click", downloadOfficialTemplateCsv);
     if ($("btnLandingDownloadXlsx")) $("btnLandingDownloadXlsx").addEventListener("click", downloadOfficialTemplateXlsx);

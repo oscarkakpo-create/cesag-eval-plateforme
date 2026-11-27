@@ -12,7 +12,7 @@
   <header class="topbar">
     <div class="topbar-inner">
       <div class="brand">
-        <div class="brand-crest" aria-hidden="true">C</div>
+        <img src="img/cesag-logo.png" alt="Logo CESAG" class="brand-logo">
         <div class="brand-text">
           <div class="brand-kicker">CESAG · ÉVALUATION DES ENSEIGNEMENTS 26-27</div>
           <h1 class="brand-title">PROGRAMMATION DES ÉVALUATIONS DES ENSEIGNEMENTS 26-27</h1>
@@ -64,12 +64,17 @@
     <!-- ============================================================ -->
     <section id="tab-accueil" class="tab-panel active">
       <div class="landing-hero">
-        <div class="hero-badge-pill">
-          <span>★</span> Campagne Académique 2026-2027 · CESAG Dakar
+        <div style="display:flex;align-items:center;gap:18px;margin-bottom:16px;flex-wrap:wrap;">
+          <img src="img/cesag-logo.png" alt="Logo CESAG" style="height:62px;background:#ffffff;border-radius:10px;padding:4px 10px;box-shadow:0 3px 10px rgba(0,0,0,0.15);">
+          <div>
+            <div class="hero-badge-pill">
+              <span>★</span> Campagne Académique 2026-2027 · CESAG Dakar
+            </div>
+            <h2>PROGRAMMATION DES ÉVALUATIONS DES ENSEIGNEMENTS 26-27</h2>
+          </div>
         </div>
-        <h2>PROGRAMMATION DES ÉVALUATIONS DES ENSEIGNEMENTS 26-27</h2>
         <p>
-          Chers collègues et responsables de programmes, l'équipe de planification et suivi-évaluation attend votre signal dès qu'un cours est achevé pour programmer et ouvrir immédiatement l'évaluation sur Moodle (Catégorie 372). Vous pouvez déclarer en quelques clics ou déposer directement votre fichier de suivi.
+          Chers collègues et responsables pédagogiques, cet espace est spécialement conçu pour <strong>faciliter la programmation de vos évaluations</strong> et <strong>assurer un meilleur suivi en temps réel</strong>. Chacun dispose de son propre périmètre (<strong>LICENCE · MASTER · MBA</strong>) : dès qu'un cours est achevé, signalez-le simplement ici ou déposez votre tableau pour déclencher immédiatement son ouverture aux étudiants sur Moodle.
         </p>
       </div>
 
@@ -83,11 +88,11 @@
           </div>
           <h3 class="landing-card-title">1. Formulaire express en ligne</h3>
           <p class="landing-card-desc">
-            Sélectionnez votre filière parmi les 50 programmes officiels, cochez les modules achevés et renseignez l'enseignant en 3 clics.
+            Sélectionnez votre cohorte officielle, cochez vos cours terminés et validez en quelques clics sans prise de tête.
           </p>
           <div class="landing-card-actions">
             <button id="btnLandingGoDeclare" class="btn btn-primary" type="button">
-              Remplir le formulaire express →
+              Accéder à mon formulaire →
             </button>
           </div>
         </div>
@@ -100,7 +105,7 @@
           </div>
           <h3 class="landing-card-title">2. Déposer un fichier Excel / CSV</h3>
           <p class="landing-card-desc">
-            Téléchargez notre modèle officiel préformaté, complétez vos modules terminés hors-ligne et glissez-déposez le fichier ici.
+            Téléchargez le modèle préconfiguré aux cohortes officielles Moodle, renseignez vos modules hors-ligne et déposez-le ici.
           </p>
           <div class="landing-card-actions">
             <div style="display:flex;gap:6px;">
@@ -117,19 +122,25 @@
           </div>
         </div>
 
-        <!-- Carte 3 : Explorer le catalogue complet (Option B) -->
+        <!-- Carte 3 : Accès direct par périmètre -->
         <div class="landing-card">
           <div class="landing-card-header">
-            <div class="landing-card-icon">📚</div>
-            <span class="landing-card-badge">Plaquettes officielles</span>
+            <div class="landing-card-icon">🎯</div>
+            <span class="landing-card-badge">Votre Périmètre</span>
           </div>
-          <h3 class="landing-card-title">3. Parcourir les 1 843 modules prévus</h3>
+          <h3 class="landing-card-title">3. Accès direct par périmètre</h3>
           <p class="landing-card-desc">
-            Accédez à l'inventaire officiel de tous les cours prévus en Licences, Masters et MBA et repérez immédiatement les vôtres.
+            Chacun son périmètre ! Cliquez directement sur votre niveau de formation pour ouvrir vos cohortes et déclarer vos cours :
           </p>
-          <div class="landing-card-actions">
-            <button id="btnLandingBrowseCatalog" class="btn btn-soft" type="button">
-              Consulter le catalogue de ma filière →
+          <div class="landing-card-actions" style="display:flex;gap:6px;">
+            <button class="btn btn-soft btn-sm btn-quick-niveau" data-quick-niveau="Licence" type="button" style="flex:1;font-weight:700;">
+              LICENCE
+            </button>
+            <button class="btn btn-soft btn-sm btn-quick-niveau" data-quick-niveau="Master" type="button" style="flex:1;font-weight:700;">
+              MASTER
+            </button>
+            <button class="btn btn-soft btn-sm btn-quick-niveau" data-quick-niveau="MBA" type="button" style="flex:1;font-weight:700;">
+              MBA
             </button>
           </div>
         </div>
@@ -139,28 +150,28 @@
       <div class="landing-workflow-card">
         <div class="landing-workflow-header">
           <h3>Comment se déroule la programmation de votre évaluation ?</h3>
-          <span class="badge-emerald" style="padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700;">Workflow Simplifié</span>
+          <span class="badge-emerald" style="padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700;">Facilité &amp; Suivi</span>
         </div>
         <div class="landing-steps-row">
           <div class="landing-step-item">
             <div class="landing-step-num">1</div>
             <div class="landing-step-body">
               <h4>Vous nous donnez le signal</h4>
-              <p>Dès la fin des cours d'un module, vous le déclarez en ligne ou déposez votre tableau. Vous n'avez aucune configuration Moodle à faire.</p>
+              <p>Dès la fin des cours d'un module, vous le signalez en ligne ou déposez votre tableau. Aucune manipulation technique Moodle requise.</p>
             </div>
           </div>
           <div class="landing-step-item">
             <div class="landing-step-num gold">2</div>
             <div class="landing-step-body">
               <h4>Alerte instantanée envoyée</h4>
-              <p>L'équipe de planification reçoit immédiatement une notification par e-mail (Outlook / Gmail) avec tous les détails du cours.</p>
+              <p>L'équipe de planification reçoit immédiatement une notification par e-mail (Outlook / Gmail) avec les détails du cours.</p>
             </div>
           </div>
           <div class="landing-step-item">
             <div class="landing-step-num dark">3</div>
             <div class="landing-step-body">
-              <h4>Programmation Moodle immédiate</h4>
-              <p>L'évaluation est activée sur Moodle avec la carte verte officielle CESAG. Les étudiants peuvent répondre en toute confidentialité.</p>
+              <h4>Programmation Moodle &amp; Suivi</h4>
+              <p>L'évaluation s'ouvre aux étudiants avec la carte verte officielle CESAG et le suivi est actualisé en temps réel dans le tableau de bord.</p>
             </div>
           </div>
         </div>
@@ -169,16 +180,16 @@
       <!-- BANDEAU CHIFFRES CLES -->
       <div class="landing-stats-strip">
         <div class="landing-stat-box">
-          <div class="landing-stat-val">50</div>
-          <div class="landing-stat-lbl">Programmes officiels</div>
+          <div class="landing-stat-val">3</div>
+          <div class="landing-stat-lbl">Périmètres (Licence · Master · MBA)</div>
         </div>
         <div class="landing-stat-box">
-          <div class="landing-stat-val">1 843</div>
-          <div class="landing-stat-lbl">Modules (ECUEs) prévus</div>
+          <div class="landing-stat-val">46</div>
+          <div class="landing-stat-lbl">Cohortes officielles Catégorie 372</div>
         </div>
         <div class="landing-stat-box">
-          <div class="landing-stat-val">1 665</div>
-          <div class="landing-stat-lbl">Activités Moodle prêtes</div>
+          <div class="landing-stat-val">Temps réel</div>
+          <div class="landing-stat-lbl">Suivi &amp; Programmation</div>
         </div>
         <div class="landing-stat-box">
           <div class="landing-stat-val">100 %</div>
