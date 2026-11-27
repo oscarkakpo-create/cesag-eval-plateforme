@@ -13,7 +13,7 @@
 
 const SHEET_DECL = "Declarations";
 const SHEET_KPI = "Synthese_KPI";
-const DEFAULT_NOTIFY_EMAILS = "oscarkakpo@gmail.com";
+const DEFAULT_NOTIFY_EMAILS = "oscar.kakpo@cesag.edu.sn, oscarkakpo@gmail.com";
 const HEADERS = [
   "id", "statut", "niveau", "programme", "semestre", "classe",
   "code_ecue", "module", "intervenant", "email_intervenant",
