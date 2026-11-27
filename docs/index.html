@@ -20,6 +20,10 @@
       </div>
 
       <div class="topbar-meta">
+        <button id="btnToggleCockpit" class="btn-cockpit-toggle" type="button" title="Activer le Mode Cockpit & Tour de Contrôle (Passion Aviation)">
+          <span class="cockpit-radar-dot"></span>
+          <span>✈️ Cockpit</span>
+        </button>
         <div id="weatherBadge" class="weather-pill" title="Météo en direct Campus CESAG Dakar (API Open-Meteo)" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.14);color:#ffffff;padding:5px 12px;border-radius:999px;font-size:12px;font-weight:700;border:1px solid rgba(255,255,255,0.25);">
           <span id="weatherIcon">☀️</span>
           <span id="weatherText">Dakar 28°C</span>
@@ -698,6 +702,9 @@
       </div>
     </div>
   </div>
+
+  <!-- Animation Décollage Avion (Passion Aviation) -->
+  <div id="flightTakeoffAnim" class="flight-takeoff-anim">✈️💨</div>
 
   <script src="js/config.js"></script>
   <script src="data/catalog.js"></script>

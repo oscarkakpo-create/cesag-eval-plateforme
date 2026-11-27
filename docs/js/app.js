@@ -668,7 +668,8 @@
     const currentClasse = $("classeInput").value.trim();
 
     $("selectedCountBadge").textContent = String(count);
-    $("btnSubmitDeclarations").textContent = `🚀 Envoyer le signal pour programmation (${count} module${count > 1 ? "s" : ""})`;
+    const isCockpit = document.body.classList.contains("mode-cockpit");
+    $("btnSubmitDeclarations").textContent = isCockpit ? `🛫 Autorisation de décollage · Transmettre signal (${count} module${count > 1 ? "s" : ""})` : `🚀 Envoyer le signal pour programmation (${count} module${count > 1 ? "s" : ""})`;
     $("btnSubmitDeclarations").disabled = count === 0;
 
     if (!count) {
@@ -801,7 +802,12 @@
     const force = $("forceDuplicateCheck").checked;
     try {
       const res = await apiCreateDeclarations(payloadItems, force);
-      showToast(`${res.added || payloadItems.length} module(s) enregistré(s) dans « À programmer » !`);
+      triggerFlightTakeoff();
+      const isCockpit = document.body.classList.contains("mode-cockpit");
+      const msg = isCockpit
+        ? `🛫 Vol autorisé 5/5 : ${res.added || payloadItems.length} module(s) transmis à la Tour de Contrôle Oscar Kakpo !`
+        : `${res.added || payloadItems.length} module(s) enregistré(s) dans « À programmer » !`;
+      showToast(msg);
       state.selectedEcues.clear();
       $("forceDuplicateCheck").checked = false;
       renderAll();
@@ -1642,11 +1648,15 @@
           else if (code >= 51 && code <= 67) ic = "🌧️";
           else if (code >= 80) ic = "🌦️";
           if (icon) icon.textContent = ic;
-          text.textContent = `Dakar ${temp}°C`;
+          text.setAttribute("data-temp", String(temp));
+          const isCockpit = document.body.classList.contains("mode-cockpit");
+          text.textContent = isCockpit ? `GOBD / DSS · ${temp}°C · CAVOK` : `Dakar ${temp}°C`;
         }
       })
       .catch(() => {
-        text.textContent = "Dakar 28°C";
+        text.setAttribute("data-temp", "28");
+        const isCockpit = document.body.classList.contains("mode-cockpit");
+        text.textContent = isCockpit ? "GOBD / DSS · 28°C · CAVOK" : "Dakar 28°C";
       });
   }
 
@@ -1699,6 +1709,89 @@
     window.openQrCodeModal = openQr;
   }
 
+
+  function playCabinChime() {
+    try {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) return;
+      const ctx = new AudioCtx();
+      if (ctx.state === "suspended") ctx.resume();
+      const now = ctx.currentTime;
+      
+      const osc1 = ctx.createOscillator();
+      const gain1 = ctx.createGain();
+      osc1.type = "sine";
+      osc1.frequency.setValueAtTime(587.33, now);
+      gain1.gain.setValueAtTime(0.16, now);
+      gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.42);
+      osc1.connect(gain1);
+      gain1.connect(ctx.destination);
+      osc1.start(now);
+      osc1.stop(now + 0.45);
+
+      const osc2 = ctx.createOscillator();
+      const gain2 = ctx.createGain();
+      osc2.type = "sine";
+      osc2.frequency.setValueAtTime(440.0, now + 0.20);
+      gain2.gain.setValueAtTime(0.14, now + 0.20);
+      gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.72);
+      osc2.connect(gain2);
+      gain2.connect(ctx.destination);
+      osc2.start(now + 0.20);
+      osc2.stop(now + 0.75);
+    } catch (_e) {}
+  }
+
+  function triggerFlightTakeoff() {
+    playCabinChime();
+    const plane = $("flightTakeoffAnim");
+    if (plane) {
+      plane.classList.remove("flying");
+      void plane.offsetWidth;
+      plane.classList.add("flying");
+      setTimeout(() => plane.classList.remove("flying"), 2500);
+    }
+  }
+
+  function updateWeatherAviation(cockpitActive) {
+    const text = $("weatherText");
+    if (!text) return;
+    const rawTemp = text.getAttribute("data-temp") || "28";
+    if (cockpitActive) {
+      text.textContent = `GOBD / DSS · ${rawTemp}°C · CAVOK`;
+    } else {
+      text.textContent = `Dakar ${rawTemp}°C`;
+    }
+  }
+
+  function initCockpitMode() {
+    const btn = $("btnToggleCockpit");
+    if (!btn) return;
+    const isCockpit = localStorage.getItem("CESAG_COCKPIT_MODE") === "true";
+    if (isCockpit) {
+      document.body.classList.add("mode-cockpit");
+      btn.classList.add("active");
+      const label = btn.querySelector("span:last-child");
+      if (label) label.textContent = "✈️ Cockpit ON";
+    }
+
+    btn.addEventListener("click", () => {
+      const active = document.body.classList.toggle("mode-cockpit");
+      btn.classList.toggle("active", active);
+      const label = btn.querySelector("span:last-child");
+      if (label) label.textContent = active ? "✈️ Cockpit ON" : "✈️ Cockpit";
+      localStorage.setItem("CESAG_COCKPIT_MODE", active ? "true" : "false");
+      triggerFlightTakeoff();
+      updateWeatherAviation(active);
+      if (active) {
+        showToast("🛫 Tour de Contrôle CESAG : Mode Cockpit activé · Contact radio 5/5 avec Oscar Kakpo !");
+      } else {
+        showToast("Retour au mode standard.");
+      }
+      renderSelectedModules();
+    });
+  }
+
   async function init() {
     if ($("defaultDateOuverture")) $("defaultDateOuverture").value = todayIso();
     if ($("defaultDateCloture")) {
@@ -1716,6 +1809,7 @@
 
     initDakarWeather();
     initQrCodeModal();
+    initCockpitMode();
     await detectBackend();
     renderNiveauPills();
     renderProgramSelect(true);

@@ -1385,3 +1385,89 @@ code {
   color: var(--text-muted);
   margin-top: 2px;
 }
+
+
+/* ============================================================== */
+/* AVIATION & COCKPIT SPECIAL THEME (PASSION AVIATION)            */
+/* ============================================================== */
+.btn-cockpit-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+.btn-cockpit-toggle:hover {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: #F5D58B;
+  transform: translateY(-1px);
+}
+.btn-cockpit-toggle.active {
+  background: #C9962A;
+  color: #0B4D2E;
+  border-color: #F5D58B;
+  box-shadow: 0 0 12px rgba(201, 150, 42, 0.45);
+}
+.btn-cockpit-toggle .cockpit-radar-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10B981;
+  box-shadow: 0 0 6px #10B981;
+  animation: radarBlink 1.4s infinite;
+}
+@keyframes radarBlink {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.3; transform: scale(0.8); }
+}
+
+.flight-takeoff-anim {
+  position: fixed;
+  bottom: 25%;
+  left: -120px;
+  font-size: 42px;
+  z-index: 99999;
+  pointer-events: none;
+  filter: drop-shadow(0 8px 16px rgba(0,0,0,0.35));
+  opacity: 0;
+}
+.flight-takeoff-anim.flying {
+  animation: jetFlightAcross 2.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+@keyframes jetFlightAcross {
+  0% {
+    left: -120px;
+    bottom: 25%;
+    transform: rotate(18deg) scale(0.85);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  50% {
+    transform: rotate(10deg) scale(1.2);
+  }
+  100% {
+    left: 110%;
+    bottom: 70%;
+    transform: rotate(2deg) scale(0.95);
+    opacity: 0;
+  }
+}
+
+body.mode-cockpit .brand-kicker::after {
+  content: ' · 📡 TOUR DE CONTRÔLE ATC';
+  font-weight: 800;
+  color: #10B981;
+}
+body.mode-cockpit .landing-hero {
+  border-bottom: 3px solid #C9962A;
+}
