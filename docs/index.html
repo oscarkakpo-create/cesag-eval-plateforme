@@ -104,7 +104,7 @@
           </div>
           <h3 class="landing-card-title">1. Formulaire express en ligne</h3>
           <p class="landing-card-desc">
-            Sélectionnez votre niveau (Licence, Master, MBA), choisissez votre filière et cochez vos cours terminés en quelques clics.
+            Sélectionnez votre niveau (Master, MBA), choisissez votre filière et cochez vos cours terminés en quelques clics.
           </p>
           <div class="landing-card-actions">
             <button id="btnLandingGoDeclare" class="btn btn-primary btn-lg" type="button" style="width:100%;font-size:14.5px;padding:12px 18px;">
@@ -148,20 +148,15 @@
           <p class="landing-card-desc">
             Chacun son périmètre ! Cliquez directement sur votre niveau pour afficher les filières correspondantes :
           </p>
-          <div class="landing-card-actions" style="display:grid;grid-template-columns:repeat(3, 1fr);gap:8px;">
-            <button class="btn-quick-niveau" data-quick-niveau="Licence" type="button">
-              <span style="font-size:22px;margin-bottom:2px;">🎓</span>
-              <span style="font-weight:800;font-size:13px;">LICENCE</span>
-              <span class="sub">L1 · L2 · L3</span>
-            </button>
+          <div class="landing-card-actions" style="display:grid;grid-template-columns:repeat(2, 1fr);gap:10px;">
             <button class="btn-quick-niveau" data-quick-niveau="Master" type="button">
-              <span style="font-size:22px;margin-bottom:2px;">🎓</span>
-              <span style="font-weight:800;font-size:13px;">MASTER</span>
+              <span style="font-size:24px;margin-bottom:2px;">🎓</span>
+              <span style="font-weight:800;font-size:14px;">MASTER</span>
               <span class="sub">Jour &amp; Soir</span>
             </button>
             <button class="btn-quick-niveau" data-quick-niveau="MBA" type="button">
-              <span style="font-size:22px;margin-bottom:2px;">🎓</span>
-              <span style="font-weight:800;font-size:13px;">MBA</span>
+              <span style="font-size:24px;margin-bottom:2px;">🎓</span>
+              <span style="font-weight:800;font-size:14px;">MBA</span>
               <span class="sub">Exec &amp; Online</span>
             </button>
           </div>
@@ -202,8 +197,8 @@
       <!-- BANDEAU CHIFFRES CLES -->
       <div class="landing-stats-strip">
         <div class="landing-stat-box">
-          <div class="landing-stat-val">3</div>
-          <div class="landing-stat-lbl">Périmètres (Licence · Master · MBA)</div>
+          <div class="landing-stat-val">2</div>
+          <div class="landing-stat-lbl">Périmètres actifs (Master · MBA)</div>
         </div>
         <div class="landing-stat-box">
           <div class="landing-stat-val">46</div>
@@ -394,12 +389,12 @@
           <div id="kpiDoneSub" class="kpi-sub">0 répondants enregistrés</div>
         </div>
         <div class="kpi-card">
-          <div class="kpi-label">Taux de programmation</div>
+          <div class="kpi-label">Progression annuelle (Cat. 372)</div>
           <div id="kpiRate" class="kpi-value">0%</div>
           <div class="progress-track">
             <div id="kpiRateBar" class="progress-fill" style="width: 0%;"></div>
           </div>
-          <div id="kpiRealRateSub" class="kpi-sub">Réalisation : 0%</div>
+          <div id="kpiRealRateSub" class="kpi-sub">0 / 1 665 prévues pour l'année</div>
         </div>
       </div>
 
@@ -418,7 +413,6 @@
           </select>
           <select id="filterNiveau" class="select select-sm">
             <option value="">Tous les niveaux</option>
-            <option value="Licence">Licence</option>
             <option value="Master">Master</option>
             <option value="MBA">MBA</option>
           </select>
@@ -687,7 +681,7 @@
             <div>
               <strong style="color:#0B4D2E;font-size:14px;">Sélectionnez votre périmètre</strong>
               <p style="margin:3px 0 0;font-size:13px;color:var(--text-secondary);line-height:1.45;">
-                Cliquez sur <strong>Licence</strong>, <strong>Master</strong> ou <strong>MBA</strong> sur la page d'accueil, puis choisissez votre filière dans la liste déroulante.
+                Cliquez sur <strong>Master</strong> ou <strong>MBA</strong> sur la page d'accueil, puis choisissez votre filière dans la liste déroulante.
               </p>
             </div>
           </div>

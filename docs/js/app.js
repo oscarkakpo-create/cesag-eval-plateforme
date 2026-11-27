@@ -97,12 +97,14 @@
     const annul = items.filter((x) => x.statut === "Annulee").length;
     const progPlus = programmee + realisee;
     const totalActives = active.length;
-    const taux_programmation = totalActives ? Math.round((progPlus / totalActives) * 1000) / 10 : 0;
-    const taux_realisation = totalActives ? Math.round((realisee / totalActives) * 1000) / 10 : 0;
+    // Objectif annuel global de programmation (1 665 évaluations prévues dans la maquette Catégorie 372)
+    const TOTAL_ANNUEL_PREVU = 1665;
+    const taux_programmation = Math.round((progPlus / TOTAL_ANNUEL_PREVU) * 1000) / 10;
+    const taux_realisation = progPlus ? Math.round((realisee / progPlus) * 1000) / 10 : 0;
     const total_repondants = items.reduce((acc, x) => acc + (Number(x.nb_repondants) || 0), 0);
 
     const par_niveau = {};
-    ["Licence", "Master", "MBA"].forEach((niv) => {
+    ["Master", "MBA"].forEach((niv) => {
       const sub = items.filter((x) => x.niveau === niv);
       par_niveau[niv] = {
         total: sub.length,
@@ -114,6 +116,7 @@
 
     return {
       total: items.length,
+      total_annuel: TOTAL_ANNUEL_PREVU,
       total_actives: totalActives,
       a_programmer,
       programmee,
@@ -365,7 +368,7 @@
 
   function renderNiveauPills() {
     const container = $("niveauPills");
-    const levels = ["Licence", "Master", "MBA"];
+    const levels = ["Master", "MBA"];
     container.innerHTML = levels
       .map((niv) => {
         const info = state.catalog.summary?.by_niveau?.[niv] || {};
@@ -533,7 +536,7 @@
           <div style="font-size:36px;margin-bottom:10px;">👆</div>
           <p style="font-size:15px;font-weight:700;color:var(--cesag-green-dark);margin-bottom:6px;">Choisissez votre filière dans la liste ci-dessus</p>
           <p class="muted-small" style="max-width:420px;margin:0 auto;line-height:1.5;">
-            Sélectionnez votre programme (ex : Licence en Gestion, MACG, MBA…) pour afficher directement ses cohortes officielles Moodle et ses modules à cocher.
+            Sélectionnez votre programme (ex : MACG, MCGF, MBF, MBA…) pour afficher directement ses cohortes officielles Moodle et ses modules à cocher.
           </p>
         </div>
       `;
@@ -826,20 +829,21 @@
   function renderDashboard() {
     const stats = state.stats || computeStats(state.declarations);
     $("kpiTotal").textContent = String(stats.total);
+    if ($("kpiTotalSub")) $("kpiTotalSub").textContent = "35 modules actifs (Licence exclue)";
     $("kpiPending").textContent = String(stats.a_programmer);
     $("kpiProgrammed").textContent = String(stats.programmee);
     $("kpiDone").textContent = String(stats.realisee);
     $("kpiDoneSub").textContent = `${stats.total_repondants} répondants enregistrés`;
     $("kpiRate").textContent = `${stats.taux_programmation}%`;
-    $("kpiRateBar").style.width = `${Math.min(100, stats.taux_programmation)}%`;
-    $("kpiRealRateSub").textContent = `Réalisation : ${stats.taux_realisation}% (${stats.programmee_ou_plus}/${stats.total_actives} actives)`;
+    $("kpiRateBar").style.width = `${Math.min(100, Math.max(3, stats.taux_programmation))}%`;
+    $("kpiRealRateSub").textContent = `${stats.programmee_ou_plus} / ${stats.total_annuel} prévues (${stats.taux_programmation}%) · ${stats.realisee} clôturées (${stats.taux_realisation}%)`;
 
     $("badgeTotalCount").textContent = String(stats.total);
     $("badgePendingCount").textContent = String(stats.a_programmer);
 
-    // Synthèse par Niveau
+    // Synthèse par Niveau (Master & MBA)
     const nivGrid = $("niveauSummaryGrid");
-    nivGrid.innerHTML = ["Licence", "Master", "MBA"]
+    nivGrid.innerHTML = ["Master", "MBA"]
       .map((niv) => {
         const d = stats.par_niveau?.[niv] || { total: 0, a_programmer: 0, programmee: 0, realisee: 0 };
         const pct = d.total ? Math.round(((d.programmee + d.realisee) / d.total) * 100) : 0;
