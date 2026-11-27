@@ -24,6 +24,9 @@ DEFAULT_DECLARATIONS = ROOT_DIR / "data" / "declarations.json"
 DEFAULT_CATALOG = ROOT_DIR / "public" / "data" / "catalog.json"
 MOODLE_BASE_URL = "https://formations.cesagonline.com"
 MOODLE_CATEGORY_ID = 372
+# Durée par défaut d'un feedback quand aucune date de clôture n'est demandée.
+# Passé cette date, l'évaluation s'affiche « Clôturé » sur la plateforme.
+DUREE_FEEDBACK_JOURS = 14
 
 
 def normalize_text(value: str) -> str:
@@ -200,6 +203,8 @@ async def execute_playwright(
                 "lien_moodle": f"{MOODLE_BASE_URL}/mod/feedback/view.php?id={cmid}",
                 "statut": "Programmee",
                 "date_ouverture": today,
+                "date_cloture": (str(item.get("date_cloture") or "")[:10]
+                                 or (datetime.date.today() + datetime.timedelta(days=DUREE_FEEDBACK_JOURS)).isoformat()),
                 "observations": f"Configuré & rendu visible sur Moodle ({item['intervenant']})",
             }
             results.append(result)
@@ -225,6 +230,7 @@ async def execute_playwright(
                 d["lien_moodle"] = r["lien_moodle"]
                 d["statut"] = "Programmee"
                 d["date_ouverture"] = r["date_ouverture"]
+                d["date_cloture"] = r["date_cloture"]
                 d["observations"] = r["observations"]
                 d["updated_at"] = now_str
         with open(DEFAULT_DECLARATIONS, "w", encoding="utf-8") as f:

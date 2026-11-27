@@ -717,3 +717,10 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--cesag-green); 
 .ecue-quick.is-locked:hover .ecue-quick-cta.lock-A_programmer { color: #8A5A00 !important; background: #FFF4DE !important; border-color: #F1DCAE !important; }
 .ecue-quick.is-locked:has(.lock-Realisee), .ecue-quick.is-locked:has(.lock-Realisee):hover { background: #F6FBF8; }
 .ecue-quick.is-locked:has(.lock-A_programmer), .ecue-quick.is-locked:has(.lock-A_programmer):hover { background: #FFFBF2; }
+
+/* Légende des statuts au-dessus de la liste des modules */
+.ecue-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin: 0 0 10px; font-size: 12.5px; color: var(--text-muted); }
+.ecue-legend .lg { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: 11.5px; font-weight: 700; border: 1px solid transparent; }
+.ecue-legend .lg-todo { color: var(--cesag-green); background: #fff; border-color: var(--cesag-green-line); }
+.ecue-legend .lg-open { color: #B42318; background: #FDECEC; border-color: #F4C7C3; }
+.ecue-legend .lg-closed { color: #0F6B3A; background: #EAF7EF; border-color: #BFE3CC; }

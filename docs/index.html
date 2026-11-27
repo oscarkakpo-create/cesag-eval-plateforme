@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CESAG ONLINE — PROGRAMMATION DES ÉVALUATIONS DES ENSEIGNEMENTS 26-27</title>
-  <link rel="stylesheet" href="css/style.css?v=20261127t">
-  <link rel="stylesheet" href="css/premium.css?v=20261127t">
+  <link rel="stylesheet" href="css/style.css?v=20261127u">
+  <link rel="stylesheet" href="css/premium.css?v=20261127u">
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
 <body>
@@ -311,13 +311,18 @@
 
           <div class="form-group">
             <div class="label-between">
-              <label class="form-label" for="moduleSearchInput">Cliquez sur un module terminé</label>
+              <label class="form-label" for="moduleSearchInput">Cliquez sur « Terminé » quand le cours est fini</label>
               <div class="inline-actions hidden">
                 <button id="btnSelectVisibleEcues" class="link-btn" type="button">Tout cocher</button>
                 <span class="sep">·</span>
                 <button id="btnClearSelectedEcues" class="link-btn" type="button">Tout décocher</button>
               </div>
             </div>
+            <p class="ecue-legend">
+              <span class="lg lg-todo">Terminé</span> à déclarer
+              <span class="lg lg-open">Feedback ouvert</span> évaluation en cours
+              <span class="lg lg-closed">Clôturé</span> date de clôture passée
+            </p>
             <input id="moduleSearchInput" class="input input-sm" type="search" placeholder="Rechercher un ECUE par code ou intitulé…">
             <div id="ecueChecklist" class="ecue-checklist"></div>
           </div>
@@ -799,10 +804,10 @@
   <!-- Animation Décollage Avion (Passion Aviation) -->
   <div id="flightTakeoffAnim" class="flight-takeoff-anim">✈️💨</div>
 
-  <script src="js/config.js?v=20261127t"></script>
-  <script src="data/catalog.js?v=20261127t"></script>
-  <script src="js/app.js?v=20261127t"></script>
-  <script src="js/board.js?v=20261127t"></script>
-  <script src="js/icons.js?v=20261127t"></script>
+  <script src="js/config.js?v=20261127u"></script>
+  <script src="data/catalog.js?v=20261127u"></script>
+  <script src="js/app.js?v=20261127u"></script>
+  <script src="js/board.js?v=20261127u"></script>
+  <script src="js/icons.js?v=20261127u"></script>
 </body>
 </html>

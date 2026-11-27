@@ -1,3 +1,4 @@
+import datetime
 import json
 
 moodle_stats = [
@@ -44,14 +45,19 @@ archive_path = r"C:\Users\Digi Face\.gemini\antigravity\scratch\cesag-eval-plate
 with open(archive_path, "r", encoding="utf-8") as f:
     items = json.load(f)
 
+# Règle de clôture : « Clôturé » (Realisee) seulement quand la date de clôture du
+# feedback est passée. Le nombre de réponses est une simple information : un
+# feedback qui a déjà des réponses peut rester ouvert.
+today = datetime.date.today().isoformat()
+
 for item in items:
     cmid = str(item.get("cmid", ""))
     if cmid in reps_map:
-        count = reps_map[cmid]
-        item["nb_repondants"] = count
-        if count > 0:
+        item["nb_repondants"] = reps_map[cmid]
+        close = str(item.get("date_cloture") or "")[:10]
+        if close and close < today:
             item["statut"] = "Realisee"
-        else:
+        elif item.get("statut") in ("Programmee", "Realisee"):
             item["statut"] = "Programmee"
 
 total_reps = sum(x.get("nb_repondants", 0) for x in items)

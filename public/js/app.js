@@ -135,6 +135,22 @@
   /* ------------------------------------------------------------------ */
   /* Storage & API Abstraction (Local Server / GAS Cloud / Static LS)   */
   /* ------------------------------------------------------------------ */
+  /* Règle de clôture : une évaluation programmée est « Clôturé » quand sa date
+     de clôture est passée, sinon « Feedback ouvert ». Sans date de clôture,
+     le statut enregistré dans la Google Sheet est conservé. */
+  function applyClosingRule(list) {
+    const today = todayIso();
+    return (list || []).map((d) => {
+      if (!d || (d.statut !== "Programmee" && d.statut !== "Realisee")) return d;
+      const close = String(d.date_cloture || "").slice(0, 10);
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(close)) return d;
+      // Date passée → clôturé ; date du jour → clôturé seulement si clôturé à la main
+      const closed = close < today || (close === today && d.statut === "Realisee");
+      const statut = closed ? "Realisee" : "Programmee";
+      return statut === d.statut ? d : Object.assign({}, d, { statut });
+    });
+  }
+
   async function detectBackend() {
     if (state.gasUrl) {
       try {
@@ -142,7 +158,7 @@
         if (res.ok) {
           const data = await res.json();
           state.mode = "cloud";
-          state.declarations = Array.isArray(data.declarations) ? data.declarations : [];
+          state.declarations = applyClosingRule(Array.isArray(data.declarations) ? data.declarations : []);
           updateStorageBadge();
           return;
         }
@@ -165,7 +181,7 @@
 
     state.mode = "static";
     const saved = localStorage.getItem(STORAGE_KEY_DECL);
-    state.declarations = saved ? JSON.parse(saved) : [];
+    state.declarations = applyClosingRule(saved ? JSON.parse(saved) : []);
     updateStorageBadge();
   }
 
@@ -180,13 +196,13 @@
       }
       if (declRes.ok) {
         const payload = await declRes.json();
-        state.declarations = payload.declarations || [];
+        state.declarations = applyClosingRule(payload.declarations || []);
         state.stats = payload.stats || computeStats(state.declarations);
       }
     } else if (state.mode === "cloud") {
       const res = await fetch(`${state.gasUrl}${state.gasUrl.includes("?") ? "&" : "?"}action=list`);
       const payload = await res.json();
-      state.declarations = payload.declarations || [];
+      state.declarations = applyClosingRule(payload.declarations || []);
       state.stats = computeStats(state.declarations);
     } else {
       localStorage.setItem(STORAGE_KEY_DECL, JSON.stringify(state.declarations));
