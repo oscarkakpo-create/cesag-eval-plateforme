@@ -657,7 +657,9 @@
     yes: `${SVG_OPEN}<path d="m5.5 12.5 4.2 4.2 8.8-9.4" stroke-width="2.2"/></svg>`,
     no: `${SVG_OPEN}<path d="m7 7 10 10M17 7 7 17" stroke-width="2.2"/></svg>`,
     send: `${SVG_OPEN}<path d="M21 3 10.5 13.5"/><path d="m21 3-6.5 18-4-7.5L3 9.5z"/></svg>`,
+    bell: `${SVG_OPEN}<path d="M6 9.5a6 6 0 0 1 12 0c0 5.5 2.2 7 2.2 7H3.8S6 15 6 9.5"/><path d="M10.2 19.5a2 2 0 0 0 3.6 0"/></svg>`,
   };
+  const NOTIF_TARGET = "le Chargé de la Planification et du Suivi Évaluation";
 
   function ensureQuickModal() {
     let modal = $("quickDeclareModal");
@@ -776,7 +778,8 @@
       icon: SYM.alert, tone: "amber",
       kicker: "Confirmation",
       title: "Êtes-vous sûr ?",
-      body: `<p class="qd-text"><strong>${escapeHtml(ecue.titre)}</strong><br>${escapeHtml(classe)} · Prof : ${escapeHtml(prof)}</p>`,
+      body: `<p class="qd-text"><strong>${escapeHtml(ecue.titre)}</strong><br>${escapeHtml(classe)} · Prof : ${escapeHtml(prof)}</p>
+        <p class="qd-notice">${SYM.bell}<span>En confirmant, ${NOTIF_TARGET} reçoit immédiatement une notification.</span></p>`,
       actions: [
         { label: "Non", sym: "no", onClick: () => askProf(prog, ecue, classe, prof) },
         { label: "Oui, envoyer", sym: "send", primary: true, onClick: () => sendQuick(prog, ecue, classe, prof, force) },
@@ -824,7 +827,8 @@
         icon: SYM.checkFill, tone: "green qd-pop",
         kicker: "C'est parti",
         title: "C'est envoyé",
-        body: `<p class="qd-text">L'évaluation de <strong>${escapeHtml(ecue.titre)}</strong> va être programmée sur Moodle.</p>`,
+        body: `<p class="qd-text">L'évaluation de <strong>${escapeHtml(ecue.titre)}</strong> va être programmée sur Moodle.</p>
+        <p class="qd-notice is-sent">${SYM.bell}<span>Notification envoyée au Chargé de la Planification et du Suivi Évaluation.</span></p>`,
         actions: [{ label: "OK", primary: true, onClick: closeQuickModal }],
       });
     } catch (err) {

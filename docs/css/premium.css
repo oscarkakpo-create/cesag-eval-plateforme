@@ -690,3 +690,12 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--cesag-green); 
 .qd-actions .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
 .qd-actions .btn .sym { width: 18px; height: 18px; }
 @media (prefers-reduced-motion: reduce) { .qd-icon.qd-pop .sym { animation: none; } }
+
+/* Encadré « notification » dans les fenêtres */
+.qd-notice {
+  display: flex; align-items: flex-start; gap: 10px;
+  margin: 12px 0 0; padding: 10px 12px; border-radius: 10px;
+  background: #EDF3FA; color: #1E4F8A; font-size: 13.5px; line-height: 1.45;
+}
+.qd-notice .sym { width: 20px; height: 20px; margin-top: 1px; }
+.qd-notice.is-sent { background: #EAF7EF; color: #0F6B3A; }
