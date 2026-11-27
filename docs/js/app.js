@@ -22,7 +22,7 @@
     catalog: window.CESAG_CATALOG || { programs: [], moodle_courses: [], intervenants_connus: [], classes_connues: [] },
     declarations: [],
     stats: null,
-    activeNiveau: "Master",
+    activeNiveau: "Licence",
     activeProgrammeId: "",
     activeSemestre: "ALL",
     selectedEcues: new Map(), // code -> { code, titre, semestre, ue_code, intervenant, email_intervenant, date_fin_module, observations }
@@ -368,17 +368,31 @@
 
   function renderNiveauPills() {
     const container = $("niveauPills");
-    const levels = ["Master", "MBA"];
+    const dirSel = $("directionFilterSelect");
+    const activeDir = dirSel ? dirSel.value : (state.activeDirection || "ALL");
+
+    let levels = ["Licence", "Master", "MBA"];
+    if (activeDir === "DPGELM") {
+      levels = ["Licence", "Master"];
+    } else if (activeDir === "DPECN") {
+      levels = ["MBA"];
+    }
+
+    if (!levels.includes(state.activeNiveau)) {
+      state.activeNiveau = levels[0];
+    }
+
     container.innerHTML = levels
       .map((niv) => {
         const info = state.catalog.summary?.by_niveau?.[niv] || {};
         const countProg = info.programmes || (state.catalog.programs || []).filter((p) => p.niveau === niv).length;
         const countEcue = info.ecues || 0;
         const active = state.activeNiveau === niv ? "active" : "";
+        const icon = niv === "Licence" ? "📘" : (niv === "Master" ? "🎓" : "💼");
         return `
           <button class="pill-btn ${active}" type="button" data-niveau="${niv}">
-            <span>${niv}</span>
-            <span class="pill-sub">${countProg} prog · ${countEcue} ECUEs</span>
+            <span>${icon} ${niv}</span>
+            <span class="pill-sub">${countProg} filières · ${countEcue} ECUEs</span>
           </button>
         `;
       })
@@ -1531,6 +1545,37 @@
     };
     if ($("btnLandingGoDeclare")) $("btnLandingGoDeclare").addEventListener("click", goDeclareTab);
     if ($("btnLandingBrowseCatalog")) $("btnLandingBrowseCatalog").addEventListener("click", goDeclareTab);
+
+    // Filter Direction (DPGELM vs DPECN)
+    const dirFilterEl = $("directionFilterSelect");
+    if (dirFilterEl) {
+      dirFilterEl.addEventListener("change", () => {
+        state.activeDirection = dirFilterEl.value;
+        if (state.activeDirection === "DPGELM") {
+          state.activeNiveau = "Licence";
+        } else if (state.activeDirection === "DPECN") {
+          state.activeNiveau = "MBA";
+        }
+        state.activeProgrammeId = "";
+        state.activeSemestre = "ALL";
+        renderNiveauPills();
+        renderProgramSelect(true);
+        renderClasseSuggestions(true);
+        renderSemestrePills();
+        renderEcueChecklist();
+      });
+    }
+
+    document.querySelectorAll(".btn-quick-direction").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const dir = btn.dataset.direction;
+        goDeclareTab();
+        if (dirFilterEl) {
+          dirFilterEl.value = dir;
+          dirFilterEl.dispatchEvent(new Event("change"));
+        }
+      });
+    });
 
     document.querySelectorAll(".btn-quick-niveau").forEach((btn) => {
       btn.addEventListener("click", () => {

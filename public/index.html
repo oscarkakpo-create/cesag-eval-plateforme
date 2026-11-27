@@ -141,21 +141,34 @@
         <!-- Carte 3 : Accès direct par périmètre -->
         <div class="landing-card">
           <div class="landing-card-header">
-            <div class="landing-card-icon">🎯</div>
-            <span class="landing-card-badge">Votre Périmètre</span>
+            <div class="landing-card-icon">🏛️</div>
+            <span class="landing-card-badge">Par Direction &amp; Niveau</span>
           </div>
-          <h3 class="landing-card-title">3. Accès direct par périmètre</h3>
+          <h3 class="landing-card-title">3. Accès direct par Direction &amp; Niveau</h3>
           <p class="landing-card-desc">
-            Chacun son périmètre ! Cliquez directement sur votre niveau pour afficher les filières correspondantes :
+            Cliquez sur votre direction académique ou directement sur votre cycle de formation :
           </p>
-          <div class="landing-card-actions" style="display:grid;grid-template-columns:repeat(2, 1fr);gap:10px;">
+          <div style="display:flex;gap:8px;margin-bottom:10px;">
+            <button class="btn btn-soft btn-sm btn-quick-direction" data-direction="DPGELM" type="button" style="flex:1;font-weight:700;padding:8px 6px;font-size:11.5px;">
+              🏛️ DPGELM (Licences &amp; Masters)
+            </button>
+            <button class="btn btn-soft btn-sm btn-quick-direction" data-direction="DPECN" type="button" style="flex:1;font-weight:700;padding:8px 6px;font-size:11.5px;">
+              🏛️ DPECN (MBA &amp; Exec)
+            </button>
+          </div>
+          <div class="landing-card-actions" style="display:grid;grid-template-columns:repeat(3, 1fr);gap:10px;">
+            <button class="btn-quick-niveau" data-quick-niveau="Licence" type="button">
+              <span style="font-size:24px;margin-bottom:2px;">📘</span>
+              <span style="font-weight:800;font-size:14px;">LICENCE</span>
+              <span class="sub">LG, LCCA, LTCF…</span>
+            </button>
             <button class="btn-quick-niveau" data-quick-niveau="Master" type="button">
               <span style="font-size:24px;margin-bottom:2px;">🎓</span>
               <span style="font-weight:800;font-size:14px;">MASTER</span>
               <span class="sub">Jour &amp; Soir</span>
             </button>
             <button class="btn-quick-niveau" data-quick-niveau="MBA" type="button">
-              <span style="font-size:24px;margin-bottom:2px;">🎓</span>
+              <span style="font-size:24px;margin-bottom:2px;">💼</span>
               <span style="font-weight:800;font-size:14px;">MBA</span>
               <span class="sub">Exec &amp; Online</span>
             </button>
@@ -197,8 +210,8 @@
       <!-- BANDEAU CHIFFRES CLES -->
       <div class="landing-stats-strip">
         <div class="landing-stat-box">
-          <div class="landing-stat-val">2</div>
-          <div class="landing-stat-lbl">Périmètres actifs (Master · MBA)</div>
+          <div class="landing-stat-val">3</div>
+          <div class="landing-stat-lbl">Périmètres actifs (Licence · Master · MBA)</div>
         </div>
         <div class="landing-stat-box">
           <div class="landing-stat-val">46</div>
@@ -235,6 +248,15 @@
           <div class="card-header">
             <span class="step-pill">Étape 1</span>
             <h3>Programme, classe et modules (ECUEs)</h3>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="directionFilterSelect">🏛️ Direction pédagogique (Organigramme CESAG)</label>
+            <select id="directionFilterSelect" class="select" style="font-weight:700;">
+              <option value="ALL" selected>Toutes les directions académiques</option>
+              <option value="DPGELM">DPGELM — Direction des Programmes Grande École, Licences et Masters</option>
+              <option value="DPECN">DPECN — Direction du Programme Executive et Campus Numérique</option>
+            </select>
           </div>
 
           <div class="form-group">
@@ -298,6 +320,7 @@
               <div class="form-group">
                 <label class="form-label" for="declarantEmail">Votre email CESAG</label>
                 <input id="declarantEmail" class="input" type="email" placeholder="prenom.nom@cesag.edu.sn">
+                <span class="muted-small" style="display:block;margin-top:4px;color:var(--cesag-green-dark);font-size:11.5px;font-weight:600;">📧 Une copie récapitulative de votre déclaration vous sera automatiquement transmise à cette adresse.</span>
               </div>
             </div>
             <div style="background:#FFFFFF;border:1px solid var(--cesag-border);border-radius:var(--radius-sm);padding:12px 14px;margin-top:10px;">
