@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CESAG ONLINE — PROGRAMMATION DES ÉVALUATIONS DES ENSEIGNEMENTS 26-27</title>
-  <link rel="stylesheet" href="css/style.css?v=20261127i">
-  <link rel="stylesheet" href="css/premium.css?v=20261127i">
+  <link rel="stylesheet" href="css/style.css?v=20261127j">
+  <link rel="stylesheet" href="css/premium.css?v=20261127j">
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
 <body>
@@ -108,9 +108,9 @@
             Sélectionnez votre niveau (Licence, Master, MBA), choisissez votre filière et cochez vos cours terminés en quelques clics.
           </p>
           <ol class="express-steps">
-            <li><strong>Choisissez</strong> votre niveau et votre filière</li>
-            <li><strong>Cochez</strong> les cours terminés</li>
-            <li><strong>Précisez</strong> les dates souhaitées <span>(facultatif)</span></li>
+            <li><strong>Choisissez</strong> votre filière et votre cohorte</li>
+            <li><strong>Cliquez</strong> sur le cours terminé</li>
+            <li><strong>Indiquez</strong> le nom du prof</li>
             <li><strong>Envoyez</strong> : le Chargé de la Planification et du Suivi Évaluation est alerté</li>
           </ol>
           <p class="express-note">Environ 2 minutes · aucune connexion à Moodle</p>
@@ -301,8 +301,8 @@
 
           <div class="form-group">
             <div class="label-between">
-              <label class="form-label" for="moduleSearchInput">Cocher les modules terminés (ECUEs)</label>
-              <div class="inline-actions">
+              <label class="form-label" for="moduleSearchInput">Cliquez sur un module terminé</label>
+              <div class="inline-actions hidden">
                 <button id="btnSelectVisibleEcues" class="link-btn" type="button">Tout cocher</button>
                 <span class="sep">·</span>
                 <button id="btnClearSelectedEcues" class="link-btn" type="button">Tout décocher</button>
@@ -314,7 +314,7 @@
         </div>
 
         <!-- Colonne Droite : Etape 2 Intervenants & Soumission -->
-        <div class="card card-sticky">
+        <div class="card card-sticky hidden" aria-hidden="true">
           <div class="card-header">
             <span class="step-pill step-gold">Étape 2</span>
             <h3>Envoyer · <span id="selectedCountBadge">0</span> module(s) coché(s)</h3>
@@ -723,9 +723,9 @@
           <div style="display:flex;gap:14px;align-items:flex-start;">
             <div style="width:32px;height:32px;border-radius:50%;background:#C9962A;color:#ffffff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0;">2</div>
             <div>
-              <strong style="color:#0B4D2E;font-size:14px;">Cochez les cours terminés</strong>
+              <strong style="color:#0B4D2E;font-size:14px;">Cliquez sur le cours terminé</strong>
               <p style="margin:3px 0 0;font-size:13px;color:var(--text-secondary);line-height:1.45;">
-                Cochez le ou les modules achevés. Le nom de l'enseignant est facultatif. Vous pouvez indiquer vos dates souhaitées d'ouverture et de clôture.
+                Une petite fenêtre vous demande si le cours est terminé, puis le nom du prof. Vous confirmez, et c'est envoyé.
               </p>
             </div>
           </div>
@@ -735,7 +735,7 @@
             <div>
               <strong style="color:#0B4D2E;font-size:14px;">Donnez-nous le signal !</strong>
               <p style="margin:3px 0 0;font-size:13px;color:var(--text-secondary);line-height:1.45;">
-                Cliquez sur <strong>« Envoyer le signal pour programmation »</strong>. L'équipe de planification (Oscar Kakpo) est alertée immédiatement sur Outlook et active l'évaluation sur Moodle.
+                Répondez <strong>« Oui »</strong> à « Êtes-vous sûr ? ». L'équipe de planification (Oscar Kakpo) est alertée immédiatement sur Outlook et active l'évaluation sur Moodle.
               </p>
             </div>
           </div>
@@ -789,10 +789,10 @@
   <!-- Animation Décollage Avion (Passion Aviation) -->
   <div id="flightTakeoffAnim" class="flight-takeoff-anim">✈️💨</div>
 
-  <script src="js/config.js?v=20261127i"></script>
-  <script src="data/catalog.js?v=20261127i"></script>
-  <script src="js/app.js?v=20261127i"></script>
-  <script src="js/board.js?v=20261127i"></script>
-  <script src="js/icons.js?v=20261127i"></script>
+  <script src="js/config.js?v=20261127j"></script>
+  <script src="data/catalog.js?v=20261127j"></script>
+  <script src="js/app.js?v=20261127j"></script>
+  <script src="js/board.js?v=20261127j"></script>
+  <script src="js/icons.js?v=20261127j"></script>
 </body>
 </html>

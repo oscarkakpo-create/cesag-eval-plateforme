@@ -610,8 +610,7 @@
           : "";
         const hoursInfo = e.total_h ? `${e.total_h}h` : "";
         html += `
-          <label class="ecue-item ${isSelected ? "selected" : ""}">
-            <input type="checkbox" data-ecue-key="${escapeHtml(key)}" ${isSelected ? "checked" : ""}>
+          <button type="button" class="ecue-item ecue-quick" data-quick-code="${escapeHtml(e.code)}">
             <div class="ecue-item-body">
               <div class="ecue-item-top">
                 <span class="ecue-code">${escapeHtml(e.code)}</span>
@@ -625,45 +624,207 @@
                 ${e.td_tp ? `<span>TD ${e.td_tp}h</span>` : ""}
               </div>
             </div>
-          </label>
-          ${isSelected ? `
-          <div class="ecue-prof">
-            <span class="ecue-prof-tag">Cours terminé · à évaluer</span>
-            <input class="input input-sm" type="text" list="intervenantsDatalist" data-prof-key="${escapeHtml(key)}" value="${escapeHtml(state.selectedEcues.get(key)?.intervenant || "")}" placeholder="Nom du prof (ex : M. Diouf)" aria-label="Nom du prof pour ${escapeHtml(e.titre)}">
-          </div>` : ""}
+            <span class="ecue-quick-cta">Terminé ?</span>
+          </button>
         `;
       });
     });
 
     container.innerHTML = html;
-    container.querySelectorAll("input[data-ecue-key]").forEach((cb) => {
-      cb.addEventListener("change", () => {
-        const key = cb.dataset.ecueKey;
-        const ecueCode = key.split("::")[1];
-        const ecue = ecues.find((item) => item.code === ecueCode);
-        if (cb.checked && ecue && prog) {
-          addSelectedEcue(prog, ecue);
-        } else {
-          state.selectedEcues.delete(key);
-        }
-        renderEcueChecklist();
-        renderSelectedModules();
-        if (cb.checked) {
-          const profInput = container.querySelector(`input[data-prof-key="${CSS.escape(key)}"]`);
-          if (profInput) profInput.focus();
-        }
+    container.querySelectorAll("[data-quick-code]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const ecue = ecues.find((item) => item.code === btn.dataset.quickCode);
+        if (ecue) openQuickDeclare(prog, ecue);
       });
     });
-    const lecturerEmails = new Map(getKnownLecturers().map((l) => [normalizeText(l.nom), l.email]));
-    container.querySelectorAll("input[data-prof-key]").forEach((inp) => {
-      inp.addEventListener("input", () => {
-        const entry = state.selectedEcues.get(inp.dataset.profKey);
-        if (!entry) return;
-        entry.intervenant = inp.value;
-        const autoEmail = lecturerEmails.get(normalizeText(inp.value));
-        entry.email_intervenant = autoEmail || "";
-      });
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Déclaration rapide par boîtes de dialogue :                          */
+  /* Terminé ? Oui/Non → Nom du prof → Êtes-vous sûr ? → Envoyé           */
+  /* ------------------------------------------------------------------ */
+  function ensureQuickModal() {
+    let modal = $("quickDeclareModal");
+    if (modal) return modal;
+    modal = document.createElement("div");
+    modal.id = "quickDeclareModal";
+    modal.className = "qd-backdrop hidden";
+    modal.setAttribute("role", "dialog");
+    modal.setAttribute("aria-modal", "true");
+    modal.setAttribute("aria-labelledby", "qdTitle");
+    modal.innerHTML = `<div class="qd-card"><p class="qd-kicker" id="qdKicker"></p><h3 id="qdTitle"></h3><div id="qdBody"></div><div class="qd-actions" id="qdActions"></div></div>`;
+    modal.addEventListener("click", (ev) => {
+      if (ev.target === modal && !modal.dataset.busy) closeQuickModal();
     });
+    document.addEventListener("keydown", (ev) => {
+      if (ev.key === "Escape" && !modal.classList.contains("hidden") && !modal.dataset.busy) closeQuickModal();
+    });
+    document.body.appendChild(modal);
+    return modal;
+  }
+
+  function closeQuickModal() {
+    const modal = $("quickDeclareModal");
+    if (modal) {
+      modal.classList.add("hidden");
+      delete modal.dataset.busy;
+    }
+  }
+
+  function showQuickStep({ kicker, title, body, actions }) {
+    const modal = ensureQuickModal();
+    $("qdKicker").textContent = kicker || "";
+    $("qdTitle").textContent = title || "";
+    $("qdBody").innerHTML = body || "";
+    const box = $("qdActions");
+    box.innerHTML = "";
+    (actions || []).forEach((a) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = `btn ${a.primary ? "btn-primary" : "btn-outline"}`;
+      b.textContent = a.label;
+      b.addEventListener("click", a.onClick);
+      box.appendChild(b);
+    });
+    modal.classList.remove("hidden");
+    const focusEl = modal.querySelector("input") || box.querySelector(".btn-primary") || box.querySelector("button");
+    setTimeout(() => focusEl && focusEl.focus(), 50);
+  }
+
+  function openQuickDeclare(prog, ecue) {
+    const classe = $("classeInput").value.trim();
+    if (!classe) {
+      showQuickStep({
+        kicker: ecue.titre,
+        title: "Choisissez d'abord votre cohorte",
+        body: `<p class="qd-text">Sélectionnez la cohorte (classe) au-dessus de la liste des modules, puis recliquez sur le module.</p>`,
+        actions: [{ label: "OK", primary: true, onClick: () => { closeQuickModal(); $("classeInput").focus(); } }],
+      });
+      return;
+    }
+    const existing = findExistingDeclarationForClass(classe, ecue.titre);
+    showQuickStep({
+      kicker: classe,
+      title: `${ecue.titre} : ce cours est-il terminé ?`,
+      body: existing
+        ? `<p class="qd-warn">Déjà déclaré pour cette cohorte (${escapeHtml(STATUT_LABELS[existing.statut] || existing.statut)}).</p>`
+        : "",
+      actions: [
+        { label: "Non", onClick: closeQuickModal },
+        { label: "Oui", primary: true, onClick: () => askProf(prog, ecue, classe, "") },
+      ],
+    });
+  }
+
+  function askProf(prog, ecue, classe, current) {
+    showQuickStep({
+      kicker: ecue.titre,
+      title: "Nom du prof",
+      body: `<input id="qdProf" class="input" type="text" list="intervenantsDatalist" placeholder="Ex : M. Diouf" value="${escapeHtml(current)}" autocomplete="off" aria-label="Nom du prof">`,
+      actions: [
+        { label: "Annuler", onClick: closeQuickModal },
+        {
+          label: "Valider",
+          primary: true,
+          onClick: () => {
+            const inp = $("qdProf");
+            const prof = (inp.value || "").trim();
+            if (!prof) {
+              inp.classList.add("qd-invalid");
+              inp.focus();
+              return;
+            }
+            confirmQuick(prog, ecue, classe, prof);
+          },
+        },
+      ],
+    });
+    $("qdProf").addEventListener("keydown", (ev) => {
+      if (ev.key === "Enter") {
+        ev.preventDefault();
+        $("qdActions").querySelector(".btn-primary").click();
+      }
+    });
+  }
+
+  function confirmQuick(prog, ecue, classe, prof, force = false) {
+    showQuickStep({
+      kicker: "Confirmation",
+      title: "Êtes-vous sûr ?",
+      body: `<p class="qd-text"><strong>${escapeHtml(ecue.titre)}</strong><br>${escapeHtml(classe)} · Prof : ${escapeHtml(prof)}</p>`,
+      actions: [
+        { label: "Non", onClick: () => askProf(prog, ecue, classe, prof) },
+        { label: "Oui, envoyer", primary: true, onClick: () => sendQuick(prog, ecue, classe, prof, force) },
+      ],
+    });
+  }
+
+  async function sendQuick(prog, ecue, classe, prof, force) {
+    showQuickStep({ kicker: ecue.titre, title: "Envoi en cours…", body: `<div class="qd-spinner" aria-hidden="true"></div>`, actions: [] });
+    const modal = ensureQuickModal();
+    modal.dataset.busy = "1";
+    let profile = {};
+    try {
+      profile = JSON.parse(localStorage.getItem(STORAGE_KEY_PROFILE) || "{}");
+    } catch (_e) {
+      profile = {};
+    }
+    const declarant_nom = ($("declarantNom")?.value || "").trim() || profile.declarant_nom || "Responsable de programme";
+    const declarant_email = ($("declarantEmail")?.value || "").trim() || profile.declarant_email || "";
+    const lecturer = getKnownLecturers().find((l) => normalizeText(l.nom) === normalizeText(prof));
+    const dateOuv = $("defaultDateOuverture")?.value || todayIso();
+    const item = {
+      niveau: prog.niveau,
+      programme: prog.code,
+      semestre: ecue.semestre,
+      classe,
+      code_ecue: ecue.code,
+      module: ecue.titre,
+      intervenant: prof,
+      email_intervenant: (lecturer && lecturer.email) || "",
+      date_ouverture: dateOuv,
+      date_cloture: $("defaultDateCloture")?.value || "",
+      date_fin_module: dateOuv,
+      declarant_nom,
+      declarant_email,
+      observations: "",
+      source: "formulaire_collegue",
+    };
+    try {
+      await apiCreateDeclarations([item], force);
+      delete modal.dataset.busy;
+      triggerFlightTakeoff();
+      renderAll();
+      showQuickStep({
+        kicker: "C'est parti",
+        title: "C'est envoyé ✓",
+        body: `<p class="qd-text">L'évaluation de <strong>${escapeHtml(ecue.titre)}</strong> va être programmée sur Moodle.</p>`,
+        actions: [{ label: "OK", primary: true, onClick: closeQuickModal }],
+      });
+    } catch (err) {
+      delete modal.dataset.busy;
+      if (err.status === 409) {
+        showQuickStep({
+          kicker: ecue.titre,
+          title: "Déjà déclaré pour cette cohorte",
+          body: `<p class="qd-text">Voulez-vous l'envoyer quand même ?</p>`,
+          actions: [
+            { label: "Non", onClick: closeQuickModal },
+            { label: "Oui", primary: true, onClick: () => sendQuick(prog, ecue, classe, prof, true) },
+          ],
+        });
+      } else {
+        showQuickStep({
+          kicker: ecue.titre,
+          title: "L'envoi n'a pas abouti",
+          body: `<p class="qd-text">${escapeHtml(err.message || "Erreur réseau")}. Réessayez dans un instant.</p>`,
+          actions: [
+            { label: "Fermer", onClick: closeQuickModal },
+            { label: "Réessayer", primary: true, onClick: () => sendQuick(prog, ecue, classe, prof, force) },
+          ],
+        });
+      }
+    }
   }
 
   function addSelectedEcue(prog, ecue) {
