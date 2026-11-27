@@ -281,3 +281,35 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--cesag-green); 
 .landing-cards-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
 .landing-card .landing-card-actions { padding-top: 18px; }
 @media (max-width: 720px) { .landing-cards-grid { grid-template-columns: 1fr !important; } }
+
+/* ---------- Barre de menus verte ---------- */
+.nav-tabs {
+  background: linear-gradient(180deg, #0D6A44 0%, var(--cesag-green) 100%) !important;
+  border-top: none !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08), 0 6px 18px -10px rgba(11, 93, 59, .55);
+}
+.nav-tabs-inner { padding-top: 8px !important; padding-bottom: 8px !important; gap: 6px; align-items: center; }
+.nav-tab {
+  color: rgba(255, 255, 255, .82) !important;
+  border: none !important;
+  border-radius: 999px !important;
+  padding: 8px 16px !important;
+  transition: background .2s var(--ease), color .2s var(--ease) !important;
+}
+.nav-tab:hover { color: #fff !important; background: rgba(255, 255, 255, .12) !important; }
+.nav-tab.active {
+  color: var(--cesag-green) !important;
+  background: #FFFFFF !important;
+  box-shadow: 0 2px 8px rgba(5, 40, 25, .25);
+}
+.nav-tab.active::after { display: none !important; }
+.tab-badge { background: rgba(255, 255, 255, .18) !important; color: #fff !important; }
+.nav-tab.active .tab-badge { background: var(--cesag-green-soft) !important; color: var(--cesag-green) !important; }
+.tab-badge.badge-amber { background: #FFF4DE !important; color: #8A5A00 !important; }
+#btnOpenGuideModal {
+  background: transparent !important;
+  color: #fff !important;
+  border: 1px solid rgba(255, 255, 255, .55) !important;
+}
+#btnOpenGuideModal:hover { background: rgba(255, 255, 255, .14) !important; }
+.nav-tab:focus-visible, #btnOpenGuideModal:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
