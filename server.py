@@ -220,8 +220,9 @@ def compute_stats(items: list[dict[str, Any]]) -> dict[str, Any]:
     annul = sum(1 for x in items if x.get("statut") == "Annulee")
     total_active = len(active)
     programmee_ou_plus = prog + real
-    taux_prog = round((programmee_ou_plus / total_active) * 100, 1) if total_active else 0.0
-    taux_real = round((real / total_active) * 100, 1) if total_active else 0.0
+    TOTAL_ANNUEL_PREVU = 1665
+    taux_prog = round((programmee_ou_plus / TOTAL_ANNUEL_PREVU) * 100, 1)
+    taux_real = round((real / programmee_ou_plus) * 100, 1) if programmee_ou_plus else 0.0
     total_repondants = sum(
         int(x["nb_repondants"])
         for x in items
@@ -240,6 +241,7 @@ def compute_stats(items: list[dict[str, Any]]) -> dict[str, Any]:
 
     return {
         "total": len(items),
+        "total_annuel": TOTAL_ANNUEL_PREVU,
         "total_actives": total_active,
         "a_programmer": a_prog,
         "programmee": prog,
