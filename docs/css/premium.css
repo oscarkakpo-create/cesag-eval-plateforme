@@ -392,3 +392,29 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--cesag-green); 
   .btn-quick-niveau { flex-direction: column !important; align-items: center !important; text-align: center !important; padding: 10px 4px !important; gap: 2px !important; font-size: 13px !important; }
   .btn-quick-niveau .sub { font-size: 10.5px !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
 }
+
+/* ---------- Couleur par niveau : Licence vert · Master bleu · MBA or ---------- */
+[data-quick-niveau="Licence"], [data-niveau="Licence"] { --niv: #0B5D3B; --niv-soft: #EDF5F0; --niv-line: #BFDCCB; }
+[data-quick-niveau="Master"],  [data-niveau="Master"]  { --niv: #1E5FA6; --niv-soft: #EDF3FA; --niv-line: #C3D7EF; }
+[data-quick-niveau="MBA"],     [data-niveau="MBA"]     { --niv: #8C6418; --niv-soft: #FAF5EA; --niv-line: #E8D5AE; }
+
+.btn-quick-niveau[data-quick-niveau] {
+  background: var(--niv-soft) !important;
+  border: 1px solid var(--niv-line) !important;
+  border-top: 3px solid var(--niv) !important;
+  color: var(--niv) !important;
+}
+.btn-quick-niveau[data-quick-niveau] .ico { color: var(--niv) !important; }
+.btn-quick-niveau[data-quick-niveau] .sub { color: var(--text-muted) !important; }
+.btn-quick-niveau[data-quick-niveau]:hover {
+  background: var(--niv) !important;
+  border-color: var(--niv) !important;
+  color: #fff !important;
+}
+.btn-quick-niveau[data-quick-niveau]:hover .ico,
+.btn-quick-niveau[data-quick-niveau]:hover .sub { color: #fff !important; }
+
+.pill-btn[data-niveau] { border-color: var(--niv-line) !important; color: var(--niv) !important; background: #fff !important; }
+.pill-btn[data-niveau]:hover { background: var(--niv-soft) !important; }
+.pill-btn[data-niveau].active { background: var(--niv) !important; border-color: var(--niv) !important; color: #fff !important; }
+.pill-btn[data-niveau] .pill-sub { color: inherit !important; opacity: .8; }
