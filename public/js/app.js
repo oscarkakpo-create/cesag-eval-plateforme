@@ -30,6 +30,8 @@
   };
 
   const $ = (id) => document.getElementById(id);
+  // Lecture seule pour les widgets d'affichage (tableau des départs)
+  window.CESAG_STATE = state;
 
   function escapeHtml(str) {
     return String(str ?? "")
