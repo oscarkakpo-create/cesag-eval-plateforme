@@ -69,21 +69,21 @@
     const mod = escapeHtml((moduleName || "Intitulé du module").trim());
     const prof = escapeHtml((intervenantName || "Nom de l'enseignant").trim());
     return (
-      `<div style="font-family:Arial,Helvetica,sans-serif;max-width:820px;margin:0 auto;background:#ffffff;border:1px solid #e5e7eb;border-radius:14px;overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,0.06);">` +
-      `<div style="background:#0B4D2E;padding:20px 24px;color:#ffffff;">` +
+      `<div style="font-family:Arial,Helvetica,sans-serif;max-width:820px;margin:0 auto;background:#ffffff;border:1px solid #E3E7E4;border-radius:14px;overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,0.06);">` +
+      `<div style="background:#0B5D3B;padding:20px 24px;color:#ffffff;">` +
       `<div style="font-size:21px;font-weight:700;line-height:1.3;">Évaluation de l’enseignement</div>` +
       `<div style="margin-top:5px;font-size:13px;color:#DDE9E2;">Votre retour contribue à l’amélioration continue de la qualité académique</div>` +
       `</div>` +
-      `<div style="padding:24px;color:#1F2937;font-size:15px;line-height:1.65;">` +
+      `<div style="padding:24px;color:#1A2B23;font-size:15px;line-height:1.65;">` +
       `<p style="margin:0 0 14px 0;">Chers étudiants,</p>` +
       `<p style="margin:0 0 16px 0;">Nous vous invitons à bien vouloir procéder à l’évaluation du module : <strong>${mod}</strong> (Enseignant : <strong>${prof}</strong>). Votre appréciation nous permet de mieux comprendre votre expérience et d’identifier les axes d’amélioration.</p>` +
-      `<div style="background:#F7F8FA;border-left:4px solid #C9962A;padding:14px 16px;margin:18px 0;border-radius:6px;">` +
-      `<strong style="color:#0B4D2E;">Confidentialité des réponses</strong><br>` +
+      `<div style="background:#F5F7F6;border-left:4px solid #B7862A;padding:14px 16px;margin:18px 0;border-radius:6px;">` +
+      `<strong style="color:#0B5D3B;">Confidentialité des réponses</strong><br>` +
       `Cette évaluation n’est pas anonyme afin de nous permettre de nous assurer de la participation de tous. Les réponses sont toutefois traitées de manière confidentielle.` +
       `</div>` +
       `<p style="margin:0;">Nous vous remercions de répondre avec sincérité, objectivité et responsabilité.</p>` +
       `</div>` +
-      `<div style="background:#F7F8FA;padding:13px 24px;border-top:1px solid #E5E7EB;color:#59636E;font-size:12px;">` +
+      `<div style="background:#F5F7F6;padding:13px 24px;border-top:1px solid #E3E7E4;color:#5A6862;font-size:12px;">` +
       `CESAG – Amélioration continue de la qualité des enseignements` +
       `</div></div>`
     );
@@ -1308,7 +1308,7 @@
       "",
       "Protocole CESAG à appliquer pour chaque module :",
       "1. Ouvrir le cours cible en catégorie 372 (/course/view.php?id={course_id}&section=1) et localiser le Feedback masqué correspondant à l'intitulé ECUE (ou le premier emplacement masqué 'MODULE X' si le cours n'est pas encore renommé).",
-      "2. Dans /course/modedit.php?update={cmid}&return=0 : mettre #id_name = intitulé du module, injecter la carte HTML officielle CESAG (#0B4D2E, bordure or #C9962A, encart 'Confidentialité des réponses', nom du module et de l'enseignant) dans #id_introeditoreditable et #id_intro.",
+      "2. Dans /course/modedit.php?update={cmid}&return=0 : mettre #id_name = intitulé du module, injecter la carte HTML officielle CESAG (#0B5D3B, bordure or #B7862A, encart 'Confidentialité des réponses', nom du module et de l'enseignant) dans #id_introeditoreditable et #id_intro.",
       "3. Passer #id_visible = '1' (Afficher aux étudiants) et valider avec #id_submitbutton2, tout en gardant les autres modules non demandés strictement masqués (visible = 0).",
       "4. Générer resultats_moodle.json avec {id, cmid, lien_moodle, moodle_course_id, statut: \"Programmee\", date_ouverture} pour réimport dans la mini-plateforme.",
     ].join("\n");
