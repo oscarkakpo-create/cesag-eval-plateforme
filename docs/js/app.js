@@ -8,7 +8,7 @@
 
   const STATUT_LABELS = {
     A_programmer: "À programmer",
-    Programmee: "Ouvert",
+    Programmee: "Feedback ouvert",
     Realisee: "Réalisée / Clôturée",
     Annulee: "Annulée",
   };
@@ -549,6 +549,13 @@
     });
   }
 
+  // Libellés du verrou dans la liste des modules (module non modifiable)
+  const LOCK_LABELS = {
+    A_programmer: "À programmer",
+    Programmee: "Feedback ouvert",
+    Realisee: "Clôturé",
+  };
+
   // Intitulés saisis avec une faute dans la Google Sheet → intitulé officiel du catalogue
   const MODULE_ALIASES = {
     "Système de management – Qualité, Hygiène, Sécurité, Environmt": "Système de management – Qualité, Hygiène, Sécurité, Environnement",
@@ -623,7 +630,7 @@
           : "";
         const hoursInfo = e.total_h ? `${e.total_h}h` : "";
         html += `
-          <button type="button" class="ecue-item ecue-quick ${existing ? "is-locked" : ""}" data-quick-code="${escapeHtml(e.code)}" ${existing ? 'disabled aria-disabled="true" title="Évaluation déjà ouverte : non modifiable"' : ""}>
+          <button type="button" class="ecue-item ecue-quick ${existing ? "is-locked" : ""}" data-quick-code="${escapeHtml(e.code)}" ${existing ? 'disabled aria-disabled="true" title="Déjà déclaré : non modifiable"' : ""}>
             <div class="ecue-item-body">
               <div class="ecue-item-top">
                 <span class="ecue-code">${escapeHtml(e.code)}</span>
@@ -638,7 +645,7 @@
               </div>
             </div>
             ${existing
-              ? `<span class="ecue-quick-cta is-locked">${SYM.lock}<span>Ouvert</span></span>`
+              ? `<span class="ecue-quick-cta is-locked lock-${escapeHtml(existing.statut)}">${SYM.lock}<span>${escapeHtml(LOCK_LABELS[existing.statut] || "Déjà déclaré")}</span></span>`
               : `<span class="ecue-quick-cta">${SYM.check}<span>Terminé</span></span>`}
           </button>
         `;

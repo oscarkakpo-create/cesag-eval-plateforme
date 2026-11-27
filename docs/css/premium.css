@@ -709,3 +709,11 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--cesag-green); 
 
 /* Statut « Ouvert » (programmée sur Moodle) en rouge, partout */
 .status-Programmee { background: #FDECEC !important; color: #B42318 !important; border-color: #F4C7C3 !important; }
+
+/* Verrou : couleur selon le vrai statut */
+.ecue-quick-cta.is-locked.lock-Realisee { color: #0F6B3A !important; background: #EAF7EF !important; border-color: #BFE3CC !important; }
+.ecue-quick.is-locked:hover .ecue-quick-cta.lock-Realisee { color: #0F6B3A !important; background: #EAF7EF !important; border-color: #BFE3CC !important; }
+.ecue-quick-cta.is-locked.lock-A_programmer { color: #8A5A00 !important; background: #FFF4DE !important; border-color: #F1DCAE !important; }
+.ecue-quick.is-locked:hover .ecue-quick-cta.lock-A_programmer { color: #8A5A00 !important; background: #FFF4DE !important; border-color: #F1DCAE !important; }
+.ecue-quick.is-locked:has(.lock-Realisee), .ecue-quick.is-locked:has(.lock-Realisee):hover { background: #F6FBF8; }
+.ecue-quick.is-locked:has(.lock-A_programmer), .ecue-quick.is-locked:has(.lock-A_programmer):hover { background: #FFFBF2; }
