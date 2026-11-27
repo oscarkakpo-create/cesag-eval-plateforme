@@ -8,7 +8,7 @@
 
   const STATUT_LABELS = {
     A_programmer: "À programmer",
-    Programmee: "Programmée / Ouverte",
+    Programmee: "Ouvert",
     Realisee: "Réalisée / Clôturée",
     Annulee: "Annulée",
   };
@@ -549,6 +549,13 @@
     });
   }
 
+  // Intitulés saisis avec une faute dans la Google Sheet → intitulé officiel du catalogue
+  const MODULE_ALIASES = {
+    "Système de management – Qualité, Hygiène, Sécurité, Environmt": "Système de management – Qualité, Hygiène, Sécurité, Environnement",
+    "Techniques quantitatives de prise de décison1": "Techniques quantitatives de prise de décision 1",
+    "Opérations, Maintenance et Support des Systèmes d'Information (CISA 4)": "Maintenance et Support des Systèmes d'Information (CISA 4)",
+  };
+
   function findExistingDeclarationForClass(classe, moduleTitle) {
     const clsNorm = normalizeText(classe);
     const modNorm = normalizeText(moduleTitle);
@@ -604,18 +611,24 @@
       items.forEach((e) => {
         const key = `${prog.id}::${e.code}`;
         const isSelected = state.selectedEcues.has(key);
-        const existing = findExistingDeclarationForClass(currentClasse, e.titre);
+        // Déjà déclaré : même cohorte, ou à défaut même filière + même module (anciens noms de classe)
+        const existing = findExistingDeclarationForClass(currentClasse, e.titre) ||
+          state.declarations.find((d) =>
+            d.statut !== "Annulee" &&
+            normalizeText(d.programme) === normalizeText(prog.code) &&
+            normalizeText(MODULE_ALIASES[d.module] || d.module) === normalizeText(e.titre)
+          ) || null;
         const existingBadge = existing
           ? `<span class="status-badge status-${escapeHtml(existing.statut)}">${escapeHtml(STATUT_LABELS[existing.statut] || existing.statut)}</span>`
           : "";
         const hoursInfo = e.total_h ? `${e.total_h}h` : "";
         html += `
-          <button type="button" class="ecue-item ecue-quick" data-quick-code="${escapeHtml(e.code)}">
+          <button type="button" class="ecue-item ecue-quick ${existing ? "is-locked" : ""}" data-quick-code="${escapeHtml(e.code)}" ${existing ? 'disabled aria-disabled="true" title="Évaluation déjà ouverte : non modifiable"' : ""}>
             <div class="ecue-item-body">
               <div class="ecue-item-top">
                 <span class="ecue-code">${escapeHtml(e.code)}</span>
                 <span class="ecue-title">${escapeHtml(e.titre)}</span>
-                ${existingBadge}
+
               </div>
               <div class="ecue-meta">
                 <span>${escapeHtml(e.annee || "")}</span>
@@ -625,7 +638,7 @@
               </div>
             </div>
             ${existing
-              ? `<span class="ecue-quick-cta is-done">${SYM.checkFill}<span>Signalé</span></span>`
+              ? `<span class="ecue-quick-cta is-locked">${SYM.lock}<span>Ouvert</span></span>`
               : `<span class="ecue-quick-cta">${SYM.check}<span>Terminé</span></span>`}
           </button>
         `;
@@ -657,6 +670,7 @@
     yes: `${SVG_OPEN}<path d="m5.5 12.5 4.2 4.2 8.8-9.4" stroke-width="2.2"/></svg>`,
     no: `${SVG_OPEN}<path d="m7 7 10 10M17 7 7 17" stroke-width="2.2"/></svg>`,
     send: `${SVG_OPEN}<path d="M21 3 10.5 13.5"/><path d="m21 3-6.5 18-4-7.5L3 9.5z"/></svg>`,
+    lock: `${SVG_OPEN}<rect x="5.5" y="10.5" width="13" height="9.5" rx="2.2"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/></svg>`,
     bell: `${SVG_OPEN}<path d="M6 9.5a6 6 0 0 1 12 0c0 5.5 2.2 7 2.2 7H3.8S6 15 6 9.5"/><path d="M10.2 19.5a2 2 0 0 0 3.6 0"/></svg>`,
   };
   const NOTIF_TARGET = "le Chargé de la Planification et du Suivi Évaluation";

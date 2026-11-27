@@ -4,7 +4,7 @@
 (function () {
   var STATUS = {
     A_programmer: { label: "À programmer", cls: "status-A_programmer" },
-    Programmee:   { label: "Ouverte",      cls: "status-Programmee" },
+    Programmee:   { label: "Ouvert",       cls: "status-Programmee" },
     Realisee:     { label: "Clôturée",     cls: "status-Realisee" },
     Annulee:      { label: "Annulée",      cls: "status-Annulee" }
   };
@@ -75,7 +75,7 @@
     var c = { A_programmer: 0, Programmee: 0, Realisee: 0 };
     all.forEach(function (d) { if (c[d.statut] != null) c[d.statut]++; });
     document.getElementById("evboardSummary").textContent =
-      c.A_programmer + " à programmer · " + c.Programmee + " ouverte" + (c.Programmee > 1 ? "s" : "") + " · " + c.Realisee + " clôturée" + (c.Realisee > 1 ? "s" : "");
+      c.A_programmer + " à programmer · " + c.Programmee + " ouvert" + (c.Programmee > 1 ? "s" : "") + " · " + c.Realisee + " clôturée" + (c.Realisee > 1 ? "s" : "");
   }
 
   function tick() {
