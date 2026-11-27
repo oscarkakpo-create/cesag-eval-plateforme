@@ -210,11 +210,9 @@
           <div class="landing-stat-val">Temps réel</div>
           <div class="landing-stat-lbl">Suivi &amp; Programmation</div>
         </div>
-        <div class="landing-stat-box" id="statBoxQrCode" style="cursor:pointer;transition:transform 0.15s ease,box-shadow 0.15s ease;" title="Cliquez pour ouvrir le Générateur Flash QR Code pour amphi (API QRServer)">
-          <div class="landing-stat-val" style="display:flex;align-items:center;justify-content:center;gap:6px;">
-            <span>📲</span> <span>QR Code</span>
-          </div>
-          <div class="landing-stat-lbl">Flash Amphi &amp; Mobile (API)</div>
+        <div class="landing-stat-box">
+          <div class="landing-stat-val">1 665</div>
+          <div class="landing-stat-lbl">Évaluations pré-créées (Cat. 372)</div>
         </div>
       </div>
     </section>
@@ -659,47 +657,6 @@
           <button class="btn btn-primary" type="submit">Enregistrer les modifications</button>
         </div>
       </form>
-    </div>
-  </div>
-
-  <!-- Modal Générateur QR Code Amphi (API QRServer) -->
-  <div id="modalQrCode" class="modal-backdrop hidden" hidden>
-    <div class="modal-card" style="max-width:540px;text-align:center;">
-      <div class="modal-header">
-        <div style="display:flex;align-items:center;gap:10px;">
-          <span style="font-size:24px;">📲</span>
-          <div style="text-align:left;">
-            <h3 style="margin:0;font-size:16px;">Générateur Flash QR Code (Amphi &amp; Mobile)</h3>
-            <p style="margin:2px 0 0;font-size:12px;color:var(--text-muted);">Propulsé par l'API Ouverte QRServer · Prêt pour vidéoprojecteur</p>
-          </div>
-        </div>
-        <button id="btnCloseModalQr" class="modal-close" type="button" aria-label="Fermer">&times;</button>
-      </div>
-      <div class="modal-body" style="padding:20px;">
-        <p style="font-size:13.5px;color:var(--text-secondary);margin-bottom:16px;text-align:left;">
-          Affichez ce QR Code sur le vidéoprojecteur en fin de cours. Les étudiants le scannent en amphi avec leur smartphone pour accéder instantanément au formulaire d'évaluation Moodle :
-        </p>
-
-        <div style="margin-bottom:14px;text-align:left;">
-          <label style="font-size:12px;font-weight:700;color:var(--text-primary);display:block;margin-bottom:6px;">Lien ou cours à encoder :</label>
-          <input id="qrInputUrl" type="text" class="input" style="width:100%;font-size:13px;" value="https://formations.cesagonline.com/course/index.php?categoryid=372">
-        </div>
-
-        <div style="display:flex;justify-content:center;margin:18px 0;">
-          <div style="padding:14px;background:#ffffff;border:2px solid #0B4D2E;border-radius:12px;box-shadow:0 6px 18px rgba(11,77,46,0.15);display:inline-block;">
-            <img id="qrImagePreview" src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&amp;margin=10&amp;data=https://formations.cesagonline.com/course/index.php?categoryid=372" alt="QR Code Évaluation CESAG" style="width:220px;height:220px;display:block;">
-            <div style="margin-top:8px;font-size:11px;font-weight:700;color:#0B4D2E;letter-spacing:0.5px;">CESAG DAKAR · ÉVALUATIONS</div>
-          </div>
-        </div>
-
-        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
-          <button id="btnRegenQr" class="btn btn-soft btn-sm" type="button">🔄 Actualiser</button>
-          <a id="btnDownloadQr" class="btn btn-primary btn-sm" href="https://api.qrserver.com/v1/create-qr-code/?size=600x600&amp;margin=15&amp;data=https://formations.cesagonline.com/course/index.php?categoryid=372" target="_blank" rel="noopener" download="qrcode_evaluation_cesag.png">📥 Télécharger haute résolution (PNG)</a>
-        </div>
-      </div>
-      <div class="modal-footer" style="justify-content:flex-end;">
-        <button id="btnCloseModalQrFooter" class="btn btn-soft" type="button">Fermer</button>
-      </div>
     </div>
   </div>
 

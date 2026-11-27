@@ -1660,62 +1660,6 @@
       });
   }
 
-  function initQrCodeModal() {
-    const statBox = $("statBoxQrCode");
-    const modal = $("modalQrCode");
-    const closeBtn = $("btnCloseModalQr");
-    const closeFooter = $("btnCloseModalQrFooter");
-    const input = $("qrInputUrl");
-    const img = $("qrImagePreview");
-    const regenBtn = $("btnRegenQr");
-    const downloadBtn = $("btnDownloadQr");
-
-    function openQr(url) {
-      if (url && input) input.value = url;
-      updateQr();
-      if (modal) {
-        modal.hidden = false;
-        modal.classList.remove("hidden");
-      }
-    }
-
-    function closeQr() {
-      if (modal) {
-        modal.hidden = true;
-        modal.classList.add("hidden");
-      }
-    }
-
-    function updateQr() {
-      if (!input || !img) return;
-      const raw = (input.value || "https://formations.cesagonline.com/course/index.php?categoryid=372").trim();
-      const encoded = encodeURIComponent(raw);
-      const srcPreview = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&margin=10&data=${encoded}`;
-      const srcDownload = `https://api.qrserver.com/v1/create-qr-code/?size=600x600&margin=15&data=${encoded}`;
-      img.src = srcPreview;
-      if (downloadBtn) downloadBtn.href = srcDownload;
-    }
-
-    if (statBox) statBox.addEventListener("click", () => openQr());
-    if (closeBtn) closeBtn.addEventListener("click", closeQr);
-    if (closeFooter) closeFooter.addEventListener("click", closeQr);
-    if (modal) {
-      modal.addEventListener("click", (e) => {
-        if (e.target === modal) closeQr();
-      });
-    }
-    if (regenBtn) regenBtn.addEventListener("click", updateQr);
-    if (input) {
-      input.addEventListener("input", () => {
-        clearTimeout(input._qrTimer);
-        input._qrTimer = setTimeout(updateQr, 400);
-      });
-    }
-
-    window.openQrCodeModal = openQr;
-  }
-
-
   function playCabinChime() {
     try {
       const AudioCtx = window.AudioContext || window.webkitAudioContext;
@@ -1814,7 +1758,6 @@
     }
 
     initDakarWeather();
-    initQrCodeModal();
     initCockpitMode();
     await detectBackend();
     renderNiveauPills();
