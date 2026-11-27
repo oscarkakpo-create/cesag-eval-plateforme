@@ -619,3 +619,44 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--cesag-green); 
   .qd-actions .btn { flex: 1; }
 }
 @media (prefers-reduced-motion: reduce) { .qd-card, .qd-spinner { animation: none; } }
+
+/* =====================================================================
+   Page Déclarer : blocs Direction + tuiles Niveau
+   ===================================================================== */
+.dir-blocks { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.dir-block {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 4px;
+  text-align: left; font: inherit; cursor: pointer;
+  padding: 16px 18px; border-radius: 12px;
+  background: #fff; border: 1px solid var(--cesag-border-strong);
+  border-left: 4px solid var(--cesag-green-line);
+  transition: border-color .15s var(--ease), background .15s var(--ease), box-shadow .15s var(--ease);
+}
+.dir-block strong { font-family: var(--font-display); font-size: 18px; color: var(--cesag-green-dark); letter-spacing: .02em; }
+.dir-block span { font-size: 12.5px; color: var(--text-muted); line-height: 1.35; }
+.dir-block:hover { border-color: var(--cesag-green); background: var(--cesag-green-soft); }
+.dir-block.active { background: var(--cesag-green); border-color: var(--cesag-green); box-shadow: 0 6px 16px -8px rgba(11, 93, 59, .55); }
+.dir-block.active strong, .dir-block.active span { color: #fff; }
+
+#niveauPills { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+#niveauPills .pill-btn[data-niveau] {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 2px;
+  padding: 12px 14px !important; border-radius: 12px !important;
+  border-top: 3px solid var(--niv) !important; text-align: left;
+  font-size: 15px; font-weight: 700;
+}
+#niveauPills .pill-btn[data-niveau] .pill-sub { font-size: 11.5px; font-weight: 500; }
+.prog-row { grid-template-columns: 1fr !important; }
+
+/* Accueil : une seule carte, en pleine largeur */
+.landing-cards-grid { grid-template-columns: 1fr !important; }
+@media (min-width: 861px) {
+  .landing-card.highlight .express-steps { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .landing-card.highlight .landing-card-actions { max-width: 380px; }
+}
+@media (max-width: 520px) { .dir-blocks { grid-template-columns: 1fr; } }
+@media (min-width: 861px) {
+  .landing-card.highlight .express-steps li { display: block; padding: 12px 14px; line-height: 1.45; }
+  .landing-card.highlight .express-steps li::before { display: grid; margin-bottom: 8px; }
+}
+@media (min-width: 861px) { .landing-card.highlight .express-steps li::before { width: 22px; } }

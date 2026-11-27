@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CESAG ONLINE — PROGRAMMATION DES ÉVALUATIONS DES ENSEIGNEMENTS 26-27</title>
-  <link rel="stylesheet" href="css/style.css?v=20261127j">
-  <link rel="stylesheet" href="css/premium.css?v=20261127j">
+  <link rel="stylesheet" href="css/style.css?v=20261127l">
+  <link rel="stylesheet" href="css/premium.css?v=20261127l">
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
 <body>
@@ -103,12 +103,12 @@
             <div class="landing-card-icon">⚡</div>
             <span class="landing-card-badge">Rapide &amp; Direct</span>
           </div>
-          <h3 class="landing-card-title">1. Formulaire express en ligne</h3>
+          <h3 class="landing-card-title">Formulaire express en ligne</h3>
           <p class="landing-card-desc">
-            Sélectionnez votre niveau (Licence, Master, MBA), choisissez votre filière et cochez vos cours terminés en quelques clics.
+            Choisissez votre direction, votre niveau et votre filière, puis cliquez sur le cours terminé.
           </p>
           <ol class="express-steps">
-            <li><strong>Choisissez</strong> votre filière et votre cohorte</li>
+            <li><strong>Choisissez</strong> votre direction et votre filière</li>
             <li><strong>Cliquez</strong> sur le cours terminé</li>
             <li><strong>Indiquez</strong> le nom du prof</li>
             <li><strong>Envoyez</strong> : le Chargé de la Planification et du Suivi Évaluation est alerté</li>
@@ -146,8 +146,8 @@
           </div>
         </div>
 
-        <!-- Carte 3 : Accès direct par périmètre -->
-        <div class="landing-card">
+        <!-- Carte 3 : Accès direct par périmètre (retirée : doublon avec la page Déclarer) -->
+        <div class="landing-card hidden" aria-hidden="true">
           <div class="landing-card-header">
             <div class="landing-card-icon">🏛️</div>
             <span class="landing-card-badge">Par Direction &amp; Niveau</span>
@@ -244,7 +244,7 @@
       <div class="section-intro">
         <div>
           <h2>Déclaration de fin de module (Espace Responsables de Programme)</h2>
-          <p>Sélectionnez votre programme issu des plaquettes officielles, cochez les ECUEs achevés et renseignez les intervenants. Chaque soumission notifie instantanément la coordination pour la programmation sur Moodle.</p>
+          <p>Choisissez votre direction, votre niveau et votre filière, puis cliquez sur le cours terminé et indiquez le nom du prof.</p>
         </div>
         <button id="btnOpenQuickImportFromDeclare" class="btn btn-outline hidden" type="button">
           Importer un fichier Excel/CSV collègue
@@ -260,8 +260,18 @@
           </div>
 
           <div class="form-group">
-            <label class="form-label" for="directionFilterSelect">🏛️ Direction pédagogique (Organigramme CESAG)</label>
-            <select id="directionFilterSelect" class="select" style="font-weight:700;">
+            <label class="form-label">Votre direction</label>
+            <div class="dir-blocks" role="group" aria-label="Direction pédagogique">
+              <button type="button" class="dir-block" data-dir-block="DPGELM">
+                <strong>DPGELM</strong>
+                <span>Programmes Grande École, Licences et Masters</span>
+              </button>
+              <button type="button" class="dir-block" data-dir-block="DPECN">
+                <strong>DPECN</strong>
+                <span>Executive, Campus Numérique, Expertise comptable</span>
+              </button>
+            </div>
+            <select id="directionFilterSelect" class="select hidden" aria-hidden="true" tabindex="-1">
               <option value="ALL" selected>Toutes les directions académiques</option>
               <option value="DPGELM">DPGELM — Direction des Programmes Grande École, Licences et Masters</option>
               <option value="DPECN">DPECN — Direction du Programme Executive et Campus Numérique</option>
@@ -269,17 +279,17 @@
           </div>
 
           <div class="form-group">
-            <label class="form-label">Niveau de formation</label>
+            <label class="form-label">Votre niveau</label>
             <div id="niveauPills" class="niveau-pills" role="group" aria-label="Niveau"></div>
           </div>
 
-          <div class="form-row-2">
-            <div class="form-group">
+          <div class="form-row-2 prog-row">
+            <div class="form-group hidden">
               <label class="form-label" for="programmeSearch">Filtrer les programmes</label>
               <input id="programmeSearch" class="input" type="search" placeholder="Ex : MACG, MBA GP, LG 1, MCCA…">
             </div>
             <div class="form-group">
-              <label class="form-label" for="programmeSelect">Programme officiel (<span id="programmeCountLabel">0</span>)</label>
+              <label class="form-label" for="programmeSelect">Votre filière (<span id="programmeCountLabel">0</span>)</label>
               <select id="programmeSelect" class="select"></select>
             </div>
           </div>
@@ -789,10 +799,10 @@
   <!-- Animation Décollage Avion (Passion Aviation) -->
   <div id="flightTakeoffAnim" class="flight-takeoff-anim">✈️💨</div>
 
-  <script src="js/config.js?v=20261127j"></script>
-  <script src="data/catalog.js?v=20261127j"></script>
-  <script src="js/app.js?v=20261127j"></script>
-  <script src="js/board.js?v=20261127j"></script>
-  <script src="js/icons.js?v=20261127j"></script>
+  <script src="js/config.js?v=20261127l"></script>
+  <script src="data/catalog.js?v=20261127l"></script>
+  <script src="js/app.js?v=20261127l"></script>
+  <script src="js/board.js?v=20261127l"></script>
+  <script src="js/icons.js?v=20261127l"></script>
 </body>
 </html>

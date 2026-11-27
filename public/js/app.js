@@ -1750,6 +1750,22 @@
 
     // Filter Direction (DPGELM vs DPECN)
     const dirFilterEl = $("directionFilterSelect");
+    const syncDirBlocks = () => {
+      document.querySelectorAll("[data-dir-block]").forEach((b) => {
+        const on = dirFilterEl && dirFilterEl.value === b.dataset.dirBlock;
+        b.classList.toggle("active", on);
+        b.setAttribute("aria-pressed", on ? "true" : "false");
+      });
+    };
+    document.querySelectorAll("[data-dir-block]").forEach((b) => {
+      b.addEventListener("click", () => {
+        if (!dirFilterEl) return;
+        dirFilterEl.value = dirFilterEl.value === b.dataset.dirBlock ? "ALL" : b.dataset.dirBlock;
+        dirFilterEl.dispatchEvent(new Event("change"));
+      });
+    });
+    if (dirFilterEl) dirFilterEl.addEventListener("change", syncDirBlocks);
+    syncDirBlocks();
     if (dirFilterEl) {
       dirFilterEl.addEventListener("change", () => {
         state.activeDirection = dirFilterEl.value;
