@@ -24,7 +24,7 @@
           <span class="cockpit-radar-dot"></span>
           <span>✈️ Cockpit</span>
         </button>
-        <div id="weatherBadge" class="weather-pill" title="Météo en direct Campus CESAG Dakar (API Open-Meteo)" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.14);color:#ffffff;padding:5px 12px;border-radius:999px;font-size:12px;font-weight:700;border:1px solid rgba(255,255,255,0.25);">
+        <div id="weatherBadge" class="weather-pill" title="Météo en direct Campus CESAG Dakar (API Open-Meteo)" style="display:inline-flex;align-items:center;gap:6px;background:#F0F9F4;color:#0B5D36;padding:5px 12px;border-radius:999px;font-size:12px;font-weight:700;border:1px solid #C6E3D2;">
           <span id="weatherIcon">☀️</span>
           <span id="weatherText">Dakar 28°C</span>
         </div>
@@ -59,7 +59,7 @@
           <span>Automatisation Moodle &amp; Cloud</span>
           <span id="badgePendingCount" class="tab-badge badge-amber">0</span>
         </button>
-        <button id="btnOpenGuideModal" class="btn btn-outline btn-xs" type="button" style="margin-left:auto;align-self:center;font-weight:700;padding:5px 12px;border-radius:999px;background:#ffffff;color:#0B4D2E;border:1.5px solid #0B4D2E;" title="Ouvrir le guide d'utilisation pour collègues">
+        <button id="btnOpenGuideModal" class="btn btn-outline btn-xs" type="button" style="margin-left:auto;align-self:center;font-weight:700;padding:5px 12px;border-radius:999px;background:#F0F9F4;color:#0B5D36;border:1.5px solid #0B5D36;" title="Ouvrir le guide d'utilisation pour collègues">
           ❓ Guide Collègue
         </button>
       </div>
@@ -76,7 +76,7 @@
     <section id="tab-accueil" class="tab-panel active">
       <div class="landing-hero">
         <div style="display:flex;align-items:center;gap:18px;margin-bottom:18px;flex-wrap:wrap;">
-          <img src="img/cesag-logo.png" alt="Logo CESAG" style="height:64px;background:#ffffff;border-radius:10px;padding:4px 10px;box-shadow:0 4px 12px rgba(0,0,0,0.18);">
+          <img src="img/cesag-logo.png" alt="Logo CESAG" style="height:60px;background:#ffffff;border-radius:10px;padding:4px 10px;border:1px solid #E2ECE6;box-shadow:0 2px 8px rgba(11,77,46,0.08);">
           <div>
             <div class="hero-badge-pill">
               <span>★</span> Campagne Académique 2026-2027 · CESAG Dakar
@@ -84,11 +84,11 @@
             <h2>PROGRAMMATION DES ÉVALUATIONS DES ENSEIGNEMENTS 26-27</h2>
           </div>
         </div>
-        <div style="background:rgba(255,255,255,0.1);border-left:4px solid #C9962A;border-radius:0 8px 8px 0;padding:14px 18px;margin-bottom:14px;">
-          <div style="font-size:17px;font-weight:700;color:#F5D58B;margin-bottom:4px;">
+        <div style="background:#F6FBF8;border:1px solid #D4E6DC;border-left:4px solid #C9962A;border-radius:0 10px 10px 0;padding:16px 20px;margin-bottom:4px;">
+          <div style="font-size:16px;font-weight:800;color:#0B5D36;margin-bottom:6px;">
             🔔 Vous nous donnez le signal, nous programmons l'évaluation sur Moodle
           </div>
-          <p style="font-size:14.5px;color:#EAF3ED;line-height:1.55;margin:0;">
+          <p style="font-size:14.5px;color:#334155;line-height:1.6;margin:0;">
             Chers collègues et responsables de formations, dès qu'un cours est achevé, vous cliquez simplement ici pour le signaler (ou déposez votre tableau). L'équipe de planification reçoit instantanément la notification pour ouvrir l'évaluation aux étudiants sur Moodle. Si vous le souhaitez, vous pouvez aussi indiquer les dates de début et de fin souhaitées pour la programmation.
           </p>
         </div>
@@ -104,7 +104,7 @@
           </div>
           <h3 class="landing-card-title">1. Formulaire express en ligne</h3>
           <p class="landing-card-desc">
-            Sélectionnez votre niveau (Master, MBA), choisissez votre filière et cochez vos cours terminés en quelques clics.
+            Sélectionnez votre niveau (Licence, Master, MBA), choisissez votre filière et cochez vos cours terminés en quelques clics.
           </p>
           <div class="landing-card-actions">
             <button id="btnLandingGoDeclare" class="btn btn-primary btn-lg" type="button" style="width:100%;font-size:14.5px;padding:12px 18px;">
@@ -683,28 +683,28 @@
   <!-- Modal Guide / Onboarding Collègues -->
   <div id="guideModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="guideModalTitle">
     <div class="modal-card" style="max-width:620px;">
-      <div class="modal-header" style="background:#0B4D2E;color:#ffffff;border-radius:12px 12px 0 0;padding:18px 24px;">
+      <div class="modal-header" style="background:#FFFFFF;color:#0B5D36;border-top:4px solid #0B5D36;border-bottom:1px solid #E2ECE6;border-radius:12px 12px 0 0;padding:18px 24px;">
         <div style="display:flex;align-items:center;gap:12px;">
-          <img src="img/cesag-logo.png" alt="Logo CESAG" style="height:36px;background:#ffffff;border-radius:6px;padding:2px 6px;">
+          <img src="img/cesag-logo.png" alt="Logo CESAG" style="height:36px;background:#ffffff;border-radius:6px;padding:2px 6px;border:1px solid #E2ECE6;">
           <div>
-            <h3 id="guideModalTitle" style="margin:0;font-size:17px;color:#ffffff;">Bienvenue sur l'Espace Programmation des Évaluations</h3>
-            <p style="margin:4px 0 0;font-size:12.5px;color:#A9DFBF;">Campagne 2026-2027 · Guide rapide pour les collègues &amp; coordonnateurs</p>
+            <h3 id="guideModalTitle" style="margin:0;font-size:17px;color:#0B5D36;font-weight:800;">Bienvenue sur l'Espace Programmation des Évaluations</h3>
+            <p style="margin:4px 0 0;font-size:12.5px;color:#475569;">Campagne 2026-2027 · Guide rapide pour les collègues &amp; coordonnateurs</p>
           </div>
         </div>
-        <button id="btnCloseGuideModal" class="modal-close" type="button" aria-label="Fermer" style="color:#ffffff;">&times;</button>
+        <button id="btnCloseGuideModal" class="modal-close" type="button" aria-label="Fermer" style="color:#0B5D36;">&times;</button>
       </div>
       <div class="modal-body" style="padding:22px 24px;">
-        <div style="background:#EAF3ED;border-left:4px solid #0B4D2E;padding:12px 16px;border-radius:6px;margin-bottom:18px;font-size:13.5px;color:#0B4D2E;line-height:1.5;">
+        <div style="background:#F2F9F5;border-left:4px solid #0B5D36;padding:12px 16px;border-radius:6px;margin-bottom:18px;font-size:13.5px;color:#084226;line-height:1.5;">
           <strong>Chers collègues,</strong> vous n'avez plus besoin de manipuler Moodle ! Dès qu'un cours est achevé dans votre filière, donnez simplement le signal ici. L'équipe de planification s'occupe de l'ouverture et du paramétrage.
         </div>
 
         <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:20px;">
           <div style="display:flex;gap:14px;align-items:flex-start;">
-            <div style="width:32px;height:32px;border-radius:50%;background:#0B4D2E;color:#ffffff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0;">1</div>
+            <div style="width:32px;height:32px;border-radius:50%;background:#0B5D36;color:#ffffff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0;">1</div>
             <div>
-              <strong style="color:#0B4D2E;font-size:14px;">Sélectionnez votre périmètre</strong>
+              <strong style="color:#0B5D36;font-size:14px;">Sélectionnez votre périmètre</strong>
               <p style="margin:3px 0 0;font-size:13px;color:var(--text-secondary);line-height:1.45;">
-                Cliquez sur <strong>Master</strong> ou <strong>MBA</strong> sur la page d'accueil, puis choisissez votre filière dans la liste déroulante.
+                Cliquez sur <strong>Licence</strong>, <strong>Master</strong> ou <strong>MBA</strong> sur la page d'accueil, puis choisissez votre filière dans la liste déroulante.
               </p>
             </div>
           </div>

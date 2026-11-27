@@ -1,17 +1,18 @@
 :root {
-  --cesag-green: #0D633D;
-  --cesag-green-dark: #0A432A;
-  --cesag-green-soft: #F0FDF4;
-  --cesag-mint: #F8FAFC;
-  --cesag-gold: #B47818;
-  --cesag-gold-light: #EAB308;
-  --cesag-gold-bg: #FEFCE8;
-  --cesag-border: #E2E8F0;
-  --cesag-border-strong: #CBD5E1;
-  --text-main: #0F172A;
-  --text-muted: #475569;
+  --cesag-green: #0B5D36;
+  --cesag-green-dark: #084226;
+  --cesag-green-soft: #F2F9F5;
+  --cesag-mint: #F8FBF9;
+  --cesag-gold: #B8841E;
+  --cesag-gold-light: #D4A138;
+  --cesag-gold-bg: #FEFBF0;
+  --cesag-border: #DCE7E1;
+  --cesag-border-strong: #BFD5C9;
+  --text-main: #1E293B;
+  --text-secondary: #475569;
+  --text-muted: #52606D;
   --text-light: #64748B;
-  --bg-page: #F8FAFC;
+  --bg-page: #F8FAF9;
   --bg-card: #FFFFFF;
   --danger: #DC2626;
   --danger-bg: #FEF2F2;
@@ -21,14 +22,19 @@
   --emerald-bg: #ECFDF5;
   --radius: 12px;
   --radius-sm: 8px;
-  --shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
-  --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+  --shadow: 0 2px 10px rgba(11, 93, 54, 0.05), 0 1px 3px rgba(0, 0, 0, 0.03);
+  --shadow-lg: 0 12px 28px -5px rgba(11, 93, 54, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
 }
 
 *,
 *::before,
 *::after {
   box-sizing: border-box;
+}
+
+html,
+body {
+  overflow-x: hidden;
 }
 
 body {
@@ -67,10 +73,11 @@ code {
   position: sticky;
   top: 0;
   z-index: 40;
-  background: #0F172A;
-  color: #FFFFFF;
-  border-bottom: 2px solid var(--cesag-green);
-  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.15);
+  background: #FFFFFF;
+  color: var(--cesag-green-dark);
+  border-top: 4px solid var(--cesag-green);
+  border-bottom: 1px solid var(--cesag-border);
+  box-shadow: 0 2px 14px rgba(11, 77, 46, 0.06);
 }
 
 .topbar-inner {
@@ -94,9 +101,9 @@ code {
   width: 44px;
   height: 44px;
   border-radius: 11px;
-  background: rgba(255, 255, 255, 0.12);
+  background: #F2F9F5;
   border: 1.5px solid var(--cesag-gold);
-  color: var(--cesag-gold-light);
+  color: var(--cesag-green-dark);
   display: grid;
   place-items: center;
   font-weight: 800;
@@ -108,10 +115,10 @@ code {
   height: 46px;
   width: auto;
   object-fit: contain;
-  background: #ffffff;
-  padding: 3px 8px;
-  border-radius: 9px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.14);
+  background: transparent;
+  padding: 0;
+  border-radius: 6px;
+  box-shadow: none;
   display: block;
   flex-shrink: 0;
 }
@@ -121,14 +128,15 @@ code {
   font-weight: 700;
   letter-spacing: 1.2px;
   text-transform: uppercase;
-  color: var(--cesag-gold-light);
+  color: var(--cesag-gold);
 }
 
 .brand-title {
   margin: 0;
   font-size: 19px;
-  font-weight: 700;
+  font-weight: 800;
   line-height: 1.25;
+  color: var(--cesag-green-dark);
 }
 
 .topbar-meta {
@@ -147,14 +155,16 @@ code {
   border-radius: 999px;
   font-size: 12px;
   font-weight: 600;
-  background: rgba(255, 255, 255, 0.12);
-  color: #FFFFFF;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: #F2F9F5;
+  color: var(--cesag-green-dark);
+  border: 1px solid #C6E3D2;
   text-decoration: none;
+  transition: background 0.15s, border-color 0.15s;
 }
 
 .moodle-pill:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: #E3F3EA;
+  border-color: var(--cesag-green);
 }
 
 .dot-live,
@@ -162,20 +172,20 @@ code {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--cesag-gold-light);
+  background: var(--cesag-green);
 }
 
 .storage-badge.mode-cloud .storage-dot {
-  background: #34D399;
+  background: #10B981;
 }
 
 .storage-badge.mode-static .storage-dot {
-  background: #FBBF24;
+  background: #D97706;
 }
 
 .nav-tabs {
-  background: rgba(0, 0, 0, 0.16);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background: #FAFDFB;
+  border-top: 1px solid #E5EFEA;
 }
 
 .nav-tabs-inner {
@@ -190,7 +200,7 @@ code {
 .nav-tab {
   border: none;
   background: transparent;
-  color: rgba(255, 255, 255, 0.8);
+  color: #475569;
   padding: 11px 16px;
   font-size: 14px;
   font-weight: 600;
@@ -204,19 +214,20 @@ code {
 }
 
 .nav-tab:hover {
-  color: #FFFFFF;
-  background: rgba(255, 255, 255, 0.06);
+  color: var(--cesag-green);
+  background: #EFF7F2;
 }
 
 .nav-tab.active {
-  color: var(--cesag-gold-light);
-  border-bottom-color: var(--cesag-gold);
-  background: rgba(255, 255, 255, 0.08);
+  color: var(--cesag-green-dark);
+  border-bottom-color: var(--cesag-green);
+  background: #FFFFFF;
+  font-weight: 700;
 }
 
 .tab-badge {
-  background: rgba(255, 255, 255, 0.2);
-  color: #FFFFFF;
+  background: #E4F2EA;
+  color: var(--cesag-green-dark);
   font-size: 11px;
   font-weight: 700;
   padding: 2px 8px;
@@ -224,8 +235,8 @@ code {
 }
 
 .tab-badge.badge-amber {
-  background: var(--cesag-gold);
-  color: #1F1600;
+  background: #FEF3C7;
+  color: #92400E;
 }
 
 /* Main Layout */
@@ -303,6 +314,8 @@ code {
   letter-spacing: 0.7px;
   padding: 3px 9px;
   border-radius: 999px;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .step-pill.step-gold {
@@ -880,6 +893,7 @@ code {
 
 .table-wrap {
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .data-table {
@@ -1146,8 +1160,9 @@ code {
   border-radius: var(--radius);
   padding: 28px 30px;
   color: var(--text-main);
-  box-shadow: 0 2px 12px rgba(15, 23, 42, 0.05);
+  box-shadow: 0 6px 24px rgba(11, 77, 46, 0.06);
   border: 1px solid var(--cesag-border);
+  border-top: 3px solid var(--cesag-green);
   position: relative;
   overflow: hidden;
   margin-bottom: 24px;
@@ -1159,16 +1174,16 @@ code {
   bottom: -30px;
   font-size: 140px;
   font-weight: 900;
-  color: rgba(15, 23, 42, 0.02);
+  color: rgba(11, 93, 54, 0.025);
   pointer-events: none;
 }
 .hero-badge-pill {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: #FEFCE8;
-  border: 1px solid #FDE047;
-  color: #854D0E;
+  background: #FEFBF0;
+  border: 1px solid #F3D98B;
+  color: #8A6012;
   padding: 4px 12px;
   border-radius: 999px;
   font-size: 11px;
@@ -1182,7 +1197,7 @@ code {
   font-weight: 800;
   line-height: 1.3;
   margin: 0 0 10px 0;
-  color: #0F172A;
+  color: var(--cesag-green-dark);
 }
 .landing-hero p {
   font-size: 14.5px;
@@ -1333,10 +1348,11 @@ code {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 16px;
-  background: var(--cesag-green-soft);
-  border: 1px solid var(--cesag-border-strong);
+  background: #FFFFFF;
+  border: 1px solid var(--cesag-border);
   border-radius: var(--radius);
   padding: 18px 22px;
+  box-shadow: var(--shadow);
 }
 .landing-stat-box {
   text-align: center;
@@ -1350,7 +1366,7 @@ code {
 .landing-stat-lbl {
   font-size: 11.5px;
   font-weight: 600;
-  color: var(--cesag-green);
+  color: var(--text-muted);
   margin-top: 4px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -1369,7 +1385,7 @@ code {
   align-items: center;
   justify-content: center;
   padding: 10px 6px;
-  background: var(--cesag-green-soft);
+  background: #FFFFFF;
   border: 1.5px solid var(--cesag-border-strong);
   border-radius: 10px;
   color: var(--cesag-green-dark);
@@ -1378,10 +1394,10 @@ code {
   box-shadow: 0 1px 3px rgba(0,0,0,0.04);
 }
 .btn-quick-niveau:hover {
-  background: #ffffff;
-  border-color: var(--cesag-gold);
+  background: #F2F9F5;
+  border-color: var(--cesag-green);
   transform: translateY(-2px);
-  box-shadow: 0 6px 14px rgba(11, 77, 46, 0.12);
+  box-shadow: 0 6px 14px rgba(11, 77, 46, 0.1);
   color: var(--cesag-green);
 }
 .btn-quick-niveau .sub {
@@ -1399,9 +1415,9 @@ code {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: rgba(255, 255, 255, 0.12);
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: #F8FAF9;
+  color: var(--cesag-green-dark);
+  border: 1px solid #C6E3D2;
   padding: 5px 12px;
   border-radius: 999px;
   font-size: 12px;
@@ -1411,15 +1427,15 @@ code {
   user-select: none;
 }
 .btn-cockpit-toggle:hover {
-  background: rgba(255, 255, 255, 0.22);
-  border-color: #F5D58B;
+  background: #ECF7F0;
+  border-color: var(--cesag-green);
   transform: translateY(-1px);
 }
 .btn-cockpit-toggle.active {
-  background: #C9962A;
-  color: #0B4D2E;
-  border-color: #F5D58B;
-  box-shadow: 0 0 12px rgba(201, 150, 42, 0.45);
+  background: var(--cesag-green);
+  color: #FFFFFF;
+  border-color: var(--cesag-green);
+  box-shadow: 0 0 12px rgba(11, 93, 54, 0.28);
 }
 .btn-cockpit-toggle .cockpit-radar-dot {
   width: 8px;
@@ -1580,6 +1596,16 @@ body.mode-cockpit .landing-hero {
   }
   .btn {
     min-height: 44px;
+  }
+  .landing-workflow-header {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .modal-backdrop {
+    padding: 10px;
+  }
+  .modal-card {
+    max-height: 94vh;
   }
 }
 

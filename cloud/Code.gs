@@ -119,6 +119,65 @@ function sendDeclarationNotification(items, ss) {
       subject: subject,
       htmlBody: htmlBody
     });
+
+    // Envoi d'une copie récapitulative au(x) collègue(s) déclarant(s) sans exposer le lien privé du Sheet
+    try {
+      const recipientList = recipients.split(",").map((e) => e.trim().toLowerCase()).filter(Boolean);
+      const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+      const byDeclarant = {};
+      items.forEach((x) => {
+        const em = String(x.declarant_email || "").trim().toLowerCase();
+        if (!em || !emailRe.test(em) || recipientList.indexOf(em) !== -1) return;
+        if (!byDeclarant[em]) byDeclarant[em] = [];
+        byDeclarant[em].push(x);
+      });
+
+      Object.keys(byDeclarant).forEach((colleagueEmail) => {
+        const cItems = byDeclarant[colleagueEmail];
+        const cClasses = [];
+        cItems.forEach((x) => {
+          if (x.classe && cClasses.indexOf(x.classe) === -1) cClasses.push(x.classe);
+        });
+        const cRowsHtml = cItems.map((x) => {
+          return (
+            "<tr>" +
+            '<td style="padding:8px 10px;border-bottom:1px solid #DCE7E1;"><strong>' + escapeHtml(x.classe) + "</strong></td>" +
+            '<td style="padding:8px 10px;border-bottom:1px solid #DCE7E1;">' + escapeHtml(x.module) + (x.code_ecue ? ' <span style="color:#64748B;font-size:12px;">(' + escapeHtml(x.code_ecue) + ")</span>" : "") + "</td>" +
+            '<td style="padding:8px 10px;border-bottom:1px solid #DCE7E1;">' + escapeHtml(x.intervenant || "—") + "</td>" +
+            '<td style="padding:8px 10px;border-bottom:1px solid #DCE7E1;">' + escapeHtml(x.date_fin_module || "—") + "</td>" +
+            "</tr>"
+          );
+        }).join("");
+
+        const colleagueBody =
+          '<div style="font-family:Arial,Helvetica,sans-serif;max-width:740px;margin:0 auto;background:#FFFFFF;border:1px solid #DCE7E1;border-top:4px solid #0B5D36;border-radius:12px;overflow:hidden;">' +
+          '<div style="background:#FFFFFF;color:#084226;padding:18px 22px;border-bottom:1px solid #DCE7E1;">' +
+          '<div style="font-size:11px;font-weight:700;letter-spacing:1.1px;color:#B8841E;text-transform:uppercase;">CESAG · ACCUSÉ DE RÉCEPTION ÉVALUATIONS 2026-2027</div>' +
+          '<h2 style="margin:6px 0 0 0;font-size:18px;color:#084226;">Confirmation : ' + cItems.length + " module(s) transmis pour programmation Moodle</h2>" +
+          "</div>" +
+          '<div style="padding:20px 22px;color:#1E293B;font-size:14px;">' +
+          '<p style="margin:0 0 14px 0;">Bonjour' + (cItems[0].declarant_nom ? " <strong>" + escapeHtml(cItems[0].declarant_nom) + "</strong>" : "") + ",<br><br>" +
+          "Votre déclaration pour <strong>" + escapeHtml(cClasses.join(", ") || "CESAG") + "</strong> a bien été transmise à l'équipe de coordination des évaluations des enseignements.</p>" +
+          '<table style="width:100%;border-collapse:collapse;font-size:13px;margin-bottom:16px;">' +
+          '<thead><tr style="background:#F2F9F5;color:#084226;text-align:left;">' +
+          '<th style="padding:8px 10px;border-bottom:2px solid #DCE7E1;">Classe</th>' +
+          '<th style="padding:8px 10px;border-bottom:2px solid #DCE7E1;">Module (ECUE)</th>' +
+          '<th style="padding:8px 10px;border-bottom:2px solid #DCE7E1;">Intervenant</th>' +
+          '<th style="padding:8px 10px;border-bottom:2px solid #DCE7E1;">Fin module</th>' +
+          "</tr></thead><tbody>" + cRowsHtml + "</tbody></table>" +
+          '<p style="margin:0;font-size:12.5px;color:#52606D;">Ceci est une copie automatique de votre déclaration. L\'équipe de planification se charge de l\'ouverture sur Moodle.</p>' +
+          "</div></div>";
+
+        MailApp.sendEmail({
+          to: colleagueEmail,
+          subject: "✅ [CESAG Évaluations] Copie de votre déclaration (" + cItems.length + " module(s)) — " + (cClasses.join(", ") || "CESAG"),
+          htmlBody: colleagueBody
+        });
+      });
+    } catch (colleagueErr) {
+      Logger.log("Erreur copie collègue : " + colleagueErr);
+    }
+
     return { notified: true, notify_error: null };
   } catch (err) {
     return { notified: false, notify_error: String(err) };
