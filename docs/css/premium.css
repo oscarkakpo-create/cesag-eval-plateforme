@@ -418,3 +418,32 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--cesag-green); 
 .pill-btn[data-niveau]:hover { background: var(--niv-soft) !important; }
 .pill-btn[data-niveau].active { background: var(--niv) !important; border-color: var(--niv) !important; color: #fff !important; }
 .pill-btn[data-niveau] .pill-sub { color: inherit !important; opacity: .8; }
+
+/* ---------- Carte « Formulaire express » : étapes ---------- */
+.express-steps { list-style: none; counter-reset: st; margin: 14px 0 0; padding: 0; display: grid; gap: 8px; }
+.express-steps li {
+  counter-increment: st;
+  display: flex; align-items: center; gap: 10px;
+  font-size: 14px; color: var(--text-main);
+  padding: 8px 10px; border-radius: 8px; background: var(--bg-page);
+}
+.express-steps li::before {
+  content: counter(st);
+  flex: 0 0 22px; height: 22px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--cesag-green); color: #fff;
+  font-size: 12px; font-weight: 700;
+}
+.express-steps strong { color: var(--cesag-green); font-weight: 700; }
+.express-steps span { color: var(--text-muted); font-size: 12.5px; }
+.express-note { margin: 10px 0 0; font-size: 12.5px; color: var(--text-muted); }
+/* Carte « Accès direct » : pas de trou, les boutons de niveau occupent la hauteur */
+.landing-card:has(.btn-quick-niveau) .landing-card-actions { margin-top: 14px !important; }
+.landing-card:has(.btn-quick-niveau) .landing-card-actions:has(.btn-quick-niveau) { flex: 1; align-items: stretch; }
+.landing-card:has(.btn-quick-niveau) .btn-quick-niveau { min-height: 96px; justify-content: center; }
+.btn-quick-niveau .ico { width: 28px; height: 28px; }
+.landing-card:has(.btn-quick-niveau) .landing-card-desc { flex: 0 0 auto !important; margin-bottom: 14px !important; }
+.landing-card:has(.btn-quick-niveau) .landing-card-actions:has(.btn-quick-niveau) { grid-auto-rows: 1fr; }
+.landing-card:has(.btn-quick-niveau) .btn-quick-niveau .ico { width: 34px; height: 34px; margin-bottom: 6px; }
+.landing-card:has(.btn-quick-niveau) .btn-quick-niveau span[style*="font-size:14px"] { font-size: 16px !important; letter-spacing: .04em; }
+@media (max-width: 860px) { .landing-card:has(.btn-quick-niveau) .btn-quick-niveau { min-height: 84px; } }
