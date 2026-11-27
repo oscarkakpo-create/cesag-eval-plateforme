@@ -450,10 +450,7 @@
         "SEMESTRE 2"
       ],
       "classes_suggerees": [
-        "LG 1",
-        "LG 1 Jour A",
-        "LG 1 Jour B",
-        "LG 1 Soir"
+        "Licence en Gestion - L1"
       ],
       "ecue_count": 31,
       "ecues": [
@@ -860,7 +857,11 @@
           "total_h": 25,
           "credits": null
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1667
+      ],
+      "default_moodle_course_id": 1667
     },
     {
       "id": "licence-lg-2",
@@ -875,10 +876,7 @@
         "SEMESTRE 4"
       ],
       "classes_suggerees": [
-        "LG 2",
-        "LG 2 Jour A",
-        "LG 2 Jour B",
-        "LG 2 Soir"
+        "Licence en Gestion - L2"
       ],
       "ecue_count": 29,
       "ecues": [
@@ -1259,7 +1257,11 @@
           "total_h": 30,
           "credits": null
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1672
+      ],
+      "default_moodle_course_id": 1672
     },
     {
       "id": "licence-lg-3-tbf",
@@ -1274,11 +1276,7 @@
         "SEMESTRE 6"
       ],
       "classes_suggerees": [
-        "LG 3",
-        "LG 3 TBF",
-        "LG 3 TBF Jour A",
-        "LG 3 TBF Jour B",
-        "LG 3 TBF Soir"
+        "Licence en Gestion - L3"
       ],
       "ecue_count": 35,
       "ecues": [
@@ -1737,7 +1735,11 @@
           "total_h": 150,
           "credits": null
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1677
+      ],
+      "default_moodle_course_id": 1677
     },
     {
       "id": "licence-lg-3-egp",
@@ -1752,11 +1754,7 @@
         "SEMESTRE 6"
       ],
       "classes_suggerees": [
-        "LG 3",
-        "LG 3 EGP",
-        "LG 3 EGP Jour A",
-        "LG 3 EGP Jour B",
-        "LG 3 EGP Soir"
+        "Licence en Gestion - L3"
       ],
       "ecue_count": 40,
       "ecues": [
@@ -2280,7 +2278,11 @@
           "total_h": 25,
           "credits": null
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1677
+      ],
+      "default_moodle_course_id": 1677
     },
     {
       "id": "licence-lg-3-grh",
@@ -2295,11 +2297,7 @@
         "SEMESTRE 6"
       ],
       "classes_suggerees": [
-        "LG 3",
-        "LG 3 GRH",
-        "LG 3 GRH Jour A",
-        "LG 3 GRH Jour B",
-        "LG 3 GRH Soir"
+        "Licence en Gestion - L3"
       ],
       "ecue_count": 27,
       "ecues": [
@@ -2654,7 +2652,11 @@
           "total_h": 100,
           "credits": 4
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1677
+      ],
+      "default_moodle_course_id": 1677
     },
     {
       "id": "licence-lg-3-mdc",
@@ -2669,11 +2671,7 @@
         "SEMESTRE 6"
       ],
       "classes_suggerees": [
-        "LG 3",
-        "LG 3 MDC",
-        "LG 3 MDC Jour A",
-        "LG 3 MDC Jour B",
-        "LG 3 MDC Soir"
+        "Licence en Gestion - L3"
       ],
       "ecue_count": 36,
       "ecues": [
@@ -3145,7 +3143,11 @@
           "total_h": 25,
           "credits": 1
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1677
+      ],
+      "default_moodle_course_id": 1677
     },
     {
       "id": "licence-lcca-1",
@@ -3160,10 +3162,7 @@
         "SEMESTRE 2"
       ],
       "classes_suggerees": [
-        "LCCA 1",
-        "LCCA 1 Jour A",
-        "LCCA 1 Jour B",
-        "LCCA 1 Soir"
+        "Licence en Comptabilité, Contrôle et Audit - L1"
       ],
       "ecue_count": 31,
       "ecues": [
@@ -3570,7 +3569,11 @@
           "total_h": 25,
           "credits": null
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1668
+      ],
+      "default_moodle_course_id": 1668
     },
     {
       "id": "licence-lcca-2",
@@ -3585,10 +3588,7 @@
         "SEMESTRE 4"
       ],
       "classes_suggerees": [
-        "LCCA 2",
-        "LCCA 2 Jour A",
-        "LCCA 2 Jour B",
-        "LCCA 2 Soir"
+        "Licence en Comptabilité, Contrôle et Audit - L2"
       ],
       "ecue_count": 29,
       "ecues": [
@@ -3969,7 +3969,11 @@
           "total_h": 30,
           "credits": null
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1673
+      ],
+      "default_moodle_course_id": 1673
     },
     {
       "id": "licence-lcca-3",
@@ -3984,10 +3988,7 @@
         "SEMESTRE 6"
       ],
       "classes_suggerees": [
-        "LCCA 3",
-        "LCCA 3 Jour A",
-        "LCCA 3 Jour B",
-        "LCCA 3 Soir"
+        "Licence en Comptabilité, Contrôle et Audit - L3"
       ],
       "ecue_count": 33,
       "ecues": [
@@ -4420,7 +4421,11 @@
           "total_h": 25,
           "credits": null
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1678
+      ],
+      "default_moodle_course_id": 1678
     },
     {
       "id": "licence-ltcf",
@@ -4435,10 +4440,7 @@
         "SEMESTRE 6"
       ],
       "classes_suggerees": [
-        "LTCF",
-        "LTCF Jour A",
-        "LTCF Jour B",
-        "LTCF Soir"
+        "Licence en Techniques Comptables et Financières 3e année"
       ],
       "ecue_count": 23,
       "ecues": [
@@ -4741,7 +4743,11 @@
           "total_h": 35,
           "credits": null
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1682
+      ],
+      "default_moodle_course_id": 1682
     },
     {
       "id": "licence-lgeo",
@@ -4759,10 +4765,7 @@
         "SPÉCIALISATION EGP – ENTREPRENEURIAT ET GESTION DES PROJETS"
       ],
       "classes_suggerees": [
-        "LGEO",
-        "LGEO Jour A",
-        "LGEO Jour B",
-        "LGEO Soir"
+        "Licence en Gestion des Entreprises et Organisations"
       ],
       "ecue_count": 41,
       "ecues": [
@@ -5299,7 +5302,11 @@
           "total_h": 25,
           "credits": null
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1680
+      ],
+      "default_moodle_course_id": 1680
     },
     {
       "id": "licence-lg-pme-pmi",
@@ -5314,10 +5321,7 @@
         "SEMESTRE 6"
       ],
       "classes_suggerees": [
-        "LG PME-PMI",
-        "LG PME-PMI Jour A",
-        "LG PME-PMI Jour B",
-        "LG PME-PMI Soir"
+        "Licence en Gestion - L3"
       ],
       "ecue_count": 33,
       "ecues": [
@@ -5750,7 +5754,11 @@
           "total_h": 150,
           "credits": 6
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1677
+      ],
+      "default_moodle_course_id": 1677
     },
     {
       "id": "licence-lgss",
@@ -5767,10 +5775,7 @@
         "SEMESTRE 6"
       ],
       "classes_suggerees": [
-        "LGSS",
-        "LGSS Jour A",
-        "LGSS Jour B",
-        "LGSS Soir"
+        "Licence en Gestion - L3"
       ],
       "ecue_count": 48,
       "ecues": [
@@ -6398,7 +6403,11 @@
           "total_h": 50,
           "credits": 2
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1677
+      ],
+      "default_moodle_course_id": 1677
     },
     {
       "id": "licence-lsmd",
@@ -6419,12 +6428,9 @@
         "SEMESTRE 6"
       ],
       "classes_suggerees": [
-        "LSMD 1",
-        "LSMD 2",
-        "LSMD 3",
-        "LSMD Jour A",
-        "LSMD Jour B",
-        "LSMD Soir"
+        "Licence en Sciences du Management et de la Décision - L1",
+        "Licence en Sciences du Management et de la Décision - L2",
+        "Licence en Sciences du Management et de la Décision 3e année spéciale"
       ],
       "ecue_count": 43,
       "ecues": [
@@ -6987,7 +6993,13 @@
           "total_h": 50,
           "credits": 2
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1671,
+        1676,
+        1681
+      ],
+      "default_moodle_course_id": 1671
     },
     {
       "id": "licence-miage-l1",
@@ -7002,10 +7014,7 @@
         "SEMESTRE 2"
       ],
       "classes_suggerees": [
-        "MIAGE L1",
-        "MIAGE L1 Jour A",
-        "MIAGE L1 Jour B",
-        "MIAGE L1 Soir"
+        "Licence en Méthodes Informatiques Appliquées à la Gestion des Entreprises - L1"
       ],
       "ecue_count": 30,
       "ecues": [
@@ -7399,7 +7408,11 @@
           "total_h": 25,
           "credits": null
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1669
+      ],
+      "default_moodle_course_id": 1669
     },
     {
       "id": "licence-miage-l2",
@@ -7414,10 +7427,7 @@
         "SEMESTRE 4"
       ],
       "classes_suggerees": [
-        "MIAGE L2",
-        "MIAGE L2 Jour A",
-        "MIAGE L2 Jour B",
-        "MIAGE L2 Soir"
+        "Licence en Méthodes Informatiques Appliquées à la Gestion des Entreprises - L2"
       ],
       "ecue_count": 24,
       "ecues": [
@@ -7733,7 +7743,11 @@
           "total_h": 50,
           "credits": null
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1674
+      ],
+      "default_moodle_course_id": 1674
     },
     {
       "id": "licence-miage-l3",
@@ -7748,10 +7762,7 @@
         "SEMESTRE 6"
       ],
       "classes_suggerees": [
-        "MIAGE L3",
-        "MIAGE L3 Jour A",
-        "MIAGE L3 Jour B",
-        "MIAGE L3 Soir"
+        "Licence en Méthodes Informatiques Appliquées à la Gestion des Entreprises - L2"
       ],
       "ecue_count": 21,
       "ecues": [
@@ -8028,7 +8039,11 @@
           "total_h": 90,
           "credits": null
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1674
+      ],
+      "default_moodle_course_id": 1674
     },
     {
       "id": "licence-decogef",
@@ -8049,12 +8064,9 @@
         "SEMESTRE 6"
       ],
       "classes_suggerees": [
-        "DECOGEF 1",
-        "DECOGEF 2",
-        "DECOGEF 3",
-        "DECOGEF Jour A",
-        "DECOGEF Jour B",
-        "DECOGEF Soir"
+        "Diplôme d’Études de Comptabilité et Gestion Financière - L1",
+        "Diplôme d’Études de Comptabilité et Gestion Financière - L2",
+        "Diplôme d’Études de Comptabilité et Gestion Financière - L3"
       ],
       "ecue_count": 56,
       "ecues": [
@@ -8786,7 +8798,13 @@
           "total_h": 40,
           "credits": null
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1670,
+        1675,
+        1679
+      ],
+      "default_moodle_course_id": 1670
     },
     {
       "id": "master-mbf",
@@ -8802,11 +8820,7 @@
         "SEMESTRE 10 – SPÉCIALISATION « MARCHÉS FINANCIERS ET FINANCE D'ENTREPRISE » (MFFE)"
       ],
       "classes_suggerees": [
-        "MBF-TC-A",
-        "MBF",
-        "MBF2 Jour A",
-        "MBF2 Jour B",
-        "MBF2 Soir"
+        "Master en Banque et Finance"
       ],
       "ecue_count": 38,
       "ecues": [
@@ -9304,7 +9318,11 @@
           "total_h": 150,
           "credits": null
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1696
+      ],
+      "default_moodle_course_id": 1696
     },
     {
       "id": "master-mcca",
@@ -9322,17 +9340,10 @@
         "SEMESTRE 10"
       ],
       "classes_suggerees": [
-        "MCCA1 Jour A",
-        "MCCA2 Jour A",
-        "MCCA 1 Jour",
-        "MCCA 1 Soir",
-        "MCCA 2 Jour",
-        "MCCA 2 Soir",
-        "MCCA1 Jour B",
-        "MCCA1 Soir",
-        "MCCA2 Jour B",
-        "MCCA2 Soir",
-        "MCCA"
+        "Master en Comptabilité, Contrôle et Audit - JOUR",
+        "Master en Comptabilité, Contrôle et Audit - SOIR",
+        "Master en Comptabilité, Contrôle et Audit - M2 - JOUR",
+        "Master en Comptabilité, Contrôle et Audit - M2 - SOIR"
       ],
       "ecue_count": 80,
       "ecues": [
@@ -10376,7 +10387,14 @@
           "total_h": 25,
           "credits": null
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1685,
+        1712,
+        1693,
+        1711
+      ],
+      "default_moodle_course_id": 1685
     },
     {
       "id": "master-macg",
@@ -10394,15 +10412,8 @@
         "SEMESTRE 10"
       ],
       "classes_suggerees": [
-        "MACG1 Jour A",
-        "MACG2 Jour A",
-        "MACG 1 Jour",
-        "MACG 1 Soir",
-        "MACG1 Jour B",
-        "MACG1 Soir",
-        "MACG2 Jour B",
-        "MACG2 Soir",
-        "MACG"
+        "Master en Audit et Contrôle de Gestion - JOUR",
+        "Master en Audit et Contrôle de Gestion - SOIR"
       ],
       "ecue_count": 57,
       "ecues": [
@@ -11147,7 +11158,12 @@
           "total_h": 150,
           "credits": null
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1683,
+        1707
+      ],
+      "default_moodle_course_id": 1683
     },
     {
       "id": "master-mcgf",
@@ -11165,16 +11181,9 @@
         "SEMESTRE 10"
       ],
       "classes_suggerees": [
-        "MCGF1 Jour A",
-        "MCGF2 Jour A",
-        "MCGF 1 Jour",
-        "MCGF 1 Soir",
-        "MCGF 2",
-        "MCGF1 Jour B",
-        "MCGF1 Soir",
-        "MCGF2 Jour B",
-        "MCGF2 Soir",
-        "MCGF"
+        "Master en Comptabilité et Gestion Financière - JOUR",
+        "Master en Comptabilité et Gestion Financière - SOIR",
+        "Master en Comptabilité et Gestion Financière - M2"
       ],
       "ecue_count": 56,
       "ecues": [
@@ -11906,7 +11915,13 @@
           "total_h": 150,
           "credits": null
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1684,
+        1708,
+        1692
+      ],
+      "default_moodle_course_id": 1684
     },
     {
       "id": "master-mdbfa",
@@ -11921,13 +11936,9 @@
         "SEMESTRE 8"
       ],
       "classes_suggerees": [
-        "MDBFA1 Jour A",
-        "MDBFA 1 Jour",
-        "MDBFA 1 Soir",
-        "MDBFA 2",
-        "MDBFA1 Jour B",
-        "MDBFA1 Soir",
-        "MDBFA"
+        "Master en Droit, Banque, Finance, Assurance - JOUR",
+        "Master en Droit, Banque, Finance, Assurance - SOIR",
+        "Master en Droit, Banque, Finance, Assurance - M2"
       ],
       "ecue_count": 31,
       "ecues": [
@@ -12334,7 +12345,13 @@
           "total_h": 35,
           "credits": null
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1686,
+        1709,
+        1694
+      ],
+      "default_moodle_course_id": 1686
     },
     {
       "id": "master-mdbfa2-dbf",
@@ -12349,10 +12366,7 @@
         "SEMESTRE 10"
       ],
       "classes_suggerees": [
-        "MDBFA2 DBF2 Jour A",
-        "MDBFA2 DBF2 Jour B",
-        "MDBFA2 DBF2 Soir",
-        "MDBFA2 DBF"
+        "Master en Droit, Banque, Finance, Assurance - M2"
       ],
       "ecue_count": 29,
       "ecues": [
@@ -12733,7 +12747,11 @@
           "total_h": 150,
           "credits": null
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1694
+      ],
+      "default_moodle_course_id": 1694
     },
     {
       "id": "master-mdbfa2-itf",
@@ -12748,10 +12766,7 @@
         "SEMESTRE 10"
       ],
       "classes_suggerees": [
-        "MDBFA2 ITF2 Jour A",
-        "MDBFA2 ITF2 Jour B",
-        "MDBFA2 ITF2 Soir",
-        "MDBFA2 ITF"
+        "Master en Droit, Banque, Finance, Assurance - M2"
       ],
       "ecue_count": 30,
       "ecues": [
@@ -13145,7 +13160,11 @@
           "total_h": 150,
           "credits": null
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1694
+      ],
+      "default_moodle_course_id": 1694
     },
     {
       "id": "master-me3p",
@@ -13163,13 +13182,7 @@
         "SEMESTRE 10"
       ],
       "classes_suggerees": [
-        "ME3P",
-        "ME3P1 Jour A",
-        "ME3P1 Jour B",
-        "ME3P1 Soir",
-        "ME3P2 Jour A",
-        "ME3P2 Jour B",
-        "ME3P2 Soir"
+        "Master en Évaluation des Projets, Programmes et Politiques"
       ],
       "ecue_count": 53,
       "ecues": [
@@ -13862,7 +13875,11 @@
           "total_h": 35,
           "credits": null
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1691
+      ],
+      "default_moodle_course_id": 1691
     },
     {
       "id": "master-mgp",
@@ -13880,15 +13897,8 @@
         "SEMESTRE 10"
       ],
       "classes_suggerees": [
-        "MGP 1 Jour",
-        "MGP 1 Soir",
-        "MGP1 Jour A",
-        "MGP1 Jour B",
-        "MGP1 Soir",
-        "MGP2 Jour A",
-        "MGP2 Jour B",
-        "MGP2 Soir",
-        "MGP"
+        "Master en Gestion des Projets - JOUR",
+        "Master en Gestion des Projets - SOIR"
       ],
       "ecue_count": 63,
       "ecues": [
@@ -14711,7 +14721,12 @@
           "total_h": 35,
           "credits": null
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1687,
+        1710
+      ],
+      "default_moodle_course_id": 1687
     },
     {
       "id": "master-mms",
@@ -14729,14 +14744,7 @@
         "SEMESTRE 10"
       ],
       "classes_suggerees": [
-        "MMS 1",
-        "MMS1 Jour A",
-        "MMS1 Jour B",
-        "MMS1 Soir",
-        "MMS2 Jour A",
-        "MMS2 Jour B",
-        "MMS2 Soir",
-        "MMS"
+        "Master en Marketing et Stratégie"
       ],
       "ecue_count": 66,
       "ecues": [
@@ -15598,7 +15606,11 @@
           "total_h": 35,
           "credits": null
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1689
+      ],
+      "default_moodle_course_id": 1689
     },
     {
       "id": "master-mgrh",
@@ -15616,14 +15628,7 @@
         "SEMESTRE 10"
       ],
       "classes_suggerees": [
-        "MGRH 1",
-        "MGRH1 Jour A",
-        "MGRH1 Jour B",
-        "MGRH1 Soir",
-        "MGRH2 Jour A",
-        "MGRH2 Jour B",
-        "MGRH2 Soir",
-        "MGRH"
+        "Master en Gestion des Ressources Humaines"
       ],
       "ecue_count": 54,
       "ecues": [
@@ -16329,7 +16334,11 @@
           "total_h": 50,
           "credits": null
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1688
+      ],
+      "default_moodle_course_id": 1688
     },
     {
       "id": "master-msmd-finance",
@@ -16347,13 +16356,8 @@
         "SEMESTRE 10"
       ],
       "classes_suggerees": [
-        "MSMD Finance1 Jour A",
-        "MSMD Finance1 Jour B",
-        "MSMD Finance1 Soir",
-        "MSMD Finance2 Jour A",
-        "MSMD Finance2 Jour B",
-        "MSMD Finance2 Soir",
-        "MSMD Finance"
+        "Master en Sciences du Management et de la Décision",
+        "Master en Sciences du Management et de la Décision - M2"
       ],
       "ecue_count": 25,
       "ecues": [
@@ -16682,7 +16686,12 @@
           "total_h": 375,
           "credits": 15
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1690,
+        1695
+      ],
+      "default_moodle_course_id": 1690
     },
     {
       "id": "master-msmd-actuariat",
@@ -16700,13 +16709,8 @@
         "SEMESTRE 10"
       ],
       "classes_suggerees": [
-        "MSMD Actuariat1 Jour A",
-        "MSMD Actuariat1 Jour B",
-        "MSMD Actuariat1 Soir",
-        "MSMD Actuariat2 Jour A",
-        "MSMD Actuariat2 Jour B",
-        "MSMD Actuariat2 Soir",
-        "MSMD Actuariat"
+        "Master en Sciences du Management et de la Décision",
+        "Master en Sciences du Management et de la Décision - M2"
       ],
       "ecue_count": 26,
       "ecues": [
@@ -17048,7 +17052,12 @@
           "total_h": 375,
           "credits": 15
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1690,
+        1695
+      ],
+      "default_moodle_course_id": 1690
     },
     {
       "id": "master-msmd-eco-appliquee",
@@ -17063,10 +17072,8 @@
         "SEMESTRE 8"
       ],
       "classes_suggerees": [
-        "MSMD Éco. appliquée1 Jour A",
-        "MSMD Éco. appliquée1 Jour B",
-        "MSMD Éco. appliquée1 Soir",
-        "MSMD Éco. appliquée"
+        "Master en Sciences du Management et de la Décision",
+        "Master en Sciences du Management et de la Décision - M2"
       ],
       "ecue_count": 19,
       "ecues": [
@@ -17317,7 +17324,12 @@
           "total_h": 50,
           "credits": 2
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1690,
+        1695
+      ],
+      "default_moodle_course_id": 1690
     },
     {
       "id": "master-mdgl",
@@ -17335,13 +17347,7 @@
         "SEMESTRE 10"
       ],
       "classes_suggerees": [
-        "MDGL1 Jour A",
-        "MDGL1 Jour B",
-        "MDGL1 Soir",
-        "MDGL2 Jour A",
-        "MDGL2 Jour B",
-        "MDGL2 Soir",
-        "MDGL"
+        "Master en Évaluation des Projets, Programmes et Politiques"
       ],
       "ecue_count": 53,
       "ecues": [
@@ -18034,7 +18040,11 @@
           "total_h": 375,
           "credits": 15
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1691
+      ],
+      "default_moodle_course_id": 1691
     },
     {
       "id": "master-descogef",
@@ -18052,16 +18062,9 @@
         "SEMESTRE 10"
       ],
       "classes_suggerees": [
-        "DESCOGEF 1",
-        "DESCOGEF 2",
-        "DESCOGEF 2 Spéciale",
-        "DESCOGEF1 Jour A",
-        "DESCOGEF1 Jour B",
-        "DESCOGEF1 Soir",
-        "DESCOGEF2 Jour A",
-        "DESCOGEF2 Jour B",
-        "DESCOGEF2 Soir",
-        "DESCOGEF"
+        "Diplôme d’Études Supérieures en Comptabilité et Gestion Financière - 1",
+        "Diplôme d’Études Supérieures en Comptabilité et Gestion Financière - 2",
+        "Diplôme d’Études Supérieures en Comptabilité et Gestion Financière - 2e année spéciale"
       ],
       "ecue_count": 48,
       "ecues": [
@@ -18689,7 +18692,13 @@
           "total_h": 50,
           "credits": 2
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1704,
+        1705,
+        1706
+      ],
+      "default_moodle_course_id": 1704
     },
     {
       "id": "mba-mba-mee",
@@ -18704,9 +18713,7 @@
         "SEMESTRE 10"
       ],
       "classes_suggerees": [
-        "MBA MEE",
-        "MBA MEE Jour",
-        "MBA MEE Soir"
+        "MBA en Administration et Gestion"
       ],
       "ecue_count": 33,
       "ecues": [
@@ -19139,7 +19146,11 @@
           "total_h": 250,
           "credits": null
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1697
+      ],
+      "default_moodle_course_id": 1697
     },
     {
       "id": "mba-mba-msch",
@@ -19154,9 +19165,7 @@
         "SEMESTRE 10"
       ],
       "classes_suggerees": [
-        "MBA MSCH",
-        "MBA MSCH Jour",
-        "MBA MSCH Soir"
+        "MBA en Management Stratégique du Capital Humain"
       ],
       "ecue_count": 35,
       "ecues": [
@@ -19615,7 +19624,11 @@
           "total_h": 150,
           "credits": null
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1700
+      ],
+      "default_moodle_course_id": 1700
     },
     {
       "id": "mba-mba-mcid",
@@ -19630,9 +19643,7 @@
         "SEMESTRE 10"
       ],
       "classes_suggerees": [
-        "MBA MCID",
-        "MBA MCID Jour",
-        "MBA MCID Soir"
+        "MBA en Administration et Gestion"
       ],
       "ecue_count": 31,
       "ecues": [
@@ -20039,7 +20050,11 @@
           "total_h": 150,
           "credits": null
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1697
+      ],
+      "default_moodle_course_id": 1697
     },
     {
       "id": "mba-mba-igf",
@@ -20057,9 +20072,7 @@
         "SEMESTRE 10 – SPÉCIALISATION 3 : DIAGNOSTIC DES SYSTÈMES ET POLITIQUES"
       ],
       "classes_suggerees": [
-        "MBA IGF",
-        "MBA IGF Jour",
-        "MBA IGF Soir"
+        "MBA en Management Stratégique du Capital Humain"
       ],
       "ecue_count": 29,
       "ecues": [
@@ -20440,7 +20453,11 @@
           "total_h": 100,
           "credits": null
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1700
+      ],
+      "default_moodle_course_id": 1700
     },
     {
       "id": "mba-mba-acg-online",
@@ -20455,9 +20472,7 @@
         "SEMESTRE 10"
       ],
       "classes_suggerees": [
-        "MBA ACG",
-        "MBA ACG Online",
-        "MBA ACG Online AUF"
+        "MBA en Audit et Contrôle de Gestion"
       ],
       "ecue_count": 37,
       "ecues": [
@@ -20942,7 +20957,11 @@
           "total_h": 150,
           "credits": null
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1698
+      ],
+      "default_moodle_course_id": 1698
     },
     {
       "id": "mba-mba-ag-online",
@@ -20959,9 +20978,7 @@
         "SEMESTRE 10 – SPÉCIALISATION 2 : ADMINISTRATION PUBLIQUE"
       ],
       "classes_suggerees": [
-        "MBA AG",
-        "MBA AG Online",
-        "MBA AG Online AUF"
+        "MBA en Administration et Gestion"
       ],
       "ecue_count": 29,
       "ecues": [
@@ -21342,7 +21359,11 @@
           "total_h": 50,
           "credits": null
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1697
+      ],
+      "default_moodle_course_id": 1697
     },
     {
       "id": "mba-mba-gp-online",
@@ -21357,9 +21378,7 @@
         "SEMESTRE 10"
       ],
       "classes_suggerees": [
-        "MBA GP",
-        "MBA GP Online",
-        "MBA GP Online AUF"
+        "MBA en Gestion des Projets"
       ],
       "ecue_count": 35,
       "ecues": [
@@ -21818,7 +21837,11 @@
           "total_h": 6,
           "credits": null
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1699
+      ],
+      "default_moodle_course_id": 1699
     },
     {
       "id": "mba-mba-acg-executive",
@@ -21833,8 +21856,7 @@
         "SEMESTRE 10"
       ],
       "classes_suggerees": [
-        "MBA ACG",
-        "MBA ACG Executive"
+        "MBA en Audit et Contrôle de Gestion"
       ],
       "ecue_count": 38,
       "ecues": [
@@ -22332,7 +22354,11 @@
           "total_h": 150,
           "credits": null
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1698
+      ],
+      "default_moodle_course_id": 1698
     },
     {
       "id": "mba-mba-ag-executive",
@@ -22348,8 +22374,7 @@
         "SPÉCIALISATION 1 : GESTION DES ENTREPRISES"
       ],
       "classes_suggerees": [
-        "MBA AG",
-        "MBA AG Executive"
+        "MBA en Administration et Gestion"
       ],
       "ecue_count": 26,
       "ecues": [
@@ -22691,7 +22716,11 @@
           "total_h": 50,
           "credits": null
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1697
+      ],
+      "default_moodle_course_id": 1697
     },
     {
       "id": "mba-mba-gp-executive",
@@ -22706,8 +22735,7 @@
         "SEMESTRE 10"
       ],
       "classes_suggerees": [
-        "MBA GP",
-        "MBA GP Executive"
+        "MBA en Gestion des Projets"
       ],
       "ecue_count": 35,
       "ecues": [
@@ -23166,7 +23194,11 @@
           "total_h": 50,
           "credits": null
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1699
+      ],
+      "default_moodle_course_id": 1699
     },
     {
       "id": "mba-mba-es",
@@ -23181,9 +23213,7 @@
         "SEMESTRE 10"
       ],
       "classes_suggerees": [
-        "MBA ES",
-        "MBA ES Jour",
-        "MBA ES Soir"
+        "MBA en Économie de la Santé"
       ],
       "ecue_count": 28,
       "ecues": [
@@ -23551,7 +23581,11 @@
           "total_h": 150,
           "credits": null
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1703
+      ],
+      "default_moodle_course_id": 1703
     },
     {
       "id": "mba-mba-mss",
@@ -23569,9 +23603,7 @@
         "SEMESTRE 10 – OPTION 3 : MANAGEMENT DES ENTREPRISES PHARMACEUTIQUES"
       ],
       "classes_suggerees": [
-        "MBA MSS",
-        "MBA MSS Jour",
-        "MBA MSS Soir"
+        "MBA en Management des Services de Santé"
       ],
       "ecue_count": 45,
       "ecues": [
@@ -24160,7 +24192,11 @@
           "total_h": 50,
           "credits": null
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1702
+      ],
+      "default_moodle_course_id": 1702
     },
     {
       "id": "mba-mba-fi",
@@ -24175,9 +24211,7 @@
         "SEMESTRE 10"
       ],
       "classes_suggerees": [
-        "MBA FI",
-        "MBA FI Jour",
-        "MBA FI Soir"
+        "MBA en Administration et Gestion"
       ],
       "ecue_count": 22,
       "ecues": [
@@ -24467,7 +24501,11 @@
           "total_h": 100,
           "credits": 4
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1697
+      ],
+      "default_moodle_course_id": 1697
     },
     {
       "id": "mba-mba-mpa",
@@ -24482,9 +24520,7 @@
         "SEMESTRE 10"
       ],
       "classes_suggerees": [
-        "MBA MPA",
-        "MBA MPA Jour",
-        "MBA MPA Soir"
+        "MBA en Management de la Performance Publique"
       ],
       "ecue_count": 23,
       "ecues": [
@@ -24787,7 +24823,11 @@
           "total_h": 150,
           "credits": 6
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1701
+      ],
+      "default_moodle_course_id": 1701
     },
     {
       "id": "mba-mba-mpp",
@@ -24802,9 +24842,7 @@
         "SEMESTRE 10"
       ],
       "classes_suggerees": [
-        "MBA MPP",
-        "MBA MPP Jour",
-        "MBA MPP Soir"
+        "MBA en Management de la Performance Publique"
       ],
       "ecue_count": 27,
       "ecues": [
@@ -25159,7 +25197,11 @@
           "total_h": 150,
           "credits": 6
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1701
+      ],
+      "default_moodle_course_id": 1701
     },
     {
       "id": "mba-mba-ms",
@@ -25174,9 +25216,7 @@
         "SEMESTRE 10"
       ],
       "classes_suggerees": [
-        "MBA MS",
-        "MBA MS Jour",
-        "MBA MS Soir"
+        "MBA en Administration et Gestion"
       ],
       "ecue_count": 32,
       "ecues": [
@@ -25596,64 +25636,60 @@
           "total_h": 125,
           "credits": 5
         }
-      ]
+      ],
+      "moodle_course_ids": [
+        1697
+      ],
+      "default_moodle_course_id": 1697
     }
   ],
   "intervenants_connus": [],
   "classes_connues": [
-    "DECOGEF 1",
-    "DECOGEF 2",
-    "DECOGEF 3",
-    "DESCOGEF 1",
-    "DESCOGEF 2",
-    "DESCOGEF 2 Spéciale",
-    "LCCA 1",
-    "LCCA 2",
-    "LCCA 3",
-    "LG 1",
-    "LG 2",
-    "LG 3",
-    "LGEO",
-    "LSMD 1",
-    "LSMD 2",
-    "LSMD 3",
-    "LTCF",
-    "MACG 1 Jour",
-    "MACG 1 Soir",
-    "MACG1 Jour A",
-    "MACG2 Jour A",
-    "MBA ACG",
-    "MBA AG",
-    "MBA ES",
-    "MBA GP",
-    "MBA MPP",
-    "MBA MSCH",
-    "MBA MSS",
-    "MBF",
-    "MBF-TC-A",
-    "MCCA 1 Jour",
-    "MCCA 1 Soir",
-    "MCCA 2 Jour",
-    "MCCA 2 Soir",
-    "MCCA1 Jour A",
-    "MCCA2 Jour A",
-    "MCGF 1 Jour",
-    "MCGF 1 Soir",
-    "MCGF 2",
-    "MCGF1 Jour A",
-    "MCGF2 Jour A",
-    "MDBFA 1 Jour",
-    "MDBFA 1 Soir",
-    "MDBFA 2",
-    "MDBFA1 Jour A",
-    "ME3P",
-    "MGP 1 Jour",
-    "MGP 1 Soir",
-    "MGRH 1",
-    "MIAGE 1",
-    "MIAGE 2",
-    "MMS 1",
-    "MSMD 1",
-    "MSMD 2"
+    "Diplôme d’Études Supérieures en Comptabilité et Gestion Financière - 1",
+    "Diplôme d’Études Supérieures en Comptabilité et Gestion Financière - 2",
+    "Diplôme d’Études Supérieures en Comptabilité et Gestion Financière - 2e année spéciale",
+    "Diplôme d’Études de Comptabilité et Gestion Financière - L1",
+    "Diplôme d’Études de Comptabilité et Gestion Financière - L2",
+    "Diplôme d’Études de Comptabilité et Gestion Financière - L3",
+    "Licence en Comptabilité, Contrôle et Audit - L1",
+    "Licence en Comptabilité, Contrôle et Audit - L2",
+    "Licence en Comptabilité, Contrôle et Audit - L3",
+    "Licence en Gestion - L1",
+    "Licence en Gestion - L2",
+    "Licence en Gestion - L3",
+    "Licence en Gestion des Entreprises et Organisations",
+    "Licence en Méthodes Informatiques Appliquées à la Gestion des Entreprises - L1",
+    "Licence en Méthodes Informatiques Appliquées à la Gestion des Entreprises - L2",
+    "Licence en Sciences du Management et de la Décision - L1",
+    "Licence en Sciences du Management et de la Décision - L2",
+    "Licence en Sciences du Management et de la Décision 3e année spéciale",
+    "Licence en Techniques Comptables et Financières 3e année",
+    "MBA en Administration et Gestion",
+    "MBA en Audit et Contrôle de Gestion",
+    "MBA en Gestion des Projets",
+    "MBA en Management Stratégique du Capital Humain",
+    "MBA en Management de la Performance Publique",
+    "MBA en Management des Services de Santé",
+    "MBA en Économie de la Santé",
+    "Master en Audit et Contrôle de Gestion - JOUR",
+    "Master en Audit et Contrôle de Gestion - SOIR",
+    "Master en Banque et Finance",
+    "Master en Comptabilité et Gestion Financière - JOUR",
+    "Master en Comptabilité et Gestion Financière - M2",
+    "Master en Comptabilité et Gestion Financière - SOIR",
+    "Master en Comptabilité, Contrôle et Audit - JOUR",
+    "Master en Comptabilité, Contrôle et Audit - M2 - JOUR",
+    "Master en Comptabilité, Contrôle et Audit - M2 - SOIR",
+    "Master en Comptabilité, Contrôle et Audit - SOIR",
+    "Master en Droit, Banque, Finance, Assurance - JOUR",
+    "Master en Droit, Banque, Finance, Assurance - M2",
+    "Master en Droit, Banque, Finance, Assurance - SOIR",
+    "Master en Gestion des Projets - JOUR",
+    "Master en Gestion des Projets - SOIR",
+    "Master en Gestion des Ressources Humaines",
+    "Master en Marketing et Stratégie",
+    "Master en Sciences du Management et de la Décision",
+    "Master en Sciences du Management et de la Décision - M2",
+    "Master en Évaluation des Projets, Programmes et Politiques"
   ]
 }

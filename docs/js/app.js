@@ -672,12 +672,12 @@
             </div>
             <div class="form-row-2">
               <div class="form-group">
-                <label class="form-label">Intervenant *</label>
-                <input class="input input-sm" type="text" list="intervenantsDatalist" data-field="intervenant" data-key="${escapeHtml(item.key)}" value="${escapeHtml(item.intervenant)}" placeholder="Ex : Dr. … / M. …" required>
+                <label class="form-label">Intervenant <span class="muted-small">(ex : M. Diouf)</span></label>
+                <input class="input input-sm" type="text" list="intervenantsDatalist" data-field="intervenant" data-key="${escapeHtml(item.key)}" value="${escapeHtml(item.intervenant)}" placeholder="Nom de l'enseignant (ou laisser vide)">
               </div>
               <div class="form-group">
-                <label class="form-label">Adresse email</label>
-                <input class="input input-sm" type="email" data-field="email_intervenant" data-key="${escapeHtml(item.key)}" value="${escapeHtml(item.email_intervenant)}" placeholder="intervenant@cesag.edu.sn">
+                <label class="form-label">Email intervenant <span class="muted-small">(facultatif)</span></label>
+                <input class="input input-sm" type="email" data-field="email_intervenant" data-key="${escapeHtml(item.key)}" value="${escapeHtml(item.email_intervenant)}" placeholder="Optionnel">
               </div>
             </div>
             <div class="form-row-2">
@@ -741,13 +741,7 @@
     const items = Array.from(state.selectedEcues.values());
     if (!items.length) return;
 
-    const missingIntervenant = items.find((x) => !x.intervenant.trim());
-    if (missingIntervenant) {
-      showToast(`Renseignez le nom de l'intervenant pour « ${missingIntervenant.module} ».`, "error");
-      return;
-    }
-
-    const declarant_nom = $("declarantNom").value.trim();
+    const declarant_nom = $("declarantNom").value.trim() || "Responsable de programme";
     const declarant_email = $("declarantEmail").value.trim();
     localStorage.setItem(STORAGE_KEY_PROFILE, JSON.stringify({ declarant_nom, declarant_email }));
 
@@ -758,7 +752,7 @@
       classe,
       code_ecue: x.code_ecue,
       module: x.module,
-      intervenant: x.intervenant.trim(),
+      intervenant: x.intervenant.trim() || "Enseignant à préciser",
       email_intervenant: x.email_intervenant.trim(),
       date_fin_module: x.date_fin_module || $("defaultDateFin").value || todayIso(),
       declarant_nom,
@@ -1437,11 +1431,11 @@
     });
 
     function downloadOfficialTemplateCsv() {
-      const headers = ["Filière", "Classe", "Code_ECUE", "Intitulé_Module", "Nom_Intervenant", "Email_Intervenant", "Date_Fin_Module", "Observations"];
+      const headers = ["Filière", "Cohorte_Officielle_Moodle", "Code_ECUE", "Intitulé_Module", "Nom_Intervenant", "Email_Intervenant_Facultatif", "Date_Fin_Module", "Observations"];
       const sampleRows = [
-        ["MACG", "MACG1 Jour A", "MACG 7.1.4", "Droit de la concurrence", "M. Jean Baptiste DIOUF", "jeanbaptiste.diouf@cesag.edu.sn", "2026-11-20", "Exemple de cours acheve"],
-        ["LG", "LG 1 Jour", "LG 1.1.2", "Comptabilité générale", "Mme Aminata SOW", "intervenant@cesag.edu.sn", "2026-11-22", "Exemple"],
-        ["MBA GP", "MBA GP Soir", "MBAGP 8.2.1", "Gestion de projets agile", "Dr. Mamadou BA", "intervenant@cesag.edu.sn", "2026-11-25", "Exemple"],
+        ["MACG", "Master en Audit et Contrôle de Gestion - JOUR", "MACG 7.1.4", "Droit de la concurrence", "M. Jean Baptiste DIOUF", "intervenant@cesag.edu.sn", "2026-11-20", "Exemple cours acheve"],
+        ["LG", "Licence en Gestion - L1", "LG 1.1.2", "Comptabilité générale", "Mme Aminata SOW", "", "2026-11-22", "Email facultatif"],
+        ["MBA GP", "MBA en Gestion des Projets", "MBAGP 8.2.1", "Gestion de projets agile", "Dr. Mamadou BA", "", "2026-11-25", "Exemple"],
       ];
       const csvContent = "\uFEFF" + [headers.join(";"), ...sampleRows.map((r) => r.map((c) => `"${c.replace(/"/g, '""')}"`).join(";"))].join("\r\n");
       const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
@@ -1459,10 +1453,10 @@
     function downloadOfficialTemplateXlsx() {
       if (window.XLSX) {
         const data = [
-          ["Filière", "Classe", "Code_ECUE", "Intitulé_Module", "Nom_Intervenant", "Email_Intervenant", "Date_Fin_Module", "Observations"],
-          ["MACG", "MACG1 Jour A", "MACG 7.1.4", "Droit de la concurrence", "M. Jean Baptiste DIOUF", "jeanbaptiste.diouf@cesag.edu.sn", "2026-11-20", "Exemple de cours achevé"],
-          ["LG", "LG 1 Jour", "LG 1.1.2", "Comptabilité générale", "Mme Aminata SOW", "intervenant@cesag.edu.sn", "2026-11-22", "Exemple"],
-          ["MBA GP", "MBA GP Soir", "MBAGP 8.2.1", "Gestion de projets agile", "Dr. Mamadou BA", "intervenant@cesag.edu.sn", "2026-11-25", "Exemple"],
+          ["Filière", "Cohorte_Officielle_Moodle", "Code_ECUE", "Intitulé_Module", "Nom_Intervenant", "Email_Intervenant_Facultatif", "Date_Fin_Module", "Observations"],
+          ["MACG", "Master en Audit et Contrôle de Gestion - JOUR", "MACG 7.1.4", "Droit de la concurrence", "M. Jean Baptiste DIOUF", "intervenant@cesag.edu.sn", "2026-11-20", "Exemple cours achevé"],
+          ["LG", "Licence en Gestion - L1", "LG 1.1.2", "Comptabilité générale", "Mme Aminata SOW", "", "2026-11-22", "Email facultatif"],
+          ["MBA GP", "MBA en Gestion des Projets", "MBAGP 8.2.1", "Gestion de projets agile", "Dr. Mamadou BA", "", "2026-11-25", "Exemple"],
         ];
         const ws = XLSX.utils.aoa_to_sheet(data);
         const wb = XLSX.utils.book_new();
