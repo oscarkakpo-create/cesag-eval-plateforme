@@ -400,3 +400,14 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--cesag-green); 
 .nav-tabs-inner::-webkit-scrollbar { display: none; }
 /* En-tête des modales fond blanc + texte vert CESAG */
 .modal-header { background: #FFFFFF !important; color: var(--cesag-green-dark) !important; border-top: 4px solid var(--cesag-green); border-bottom: 1px solid var(--cesag-border); }
+
+/* ---------- Icônes SVG (remplacent les emojis) ---------- */
+.ico { width: 1.15em; height: 1.15em; display: inline-block; vertical-align: -0.2em; flex-shrink: 0; margin-right: .35em; stroke-width: 1.9; }
+.tab-icon .ico, .landing-card-icon .ico, .btn-cockpit-toggle .ico { margin-right: 0; }
+.tab-icon { display: inline-flex; opacity: .85; }
+.landing-card-icon { color: var(--cesag-green); font-size: 0 !important; }
+.landing-card-icon .ico { width: 22px; height: 22px; }
+.landing-card.highlight .landing-card-icon { color: #9A6E12; }
+.btn-quick-niveau .ico { width: 26px; height: 26px; color: var(--cesag-green); margin: 0 auto 2px; display: block; }
+.hero-badge-pill .ico { width: 12px; height: 12px; fill: currentColor; }
+.landing-hero .ico-bell { color: var(--cesag-gold); }
