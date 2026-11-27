@@ -2087,10 +2087,7 @@
       });
     }
 
-    // Auto-open on first visit if not disabled
-    if (localStorage.getItem("CESAG_HIDE_GUIDE") !== "true") {
-      setTimeout(openGuide, 600);
-    }
+    // La fenêtre d'aide ne s'ouvre plus au démarrage (parcours en boîtes de dialogue).
   }
 
   // Password Protection for Dashboard & Automation Tabs
