@@ -1626,6 +1626,79 @@
     });
   }
 
+  function initDakarWeather() {
+    const text = $("weatherText");
+    const icon = $("weatherIcon");
+    if (!text) return;
+    fetch("https://api.open-meteo.com/v1/forecast?latitude=14.6928&longitude=-17.4467&current_weather=true")
+      .then((r) => r.json())
+      .then((data) => {
+        if (data && data.current_weather) {
+          const temp = Math.round(data.current_weather.temperature);
+          const code = data.current_weather.weathercode;
+          let ic = "☀️";
+          if (code >= 1 && code <= 3) ic = "🌤️";
+          else if (code >= 45 && code <= 48) ic = "🌫️";
+          else if (code >= 51 && code <= 67) ic = "🌧️";
+          else if (code >= 80) ic = "🌦️";
+          if (icon) icon.textContent = ic;
+          text.textContent = `Dakar ${temp}°C`;
+        }
+      })
+      .catch(() => {
+        text.textContent = "Dakar 28°C";
+      });
+  }
+
+  function initQrCodeModal() {
+    const statBox = $("statBoxQrCode");
+    const modal = $("modalQrCode");
+    const closeBtn = $("btnCloseModalQr");
+    const closeFooter = $("btnCloseModalQrFooter");
+    const input = $("qrInputUrl");
+    const img = $("qrImagePreview");
+    const regenBtn = $("btnRegenQr");
+    const downloadBtn = $("btnDownloadQr");
+
+    function openQr(url) {
+      if (url && input) input.value = url;
+      updateQr();
+      if (modal) modal.hidden = false;
+    }
+
+    function closeQr() {
+      if (modal) modal.hidden = true;
+    }
+
+    function updateQr() {
+      if (!input || !img) return;
+      const raw = (input.value || "https://formations.cesagonline.com/course/index.php?categoryid=372").trim();
+      const encoded = encodeURIComponent(raw);
+      const srcPreview = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&margin=10&data=${encoded}`;
+      const srcDownload = `https://api.qrserver.com/v1/create-qr-code/?size=600x600&margin=15&data=${encoded}`;
+      img.src = srcPreview;
+      if (downloadBtn) downloadBtn.href = srcDownload;
+    }
+
+    if (statBox) statBox.addEventListener("click", () => openQr());
+    if (closeBtn) closeBtn.addEventListener("click", closeQr);
+    if (closeFooter) closeFooter.addEventListener("click", closeQr);
+    if (modal) {
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) closeQr();
+      });
+    }
+    if (regenBtn) regenBtn.addEventListener("click", updateQr);
+    if (input) {
+      input.addEventListener("input", () => {
+        clearTimeout(input._qrTimer);
+        input._qrTimer = setTimeout(updateQr, 400);
+      });
+    }
+
+    window.openQrCodeModal = openQr;
+  }
+
   async function init() {
     if ($("defaultDateOuverture")) $("defaultDateOuverture").value = todayIso();
     if ($("defaultDateCloture")) {
@@ -1641,6 +1714,8 @@
       // Ignore malformed profile
     }
 
+    initDakarWeather();
+    initQrCodeModal();
     await detectBackend();
     renderNiveauPills();
     renderProgramSelect(true);
