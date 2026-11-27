@@ -384,20 +384,21 @@
     container.querySelectorAll("[data-niveau]").forEach((btn) => {
       btn.addEventListener("click", () => {
         state.activeNiveau = btn.dataset.niveau;
+        state.activeProgrammeId = "";
         state.activeSemestre = "ALL";
         renderNiveauPills();
-        renderProgramSelect(true);
+        renderProgramSelect(false);
       });
     });
   }
 
-  function renderProgramSelect(pickFirst = false) {
+  function renderProgramSelect(preserveCurrent = false) {
     const list = getProgramsByNiveau(state.activeNiveau);
     const sel = $("programmeSelect");
     $("programmeCountLabel").textContent = String(list.length);
 
     if (!list.length) {
-      sel.innerHTML = `<option value="">Aucun programme trouvé</option>`;
+      sel.innerHTML = `<option value="">Aucune filière trouvée</option>`;
       state.activeProgrammeId = "";
       renderClasseSuggestions();
       renderSemestrePills();
@@ -405,18 +406,22 @@
       return;
     }
 
-    if (pickFirst || !list.some((p) => p.id === state.activeProgrammeId)) {
-      state.activeProgrammeId = list[0].id;
+    if (!preserveCurrent || !list.some((p) => p.id === state.activeProgrammeId)) {
+      state.activeProgrammeId = "";
     }
 
-    sel.innerHTML = list
-      .map((p) => {
-        const selected = p.id === state.activeProgrammeId ? "selected" : "";
-        return `<option value="${escapeHtml(p.id)}" ${selected}>${escapeHtml(p.code)} — ${escapeHtml(p.titre)} (${p.ecue_count})</option>`;
-      })
-      .join("");
+    const placeholder = `<option value="" ${!state.activeProgrammeId ? "selected" : ""}>-- Choisissez votre filière / programme (${list.length} disponibles) --</option>`;
 
-    renderClasseSuggestions(true);
+    sel.innerHTML =
+      placeholder +
+      list
+        .map((p) => {
+          const selected = p.id === state.activeProgrammeId ? "selected" : "";
+          return `<option value="${escapeHtml(p.id)}" ${selected}>${escapeHtml(p.code)} — ${escapeHtml(p.titre)} (${p.ecue_count} cours)</option>`;
+        })
+        .join("");
+
+    renderClasseSuggestions(Boolean(state.activeProgrammeId));
     renderSemestrePills();
     renderEcueChecklist();
   }
@@ -424,6 +429,15 @@
   function renderClasseSuggestions(prefillIfEmpty = false) {
     const prog = getSelectedProgram();
     const container = $("classeSuggestions");
+
+    if (!prog) {
+      $("classeInput").value = "";
+      $("classeInput").placeholder = "Sélectionnez d'abord une filière ci-dessus…";
+      container.innerHTML = `<div class="muted-small" style="padding:4px 0;">Sélectionnez une filière ci-dessus pour afficher ses cohortes officielles Moodle.</div>`;
+      return;
+    }
+
+    $("classeInput").placeholder = "Sélectionnez ou cliquez sur l'intitulé officiel ci-dessous…";
     const suggestions = prog?.classes_suggerees || [];
 
     if (prefillIfEmpty && suggestions.length) {
@@ -511,12 +525,25 @@
   function renderEcueChecklist() {
     const container = $("ecueChecklist");
     const prog = getSelectedProgram();
+
+    if (!prog) {
+      $("ecueStatsLabel").textContent = "";
+      container.innerHTML = `
+        <div class="empty-selection" style="padding:48px 16px;text-align:center;">
+          <div style="font-size:36px;margin-bottom:10px;">👆</div>
+          <p style="font-size:15px;font-weight:700;color:var(--cesag-green-dark);margin-bottom:6px;">Choisissez votre filière dans la liste ci-dessus</p>
+          <p class="muted-small" style="max-width:420px;margin:0 auto;line-height:1.5;">
+            Sélectionnez votre programme (ex : Licence en Gestion, MACG, MBA…) pour afficher directement ses cohortes officielles Moodle et ses modules à cocher.
+          </p>
+        </div>
+      `;
+      return;
+    }
+
     const ecues = getFilteredEcues();
     const currentClasse = $("classeInput").value.trim();
 
-    $("ecueStatsLabel").textContent = prog
-      ? `${ecues.length} ECUE(s) affiché(s) sur ${prog.ecue_count}`
-      : "";
+    $("ecueStatsLabel").textContent = `${ecues.length} ECUE(s) affiché(s) sur ${prog.ecue_count}`;
 
     if (!ecues.length) {
       container.innerHTML = `<div class="empty-table">Aucun ECUE trouvé pour ce filtre.</div>`;
@@ -584,6 +611,8 @@
   function addSelectedEcue(prog, ecue) {
     const key = `${prog.id}::${ecue.code}`;
     if (state.selectedEcues.has(key)) return;
+    const dateOuv = $("defaultDateOuverture")?.value || todayIso();
+    const dateClot = $("defaultDateCloture")?.value || "";
     state.selectedEcues.set(key, {
       key,
       niveau: prog.niveau,
@@ -593,7 +622,9 @@
       module: ecue.titre,
       intervenant: "",
       email_intervenant: "",
-      date_fin_module: $("defaultDateFin").value || todayIso(),
+      date_ouverture: dateOuv,
+      date_cloture: dateClot,
+      date_fin_module: dateOuv,
       observations: "",
     });
   }
@@ -637,7 +668,7 @@
     const currentClasse = $("classeInput").value.trim();
 
     $("selectedCountBadge").textContent = String(count);
-    $("btnSubmitDeclarations").textContent = `Soumettre la déclaration (${count} module${count > 1 ? "s" : ""})`;
+    $("btnSubmitDeclarations").textContent = `🚀 Envoyer le signal pour programmation (${count} module${count > 1 ? "s" : ""})`;
     $("btnSubmitDeclarations").disabled = count === 0;
 
     if (!count) {
@@ -682,13 +713,17 @@
             </div>
             <div class="form-row-2">
               <div class="form-group" style="margin-bottom:0;">
-                <label class="form-label">Date de fin du module</label>
-                <input class="input input-sm" type="date" data-field="date_fin_module" data-key="${escapeHtml(item.key)}" value="${escapeHtml(item.date_fin_module)}">
+                <label class="form-label">Date début programmation (ouverture)</label>
+                <input class="input input-sm" type="date" data-field="date_ouverture" data-key="${escapeHtml(item.key)}" value="${escapeHtml(item.date_ouverture || todayIso())}">
               </div>
               <div class="form-group" style="margin-bottom:0;">
-                <label class="form-label">Note (optionnel)</label>
-                <input class="input input-sm" type="text" data-field="observations" data-key="${escapeHtml(item.key)}" value="${escapeHtml(item.observations)}" placeholder="Ex : Groupe A, fin vendredi">
+                <label class="form-label">Date de clôture <span class="muted-small">(facultatif)</span></label>
+                <input class="input input-sm" type="date" data-field="date_cloture" data-key="${escapeHtml(item.key)}" value="${escapeHtml(item.date_cloture || '')}">
               </div>
+            </div>
+            <div class="form-group" style="margin-top:6px;margin-bottom:0;">
+              <label class="form-label">Note / Observation <span class="muted-small">(facultatif)</span></label>
+              <input class="input input-sm" type="text" data-field="observations" data-key="${escapeHtml(item.key)}" value="${escapeHtml(item.observations)}" placeholder="Ex : cours achevé, évaluation demandée">
             </div>
           </div>
         `;
@@ -754,10 +789,13 @@
       module: x.module,
       intervenant: x.intervenant.trim() || "Enseignant à préciser",
       email_intervenant: x.email_intervenant.trim(),
-      date_fin_module: x.date_fin_module || $("defaultDateFin").value || todayIso(),
+      date_ouverture: x.date_ouverture || $("defaultDateOuverture")?.value || todayIso(),
+      date_cloture: x.date_cloture || $("defaultDateCloture")?.value || "",
+      date_fin_module: x.date_ouverture || $("defaultDateOuverture")?.value || todayIso(),
       declarant_nom,
       declarant_email,
       observations: x.observations.trim(),
+      source: "formulaire_collegue",
     }));
 
     const force = $("forceDuplicateCheck").checked;
@@ -1362,12 +1400,15 @@
     });
 
     $("btnApplyDefaultDate").addEventListener("click", () => {
-      const dateVal = $("defaultDateFin").value || todayIso();
+      const dateOuv = $("defaultDateOuverture")?.value || todayIso();
+      const dateClot = $("defaultDateCloture")?.value || "";
       state.selectedEcues.forEach((item) => {
-        item.date_fin_module = dateVal;
+        item.date_ouverture = dateOuv;
+        item.date_cloture = dateClot;
+        item.date_fin_module = dateOuv;
       });
       renderSelectedModules();
-      showToast(`Date ${dateVal} appliquée à la sélection.`);
+      showToast(`Dates appliquées : ouverture le ${dateOuv}${dateClot ? ", clôture le " + dateClot : ""}`);
     });
 
     $("btnSubmitDeclarations").addEventListener("click", handleSubmitDeclarations);
@@ -1586,7 +1627,12 @@
   }
 
   async function init() {
-    $("defaultDateFin").value = todayIso();
+    if ($("defaultDateOuverture")) $("defaultDateOuverture").value = todayIso();
+    if ($("defaultDateCloture")) {
+      const d7 = new Date();
+      d7.setDate(d7.getDate() + 7);
+      $("defaultDateCloture").value = d7.toISOString().slice(0, 10);
+    }
     try {
       const savedProfile = JSON.parse(localStorage.getItem(STORAGE_KEY_PROFILE) || "{}");
       if (savedProfile.declarant_nom) $("declarantNom").value = savedProfile.declarant_nom;

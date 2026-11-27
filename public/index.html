@@ -64,8 +64,8 @@
     <!-- ============================================================ -->
     <section id="tab-accueil" class="tab-panel active">
       <div class="landing-hero">
-        <div style="display:flex;align-items:center;gap:18px;margin-bottom:16px;flex-wrap:wrap;">
-          <img src="img/cesag-logo.png" alt="Logo CESAG" style="height:62px;background:#ffffff;border-radius:10px;padding:4px 10px;box-shadow:0 3px 10px rgba(0,0,0,0.15);">
+        <div style="display:flex;align-items:center;gap:18px;margin-bottom:18px;flex-wrap:wrap;">
+          <img src="img/cesag-logo.png" alt="Logo CESAG" style="height:64px;background:#ffffff;border-radius:10px;padding:4px 10px;box-shadow:0 4px 12px rgba(0,0,0,0.18);">
           <div>
             <div class="hero-badge-pill">
               <span>★</span> Campagne Académique 2026-2027 · CESAG Dakar
@@ -73,9 +73,14 @@
             <h2>PROGRAMMATION DES ÉVALUATIONS DES ENSEIGNEMENTS 26-27</h2>
           </div>
         </div>
-        <p>
-          Chers collègues et responsables pédagogiques, cet espace est spécialement conçu pour <strong>faciliter la programmation de vos évaluations</strong> et <strong>assurer un meilleur suivi en temps réel</strong>. Chacun dispose de son propre périmètre (<strong>LICENCE · MASTER · MBA</strong>) : dès qu'un cours est achevé, signalez-le simplement ici ou déposez votre tableau pour déclencher immédiatement son ouverture aux étudiants sur Moodle.
-        </p>
+        <div style="background:rgba(255,255,255,0.1);border-left:4px solid #C9962A;border-radius:0 8px 8px 0;padding:14px 18px;margin-bottom:14px;">
+          <div style="font-size:17px;font-weight:700;color:#F5D58B;margin-bottom:4px;">
+            🔔 Vous nous donnez le signal, nous programmons l'évaluation sur Moodle
+          </div>
+          <p style="font-size:14.5px;color:#EAF3ED;line-height:1.55;margin:0;">
+            Chers collègues et responsables de formations, dès qu'un cours est achevé, vous cliquez simplement ici pour le signaler (ou déposez votre tableau). L'équipe de planification reçoit instantanément la notification pour ouvrir l'évaluation aux étudiants sur Moodle. Si vous le souhaitez, vous pouvez aussi indiquer les dates de début et de fin souhaitées pour la programmation.
+          </p>
+        </div>
       </div>
 
       <!-- 3 MODES D'ACTION -->
@@ -88,11 +93,11 @@
           </div>
           <h3 class="landing-card-title">1. Formulaire express en ligne</h3>
           <p class="landing-card-desc">
-            Sélectionnez votre cohorte officielle, cochez vos cours terminés et validez en quelques clics sans prise de tête.
+            Sélectionnez votre niveau (Licence, Master, MBA), choisissez votre filière et cochez vos cours terminés en quelques clics.
           </p>
           <div class="landing-card-actions">
-            <button id="btnLandingGoDeclare" class="btn btn-primary" type="button">
-              Accéder à mon formulaire →
+            <button id="btnLandingGoDeclare" class="btn btn-primary btn-lg" type="button" style="width:100%;font-size:14.5px;padding:12px 18px;">
+              ⚡ Déclarer un cours terminé →
             </button>
           </div>
         </div>
@@ -105,18 +110,18 @@
           </div>
           <h3 class="landing-card-title">2. Déposer un fichier Excel / CSV</h3>
           <p class="landing-card-desc">
-            Téléchargez le modèle préconfiguré aux cohortes officielles Moodle, renseignez vos modules hors-ligne et déposez-le ici.
+            Vous préférez envoyer plusieurs modules d'un coup ? Téléchargez le modèle officiel préconfiguré et déposez-le ici.
           </p>
           <div class="landing-card-actions">
-            <div style="display:flex;gap:6px;">
-              <button id="btnLandingDownloadCsv" class="btn btn-outline btn-sm" type="button" style="flex:1;">
-                📥 Modèle CSV
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+              <button id="btnLandingDownloadXlsx" class="btn btn-outline btn-sm" type="button" style="font-weight:600;padding:8px 6px;">
+                📥 Modèle Excel (.xlsx)
               </button>
-              <button id="btnLandingDownloadXlsx" class="btn btn-outline btn-sm" type="button" style="flex:1;">
-                📥 Modèle Excel
+              <button id="btnLandingDownloadCsv" class="btn btn-outline btn-sm" type="button" style="font-weight:600;padding:8px 6px;">
+                📄 Modèle CSV
               </button>
             </div>
-            <button id="btnLandingOpenImport" class="btn btn-primary" type="button">
+            <button id="btnLandingOpenImport" class="btn btn-primary" type="button" style="width:100%;font-size:14px;padding:11px 18px;">
               📂 Déposer mon fichier rempli
             </button>
           </div>
@@ -130,17 +135,23 @@
           </div>
           <h3 class="landing-card-title">3. Accès direct par périmètre</h3>
           <p class="landing-card-desc">
-            Chacun son périmètre ! Cliquez directement sur votre niveau de formation pour ouvrir vos cohortes et déclarer vos cours :
+            Chacun son périmètre ! Cliquez directement sur votre niveau pour afficher les filières correspondantes :
           </p>
-          <div class="landing-card-actions" style="display:flex;gap:6px;">
-            <button class="btn btn-soft btn-sm btn-quick-niveau" data-quick-niveau="Licence" type="button" style="flex:1;font-weight:700;">
-              LICENCE
+          <div class="landing-card-actions" style="display:grid;grid-template-columns:repeat(3, 1fr);gap:8px;">
+            <button class="btn-quick-niveau" data-quick-niveau="Licence" type="button">
+              <span style="font-size:22px;margin-bottom:2px;">🎓</span>
+              <span style="font-weight:800;font-size:13px;">LICENCE</span>
+              <span class="sub">L1 · L2 · L3</span>
             </button>
-            <button class="btn btn-soft btn-sm btn-quick-niveau" data-quick-niveau="Master" type="button" style="flex:1;font-weight:700;">
-              MASTER
+            <button class="btn-quick-niveau" data-quick-niveau="Master" type="button">
+              <span style="font-size:22px;margin-bottom:2px;">🎓</span>
+              <span style="font-weight:800;font-size:13px;">MASTER</span>
+              <span class="sub">Jour &amp; Soir</span>
             </button>
-            <button class="btn btn-soft btn-sm btn-quick-niveau" data-quick-niveau="MBA" type="button" style="flex:1;font-weight:700;">
-              MBA
+            <button class="btn-quick-niveau" data-quick-niveau="MBA" type="button">
+              <span style="font-size:22px;margin-bottom:2px;">🎓</span>
+              <span style="font-weight:800;font-size:13px;">MBA</span>
+              <span class="sub">Exec &amp; Online</span>
             </button>
           </div>
         </div>
@@ -283,14 +294,23 @@
                 <input id="declarantEmail" class="input" type="email" placeholder="prenom.nom@cesag.edu.sn">
               </div>
             </div>
-            <div class="form-row-2">
-              <div class="form-group">
-                <label class="form-label" for="defaultDateFin">Date de fin par défaut</label>
-                <input id="defaultDateFin" class="input" type="date">
+            <div style="background:#FFFFFF;border:1px solid var(--cesag-border);border-radius:var(--radius-sm);padding:12px 14px;margin-top:10px;">
+              <div style="font-size:12.5px;font-weight:700;color:var(--cesag-green-dark);margin-bottom:6px;">
+                🗓️ Période de programmation souhaitée pour l'évaluation :
               </div>
-              <div class="form-group align-bottom">
-                <button id="btnApplyDefaultDate" class="btn btn-soft btn-full" type="button">
-                  Appliquer la date à tous
+              <div class="form-row-2">
+                <div class="form-group" style="margin-bottom:0;">
+                  <label class="form-label" for="defaultDateOuverture">Date d'ouverture souhaitée</label>
+                  <input id="defaultDateOuverture" class="input" type="date">
+                </div>
+                <div class="form-group" style="margin-bottom:0;">
+                  <label class="form-label" for="defaultDateCloture">Date de clôture <span class="muted-small">(facultatif)</span></label>
+                  <input id="defaultDateCloture" class="input" type="date">
+                </div>
+              </div>
+              <div style="margin-top:8px;">
+                <button id="btnApplyDefaultDate" class="btn btn-soft btn-sm btn-full" type="button">
+                  Appliquer ces dates aux modules sélectionnés
                 </button>
               </div>
             </div>
@@ -309,12 +329,15 @@
           <datalist id="intervenantsDatalist"></datalist>
 
           <div class="submit-footer">
+            <div class="muted-small" style="background:#EAF3ED;border:1px solid #BDD6C4;border-radius:8px;padding:10px 14px;margin-bottom:12px;color:#0B4D2E;line-height:1.45;">
+              🔔 <strong>Signal instantané :</strong> Dès que vous validez, l'équipe reçoit immédiatement votre demande avec les dates souhaitées et programme l'évaluation sur Moodle.
+            </div>
             <label class="checkbox-inline">
               <input id="forceDuplicateCheck" type="checkbox">
-              <span>Autoriser si déjà présent pour cette classe</span>
+              <span>Autoriser si déjà présent pour cette cohorte</span>
             </label>
-            <button id="btnSubmitDeclarations" class="btn btn-primary btn-lg btn-full" type="button" disabled>
-              Soumettre la déclaration (0 module)
+            <button id="btnSubmitDeclarations" class="btn btn-primary btn-lg btn-full" type="button" disabled style="font-size:15px;padding:14px 20px;">
+              🚀 Envoyer le signal pour programmation (0 module)
             </button>
           </div>
         </div>

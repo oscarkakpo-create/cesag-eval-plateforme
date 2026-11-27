@@ -1357,3 +1357,31 @@ code {
     grid-template-columns: 1fr;
   }
 }
+
+.btn-quick-niveau {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 6px;
+  background: var(--cesag-green-soft);
+  border: 1.5px solid var(--cesag-border-strong);
+  border-radius: 10px;
+  color: var(--cesag-green-dark);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.btn-quick-niveau:hover {
+  background: #ffffff;
+  border-color: var(--cesag-gold);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(11, 77, 46, 0.12);
+  color: var(--cesag-green);
+}
+.btn-quick-niveau .sub {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
