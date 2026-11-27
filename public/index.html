@@ -49,15 +49,18 @@
           <span class="tab-icon">✍️</span>
           <span>Déclarer des modules terminés</span>
         </button>
-        <button class="nav-tab" data-tab="dashboard" type="button">
-          <span class="tab-icon">📊</span>
+        <button class="nav-tab" data-tab="dashboard" type="button" title="Accès réservé coordination (protégé par mot de passe)">
+          <span class="tab-icon">🔒</span>
           <span>Tableau de bord &amp; Suivi</span>
           <span id="badgeTotalCount" class="tab-badge">0</span>
         </button>
-        <button class="nav-tab" data-tab="automation" type="button">
-          <span class="tab-icon">⚡</span>
+        <button class="nav-tab" data-tab="automation" type="button" title="Accès réservé coordination (protégé par mot de passe)">
+          <span class="tab-icon">🔒</span>
           <span>Automatisation Moodle &amp; Cloud</span>
           <span id="badgePendingCount" class="tab-badge badge-amber">0</span>
+        </button>
+        <button id="btnOpenGuideModal" class="btn btn-outline btn-xs" type="button" style="margin-left:auto;align-self:center;font-weight:700;padding:5px 12px;border-radius:999px;background:#ffffff;color:#0B4D2E;border:1.5px solid #0B4D2E;" title="Ouvrir le guide d'utilisation pour collègues">
+          ❓ Guide Collègue
         </button>
       </div>
     </nav>
@@ -655,6 +658,101 @@
         <div class="modal-footer">
           <button class="btn btn-soft" data-close-modal="editModal" type="button">Annuler</button>
           <button class="btn btn-primary" type="submit">Enregistrer les modifications</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Guide / Onboarding Collègues -->
+  <div id="guideModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="guideModalTitle">
+    <div class="modal-card" style="max-width:620px;">
+      <div class="modal-header" style="background:#0B4D2E;color:#ffffff;border-radius:12px 12px 0 0;padding:18px 24px;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <img src="img/cesag-logo.png" alt="Logo CESAG" style="height:36px;background:#ffffff;border-radius:6px;padding:2px 6px;">
+          <div>
+            <h3 id="guideModalTitle" style="margin:0;font-size:17px;color:#ffffff;">Bienvenue sur l'Espace Programmation des Évaluations</h3>
+            <p style="margin:4px 0 0;font-size:12.5px;color:#A9DFBF;">Campagne 2026-2027 · Guide rapide pour les collègues &amp; coordonnateurs</p>
+          </div>
+        </div>
+        <button id="btnCloseGuideModal" class="modal-close" type="button" aria-label="Fermer" style="color:#ffffff;">&times;</button>
+      </div>
+      <div class="modal-body" style="padding:22px 24px;">
+        <div style="background:#EAF3ED;border-left:4px solid #0B4D2E;padding:12px 16px;border-radius:6px;margin-bottom:18px;font-size:13.5px;color:#0B4D2E;line-height:1.5;">
+          <strong>Chers collègues,</strong> vous n'avez plus besoin de manipuler Moodle ! Dès qu'un cours est achevé dans votre filière, donnez simplement le signal ici. L'équipe de planification s'occupe de l'ouverture et du paramétrage.
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:20px;">
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div style="width:32px;height:32px;border-radius:50%;background:#0B4D2E;color:#ffffff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0;">1</div>
+            <div>
+              <strong style="color:#0B4D2E;font-size:14px;">Sélectionnez votre périmètre</strong>
+              <p style="margin:3px 0 0;font-size:13px;color:var(--text-secondary);line-height:1.45;">
+                Cliquez sur <strong>Licence</strong>, <strong>Master</strong> ou <strong>MBA</strong> sur la page d'accueil, puis choisissez votre filière dans la liste déroulante.
+              </p>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div style="width:32px;height:32px;border-radius:50%;background:#C9962A;color:#ffffff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0;">2</div>
+            <div>
+              <strong style="color:#0B4D2E;font-size:14px;">Cochez les cours terminés</strong>
+              <p style="margin:3px 0 0;font-size:13px;color:var(--text-secondary);line-height:1.45;">
+                Cochez le ou les modules achevés. Le nom de l'enseignant est facultatif. Vous pouvez indiquer vos dates souhaitées d'ouverture et de clôture.
+              </p>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div style="width:32px;height:32px;border-radius:50%;background:#0B4D2E;color:#ffffff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0;">3</div>
+            <div>
+              <strong style="color:#0B4D2E;font-size:14px;">Donnez-nous le signal !</strong>
+              <p style="margin:3px 0 0;font-size:13px;color:var(--text-secondary);line-height:1.45;">
+                Cliquez sur <strong>« Envoyer le signal pour programmation »</strong> (ou déposez votre fichier Excel). L'équipe de planification (Oscar Kakpo) est alertée immédiatement sur Outlook et active l'évaluation sur Moodle.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:center;justify-content:space-between;border-top:1px solid #e5e7eb;padding-top:14px;margin-top:10px;">
+          <label style="display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--text-muted);cursor:pointer;">
+            <input id="chkDontShowGuideAgain" type="checkbox">
+            <span>Ne plus afficher automatiquement au démarrage</span>
+          </label>
+        </div>
+      </div>
+      <div class="modal-footer" style="padding:14px 24px;background:#F9FAFB;border-radius:0 0 12px 12px;">
+        <button id="btnStartDeclareFromGuide" class="btn btn-primary" type="button" style="width:100%;font-size:14px;padding:11px 18px;">
+          🚀 C'est compris, je déclare un cours terminé →
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Accès Protégé / Mot de passe Tableau de bord -->
+  <div id="authModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="authModalTitle">
+    <div class="modal-card" style="max-width:440px;">
+      <div class="modal-header">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="font-size:24px;">🔒</span>
+          <div>
+            <h3 id="authModalTitle" style="margin:0;font-size:16px;">Accès Restreint — Espace Planification</h3>
+            <p style="margin:2px 0 0;font-size:12px;color:var(--text-muted);">Réservé à l'équipe de coordination (Oscar Kakpo)</p>
+          </div>
+        </div>
+        <button id="btnCloseAuthModal" class="modal-close" type="button" aria-label="Fermer">&times;</button>
+      </div>
+      <form id="authForm" class="modal-body" style="padding:20px;">
+        <p style="font-size:13.5px;color:var(--text-secondary);margin-bottom:16px;line-height:1.45;">
+          Pour des raisons de confidentialité, le tableau de bord de suivi-évaluation et les données d'enseignants sont protégés par mot de passe.
+        </p>
+        <div class="form-group" style="margin-bottom:14px;">
+          <label class="form-label" for="planningPasswordInput">Mot de passe de coordination :</label>
+          <input id="planningPasswordInput" class="input" type="password" placeholder="Saisir votre mot de passe" autocomplete="current-password" required style="font-size:15px;letter-spacing:1px;">
+          <div id="authErrorMsg" class="form-hint" style="color:#DC2626;font-weight:700;margin-top:6px;display:none;">Mot de passe incorrect. Veuillez réessayer.</div>
+        </div>
+        <div class="modal-footer" style="padding:12px 0 0;border-top:1px solid #e5e7eb;display:flex;gap:10px;justify-content:flex-end;">
+          <button id="btnCancelAuth" class="btn btn-soft" type="button">Annuler</button>
+          <button class="btn btn-primary" type="submit">🔓 Déverrouiller</button>
         </div>
       </form>
     </div>
