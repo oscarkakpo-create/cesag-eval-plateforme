@@ -276,3 +276,8 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--cesag-green); 
   .main-container { padding-top: 16px; }
   .brand-title { font-size: 15px; }
 }
+
+/* Accueil : deux modes d'action (le dépôt Excel/CSV est retiré) */
+.landing-cards-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+.landing-card .landing-card-actions { padding-top: 18px; }
+@media (max-width: 720px) { .landing-cards-grid { grid-template-columns: 1fr !important; } }
