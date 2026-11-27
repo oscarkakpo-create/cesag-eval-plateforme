@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CESAG ONLINE — Portail Évaluations des Enseignements 2026-2027</title>
+  <title>CESAG ONLINE — Programmation des Évaluations 2026-2027</title>
   <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
 <body>
   <!-- Header Institutionnel CESAG -->
@@ -14,7 +15,7 @@
         <div class="brand-crest" aria-hidden="true">C</div>
         <div class="brand-text">
           <div class="brand-kicker">CESAG · PLANIFICATION &amp; SUIVI-ÉVALUATION</div>
-          <h1 class="brand-title">Évaluations des Enseignements 2026-2027</h1>
+          <h1 class="brand-title">Programmation des Évaluations 2026-2027</h1>
         </div>
       </div>
 
@@ -32,12 +33,16 @@
 
     <nav class="nav-tabs" aria-label="Navigation principale">
       <div class="nav-tabs-inner">
-        <button class="nav-tab active" data-tab="declare" type="button">
-          <span class="tab-icon">＋</span>
+        <button class="nav-tab active" data-tab="accueil" type="button">
+          <span class="tab-icon">🏠</span>
+          <span>Accueil &amp; Guide collègue</span>
+        </button>
+        <button class="nav-tab" data-tab="declare" type="button">
+          <span class="tab-icon">✍️</span>
           <span>Déclarer des modules terminés</span>
         </button>
         <button class="nav-tab" data-tab="dashboard" type="button">
-          <span class="tab-icon">☰</span>
+          <span class="tab-icon">📊</span>
           <span>Tableau de bord &amp; Suivi</span>
           <span id="badgeTotalCount" class="tab-badge">0</span>
         </button>
@@ -55,9 +60,137 @@
     <div id="toastArea" class="toast-area" aria-live="polite"></div>
 
     <!-- ============================================================ -->
+    <!-- TAB ACCUEIL : LANDING PAGE PROGRAMMATION DES ÉVALUATIONS     -->
+    <!-- ============================================================ -->
+    <section id="tab-accueil" class="tab-panel active">
+      <div class="landing-hero">
+        <div class="hero-badge-pill">
+          <span>★</span> Campagne Académique 2026-2027 · CESAG Dakar
+        </div>
+        <h2>Espace Programmation des Évaluations des Enseignements</h2>
+        <p>
+          Chers collègues et responsables de programmes, l'équipe de planification et suivi-évaluation attend votre signal dès qu'un cours est achevé pour programmer et ouvrir immédiatement l'évaluation sur Moodle (Catégorie 372). Vous pouvez déclarer en quelques clics ou déposer directement votre fichier de suivi.
+        </p>
+      </div>
+
+      <!-- 3 MODES D'ACTION -->
+      <div class="landing-cards-grid">
+        <!-- Carte 1 : Formulaire Express en ligne -->
+        <div class="landing-card highlight">
+          <div class="landing-card-header">
+            <div class="landing-card-icon">⚡</div>
+            <span class="landing-card-badge">Rapide &amp; Direct</span>
+          </div>
+          <h3 class="landing-card-title">1. Formulaire express en ligne</h3>
+          <p class="landing-card-desc">
+            Sélectionnez votre filière parmi les 50 programmes officiels, cochez les modules achevés et renseignez l'enseignant en 3 clics.
+          </p>
+          <div class="landing-card-actions">
+            <button id="btnLandingGoDeclare" class="btn btn-primary" type="button">
+              Remplir le formulaire express →
+            </button>
+          </div>
+        </div>
+
+        <!-- Carte 2 : Déposer un fichier CSV / Excel -->
+        <div class="landing-card">
+          <div class="landing-card-header">
+            <div class="landing-card-icon">📥</div>
+            <span class="landing-card-badge">Fichier groupé</span>
+          </div>
+          <h3 class="landing-card-title">2. Déposer un fichier Excel / CSV</h3>
+          <p class="landing-card-desc">
+            Téléchargez notre modèle officiel préformaté, complétez vos modules terminés hors-ligne et glissez-déposez le fichier ici.
+          </p>
+          <div class="landing-card-actions">
+            <div style="display:flex;gap:6px;">
+              <button id="btnLandingDownloadCsv" class="btn btn-outline btn-sm" type="button" style="flex:1;">
+                📥 Modèle CSV
+              </button>
+              <button id="btnLandingDownloadXlsx" class="btn btn-outline btn-sm" type="button" style="flex:1;">
+                📥 Modèle Excel
+              </button>
+            </div>
+            <button id="btnLandingOpenImport" class="btn btn-primary" type="button">
+              📂 Déposer mon fichier rempli
+            </button>
+          </div>
+        </div>
+
+        <!-- Carte 3 : Explorer le catalogue complet (Option B) -->
+        <div class="landing-card">
+          <div class="landing-card-header">
+            <div class="landing-card-icon">📚</div>
+            <span class="landing-card-badge">Plaquettes officielles</span>
+          </div>
+          <h3 class="landing-card-title">3. Parcourir les 1 843 modules prévus</h3>
+          <p class="landing-card-desc">
+            Accédez à l'inventaire officiel de tous les cours prévus en Licences, Masters et MBA et repérez immédiatement les vôtres.
+          </p>
+          <div class="landing-card-actions">
+            <button id="btnLandingBrowseCatalog" class="btn btn-soft" type="button">
+              Consulter le catalogue de ma filière →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- WORKFLOW EN 3 ETAPES -->
+      <div class="landing-workflow-card">
+        <div class="landing-workflow-header">
+          <h3>Comment se déroule la programmation de votre évaluation ?</h3>
+          <span class="badge-emerald" style="padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700;">Workflow Simplifié</span>
+        </div>
+        <div class="landing-steps-row">
+          <div class="landing-step-item">
+            <div class="landing-step-num">1</div>
+            <div class="landing-step-body">
+              <h4>Vous nous donnez le signal</h4>
+              <p>Dès la fin des cours d'un module, vous le déclarez en ligne ou déposez votre tableau. Vous n'avez aucune configuration Moodle à faire.</p>
+            </div>
+          </div>
+          <div class="landing-step-item">
+            <div class="landing-step-num gold">2</div>
+            <div class="landing-step-body">
+              <h4>Alerte instantanée envoyée</h4>
+              <p>L'équipe de planification reçoit immédiatement une notification par e-mail (Outlook / Gmail) avec tous les détails du cours.</p>
+            </div>
+          </div>
+          <div class="landing-step-item">
+            <div class="landing-step-num dark">3</div>
+            <div class="landing-step-body">
+              <h4>Programmation Moodle immédiate</h4>
+              <p>L'évaluation est activée sur Moodle avec la carte verte officielle CESAG. Les étudiants peuvent répondre en toute confidentialité.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BANDEAU CHIFFRES CLES -->
+      <div class="landing-stats-strip">
+        <div class="landing-stat-box">
+          <div class="landing-stat-val">50</div>
+          <div class="landing-stat-lbl">Programmes officiels</div>
+        </div>
+        <div class="landing-stat-box">
+          <div class="landing-stat-val">1 843</div>
+          <div class="landing-stat-lbl">Modules (ECUEs) prévus</div>
+        </div>
+        <div class="landing-stat-box">
+          <div class="landing-stat-val">1 665</div>
+          <div class="landing-stat-lbl">Activités Moodle prêtes</div>
+        </div>
+        <div class="landing-stat-box">
+          <div class="landing-stat-val">100 %</div>
+          <div class="landing-stat-lbl">Anonymat garanti</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
     <!-- TAB 1 : DECLARER DES MODULES TERMINES (RESPONSABLES PROG)    -->
     <!-- ============================================================ -->
-    <section id="tab-declare" class="tab-panel active">
+    <section id="tab-declare" class="tab-panel">
       <div class="section-intro">
         <div>
           <h2>Déclaration de fin de module (Espace Responsables de Programme)</h2>
@@ -268,8 +401,20 @@
             <tbody id="declarationsTableBody"></tbody>
           </table>
         </div>
-        <div id="tableEmptyState" class="empty-table hidden">
-          Aucune évaluation ne correspond aux filtres sélectionnés.
+        <div id="tableEmptyState" class="empty-table hidden" style="padding:48px 24px;text-align:center;">
+          <div style="font-size:36px;margin-bottom:10px;">📋</div>
+          <div style="font-size:18px;font-weight:700;color:var(--cesag-green-dark);margin-bottom:6px;">Aucune évaluation enregistrée pour le moment</div>
+          <p class="muted-small" style="max-width:540px;margin:0 auto 18px auto;line-height:1.5;">
+            L'espace est configuré et prêt. Dès qu'un collègue déclare la fin d'un cours en ligne ou dépose un tableau, la demande apparaîtra ici avec le statut « À programmer » pour ouverture sur Moodle.
+          </p>
+          <div style="display:flex;gap:10px;justify-content:center;">
+            <button class="btn btn-primary btn-sm" onclick="document.querySelector('.nav-tab[data-tab=\'declare\']').click()" type="button">
+              Faire une déclaration →
+            </button>
+            <button class="btn btn-outline btn-sm" onclick="document.getElementById('importModal').classList.remove('hidden')" type="button">
+              Déposer un fichier collègue
+            </button>
+          </div>
         </div>
       </div>
     </section>
@@ -363,23 +508,30 @@
         <button class="modal-close" data-close-modal="importModal" type="button" aria-label="Fermer">&times;</button>
       </div>
       <div class="modal-body">
-        <p class="muted-small">
-          Importez un fichier <strong>.csv / .tsv</strong> ou collez directement les lignes copiées depuis Excel avec les colonnes :
-          <code>Modules | Intervenants | Classe | Adresse email</code>.
-        </p>
+        <div style="background:var(--cesag-green-soft);border:1px solid var(--cesag-border-strong);border-radius:var(--radius-sm);padding:14px 16px;margin-bottom:16px;">
+          <div style="font-weight:700;color:var(--cesag-green-dark);margin-bottom:6px;">Modèle officiel préconfiguré à télécharger</div>
+          <p class="muted-small" style="margin:0 0 10px 0;">
+            Utilisez ce modèle pour préparer la liste de vos cours terminés. Remplissez les colonnes puis déposez votre fichier ci-dessous :
+          </p>
+          <div style="display:flex;gap:10px;">
+            <button id="btnModalDownloadCsv" class="btn btn-outline btn-sm" type="button">📥 Télécharger le modèle CSV</button>
+            <button id="btnModalDownloadXlsx" class="btn btn-outline btn-sm" type="button">📥 Télécharger le modèle Excel (.xlsx)</button>
+          </div>
+        </div>
+
         <div class="form-row-2">
           <div class="form-group">
-            <label class="form-label" for="importFileInput">Choisir un fichier CSV / TSV</label>
-            <input id="importFileInput" class="input" type="file" accept=".csv,.tsv,.txt">
+            <label class="form-label" for="importFileInput">Choisir un fichier (Excel .xlsx, .xls ou .csv)</label>
+            <input id="importFileInput" class="input" type="file" accept=".xlsx,.xls,.csv,.tsv,.txt">
           </div>
           <div class="form-group">
-            <label class="form-label" for="importDeclarantNom">Nom du déclarant / collègue</label>
-            <input id="importDeclarantNom" class="input" type="text" placeholder="Ex : Coordination Master">
+            <label class="form-label" for="importDeclarantNom">Votre nom (Responsable déclarant)</label>
+            <input id="importDeclarantNom" class="input" type="text" placeholder="Ex : M. Diallo / Coord. Master">
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label" for="importPasteTextarea">Ou coller les lignes depuis Excel (Ctrl+V)</label>
-          <textarea id="importPasteTextarea" class="textarea" rows="5" placeholder="Modules	Intervenants	Classe	Adresse email&#10;Droit de la concurrence	M. Jean Baptiste DIOUF	MACG1 Jour A	jeanbaptiste.diouf@cesag.edu.sn"></textarea>
+          <label class="form-label" for="importPasteTextarea">Ou coller directement les lignes depuis votre tableur (Ctrl+V)</label>
+          <textarea id="importPasteTextarea" class="textarea" rows="4" placeholder="Modules	Intervenants	Classe	Adresse email&#10;Droit de la concurrence	M. Jean Baptiste DIOUF	MACG1 Jour A	jeanbaptiste.diouf@cesag.edu.sn"></textarea>
         </div>
         <div id="importPreviewArea" class="import-preview hidden"></div>
       </div>

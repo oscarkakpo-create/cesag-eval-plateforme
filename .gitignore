@@ -1,4 +1,5 @@
 data/declarations.json
+data/declarations_archive_test.json
 data/resultats_moodle.json
 data/plaquettes/
 *.xlsx

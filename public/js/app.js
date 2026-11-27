@@ -1034,10 +1034,10 @@
 
     if (hasHeader) {
       startRow = 1;
-      idxMod = headerNorm.findIndex((h) => h.includes("module"));
-      idxInt = headerNorm.findIndex((h) => h.includes("intervenant"));
-      idxCls = headerNorm.findIndex((h) => h.includes("classe"));
-      idxMail = headerNorm.findIndex((h) => h.includes("mail"));
+      idxMod = headerNorm.findIndex((h) => h.includes("module") || h.includes("ecue") || h.includes("cours"));
+      idxInt = headerNorm.findIndex((h) => h.includes("intervenant") || h.includes("enseignant") || h.includes("prof"));
+      idxCls = headerNorm.findIndex((h) => h.includes("classe") || h.includes("filiere") || h.includes("cohorte"));
+      idxMail = headerNorm.findIndex((h) => h.includes("mail") || h.includes("courriel"));
     }
 
     const rows = [];
@@ -1436,14 +1436,81 @@
       });
     });
 
+    function downloadOfficialTemplateCsv() {
+      const headers = ["Filière", "Classe", "Code_ECUE", "Intitulé_Module", "Nom_Intervenant", "Email_Intervenant", "Date_Fin_Module", "Observations"];
+      const sampleRows = [
+        ["MACG", "MACG1 Jour A", "MACG 7.1.4", "Droit de la concurrence", "M. Jean Baptiste DIOUF", "jeanbaptiste.diouf@cesag.edu.sn", "2026-11-20", "Exemple de cours acheve"],
+        ["LG", "LG 1 Jour", "LG 1.1.2", "Comptabilité générale", "Mme Aminata SOW", "intervenant@cesag.edu.sn", "2026-11-22", "Exemple"],
+        ["MBA GP", "MBA GP Soir", "MBAGP 8.2.1", "Gestion de projets agile", "Dr. Mamadou BA", "intervenant@cesag.edu.sn", "2026-11-25", "Exemple"],
+      ];
+      const csvContent = "\uFEFF" + [headers.join(";"), ...sampleRows.map((r) => r.map((c) => `"${c.replace(/"/g, '""')}"`).join(";"))].join("\r\n");
+      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "modele_declaration_evaluations_cesag.csv";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast("Modèle CSV officiel téléchargé !");
+    }
+
+    function downloadOfficialTemplateXlsx() {
+      if (window.XLSX) {
+        const data = [
+          ["Filière", "Classe", "Code_ECUE", "Intitulé_Module", "Nom_Intervenant", "Email_Intervenant", "Date_Fin_Module", "Observations"],
+          ["MACG", "MACG1 Jour A", "MACG 7.1.4", "Droit de la concurrence", "M. Jean Baptiste DIOUF", "jeanbaptiste.diouf@cesag.edu.sn", "2026-11-20", "Exemple de cours achevé"],
+          ["LG", "LG 1 Jour", "LG 1.1.2", "Comptabilité générale", "Mme Aminata SOW", "intervenant@cesag.edu.sn", "2026-11-22", "Exemple"],
+          ["MBA GP", "MBA GP Soir", "MBAGP 8.2.1", "Gestion de projets agile", "Dr. Mamadou BA", "intervenant@cesag.edu.sn", "2026-11-25", "Exemple"],
+        ];
+        const ws = XLSX.utils.aoa_to_sheet(data);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Déclarations");
+        XLSX.writeFile(wb, "modele_declaration_evaluations_cesag.xlsx");
+        showToast("Modèle Excel officiel (.xlsx) téléchargé !");
+      } else {
+        downloadOfficialTemplateCsv();
+      }
+    }
+
+    // Landing Page Actions
+    const goDeclareTab = () => {
+      const tabDeclare = document.querySelector('.nav-tab[data-tab="declare"]');
+      if (tabDeclare) tabDeclare.click();
+    };
+    if ($("btnLandingGoDeclare")) $("btnLandingGoDeclare").addEventListener("click", goDeclareTab);
+    if ($("btnLandingBrowseCatalog")) $("btnLandingBrowseCatalog").addEventListener("click", goDeclareTab);
+    if ($("btnLandingDownloadCsv")) $("btnLandingDownloadCsv").addEventListener("click", downloadOfficialTemplateCsv);
+    if ($("btnModalDownloadCsv")) $("btnModalDownloadCsv").addEventListener("click", downloadOfficialTemplateCsv);
+    if ($("btnLandingDownloadXlsx")) $("btnLandingDownloadXlsx").addEventListener("click", downloadOfficialTemplateXlsx);
+    if ($("btnModalDownloadXlsx")) $("btnModalDownloadXlsx").addEventListener("click", downloadOfficialTemplateXlsx);
+
     const openImport = () => $("importModal").classList.remove("hidden");
     $("btnOpenImportModal").addEventListener("click", openImport);
     $("btnOpenQuickImportFromDeclare").addEventListener("click", openImport);
+    if ($("btnLandingOpenImport")) $("btnLandingOpenImport").addEventListener("click", openImport);
 
     $("importPasteTextarea").addEventListener("input", (e) => updateImportPreview(e.target.value));
     $("importFileInput").addEventListener("change", async (e) => {
       const file = e.target.files?.[0];
       if (!file) return;
+      if (file.name.endsWith(".xlsx") || file.name.endsWith(".xls")) {
+        if (window.XLSX) {
+          try {
+            const buffer = await file.arrayBuffer();
+            const wb = XLSX.read(buffer, { type: "array" });
+            const firstSheet = wb.Sheets[wb.SheetNames[0]];
+            const csv = XLSX.utils.sheet_to_csv(firstSheet);
+            $("importPasteTextarea").value = csv;
+            updateImportPreview(csv);
+            showToast(`Fichier Excel importé : ${wb.SheetNames[0]} (${file.name})`);
+            return;
+          } catch (err) {
+            showToast(`Erreur lecture Excel : ${err.message}`, "error");
+          }
+        }
+      }
       const text = await file.text();
       $("importPasteTextarea").value = text;
       updateImportPreview(text);
